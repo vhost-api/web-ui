@@ -1,0 +1,19 @@
+.login-panel
+  .panel-header VHost-API
+  .panel-body
+    .flash-message
+      = find_and_preserve styled_flash
+    %form{ accept: { charset: 'UTF-8' },
+           action: '/login',
+           role: 'form',
+           method: 'POST' }
+      %fieldset
+        .form-group
+          %input.form-control#user{ type: 'text', name: 'user',
+            placeholder: 'Username',
+            autofocus: 'autofocus' }
+        .form-group
+          %input.form-control#password{ type: 'password',
+            name: 'password', placeholder: 'Password' }
+        .right
+          %input.formbutton{ type: 'submit', value: 'Log In' }

@@ -1,0 +1,27 @@
+require: rubocop-rspec
+AllCops:
+  TargetRubyVersion: 2.3
+  Include:
+    - ./**/*.rb
+    - '**/Rakefile'
+    - '**/Gemfile'
+    - '**/Guardfile'
+  Exclude:
+    - vendor/**/*
+    - .vendor/**/*
+    - pkg/**/*
+    - spec/fixtures/**/*
+# based on https://github.com/voxpupuli/modulesync_config/issues/168
+Style/RegexpLiteral:
+  EnforcedStyle: percent_r
+  Enabled: true
+
+# RSpec
+
+# We don't use rspec in this way
+RSpec/DescribeClass:
+  Enabled: False
+
+# Example length is not necessarily an indicator of code quality
+RSpec/ExampleLength:
+  Enabled: False
