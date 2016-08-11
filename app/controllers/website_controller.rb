@@ -3,27 +3,26 @@ helpers do
   # @param endpoint [String]
   # @return [Hash, nil]
   def api_query(endpoint)
-    halt 401, 'invalid cookie' if @cookie.nil?
     apiresponse = RestClient.get(
       api_url(endpoint),
-      cookies: { settings.session_key => @cookie }
+      Authorization: auth_secret_apikey
     )
-    response_cookie(apiresponse.cookies[settings.session_key])
     parse_apiresponse(apiresponse)
+  end
+
+  def auth_secret_apikey
+    return nil if @user.nil?
+    method = 'VHOSTAPI-KEY'
+    credentials = "#{@user[:id]}:#{@user[:api_key]}"
+    auth_secret = Base64.encode64(credentials).delete("\n")
+
+    "#{method} #{auth_secret}"
   end
 
   # @param endpoint [String]
   # @return [String]
   def api_url(endpoint)
     "#{settings.api_url}/api/v#{settings.api_ver}/#{endpoint}"
-  end
-
-  # @param cookie [String]
-  def response_cookie(cookie)
-    response.set_cookie(
-      settings.session_key,
-      value: cookie
-    )
   end
 
   # @param apiresponse [RestClientResponse]
@@ -34,37 +33,54 @@ helpers do
   end
 end
 
-get '/login' do
-  haml :login, layout: :layout_login
-end
-
 post '/login' do
-  apiresponse = RestClient::Request.execute(
-    method: :post,
-    url: "#{settings.api_url}/api/v#{settings.api_ver}/auth/login",
-    payload: { user: { login: params['user'], password: params['password'] } },
-    max_redirects: 0
+  halt 400, 'invalid request' unless params['user'] && params['password']
+
+  # perform the login request on the api to get an apikey for future requests
+  apiresponse = RestClient.post(
+    api_url('auth/login'),
+    user: params['user'],
+    password: params['password'],
+    apikey: settings.api_key_id.to_s
   )
-  if apiresponse.code == 200
-    status 302
-    response.set_cookie(
-      settings.session_key,
-      value: apiresponse.cookies[settings.session_key]
-    )
+  data = parse_apiresponse(apiresponse)
+
+  unless apiresponse.code.eql?(200)
+    flash[:error] = 'Invalid Login'
+    redirect '/login'
+  end
+
+  @user = {
+    id: data['user_id'],
+    api_key: data['apikey'],
+    login: params['user']
+  }
+
+  # store stuff for later use
+  session[:user] = @user
+
+  flash[:success] = 'Successfully logged in.'
+
+  status 200
+
+  if session[:return_to].nil?
     redirect '/'
   else
-    redirect '/login'
+    original_request = session[:return_to]
+    session[:return_to] = nil
+    redirect original_request
   end
 end
 
 get '/logout' do
-  apiresponse = RestClient.get(
-    "#{settings.api_url}/api/v#{settings.api_ver}/auth/logout",
-    cookies: {
-      settings.session_key => @cookies[settings.session_key]
-    }
-  )
-  [apiresponse.code, apiresponse.headers, apiresponse.body]
+  authenticate!
+  session[:user] = nil
+  flash[:success] = 'Successfully logged out.'
+  redirect '/login'
+end
+
+get '/login' do
+  haml :login, layout: :layout_login
 end
 
 namespace '/user' do
@@ -74,6 +90,7 @@ namespace '/user' do
   end
 
   get do
+    authenticate!
     @users = api_query('users')
     haml :users
   end
@@ -86,6 +103,7 @@ namespace '/domains' do
   end
 
   get do
+    authenticate!
     @domains = api_query('domains')
     haml :domains
   end
@@ -98,11 +116,13 @@ namespace '/mail' do
   end
 
   get do
+    authenticate!
     haml :mailhome
   end
 
   namespace '/domains' do
     get do
+      authenticate!
       @domains = api_query('domains')
       haml :domains
     end
@@ -110,24 +130,26 @@ namespace '/mail' do
 
   namespace '/accounts' do
     get do
+      authenticate!
       @mailaccounts = api_query('mailaccounts')
       haml :mailaccounts
     end
 
     before %r{\A/(?<id>\d+)/?.*} do
-      @cookie = request.cookies[settings.session_key]
+      authenticate!
       @mailaccount = api_query("mailaccounts/#{params[:id]}")
-      p @mailaccount
       # 404 = Not Found
       halt 404 if @mailaccount.nil?
     end
 
     namespace '/:id' do
       get do
+        authenticate!
         haml :mailaccount
       end
 
       get '/edit' do
+        authenticate!
         haml :edit_mailaccount
       end
     end
@@ -135,6 +157,7 @@ namespace '/mail' do
 
   namespace '/aliases' do
     get do
+      authenticate!
       @mailaliases = api_query('mailaliases')
       haml :mailaliases
     end
@@ -142,6 +165,7 @@ namespace '/mail' do
 
   namespace '/sources' do
     get do
+      authenticate!
       @mailaliases = api_query('mailsources')
       haml :mailsources
     end
@@ -149,6 +173,7 @@ namespace '/mail' do
 
   namespace '/dkim' do
     get do
+      authenticate!
       @dkims = api_query('dkims')
       @dkimsignings = api_query('dkimsignings')
       haml :dkim
@@ -163,6 +188,7 @@ namespace '/webhosting' do
   end
 
   get do
+    authenticate!
     @phpruntimes = api_query('phpruntimes')
     @ipv4addresses = api_query('ipv4addresses')
     @ipv6addresses = api_query('ipv6addresses')
@@ -171,6 +197,7 @@ namespace '/webhosting' do
 
   namespace '/vhosts' do
     get do
+      authenticate!
       @vhosts = api_query('vhosts')
       haml :vhosts
     end
@@ -178,6 +205,7 @@ namespace '/webhosting' do
 
   namespace '/sftpusers' do
     get do
+      authenticate!
       @sftpusers = api_query('sftpusers')
       haml :sftpusers
     end
@@ -185,6 +213,7 @@ namespace '/webhosting' do
 
   namespace '/shellusers' do
     get do
+      authenticate!
       @shellusers = api_query('shellusers')
       haml :shellusers
     end
@@ -198,11 +227,13 @@ namespace '/dns' do
   end
 
   get do
+    authenticate!
     haml :dnshome
   end
 
   namespace '/domains' do
     get do
+      authenticate!
       @domains = api_query('domains')
       haml :domains
     end

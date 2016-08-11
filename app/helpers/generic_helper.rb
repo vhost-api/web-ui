@@ -37,3 +37,16 @@ def sidebar_current?(path = '/')
   req_path = request.path.to_s.split('/')[2]
   req_path == path || req_path == path + '/' ? 'current' : nil
 end
+
+def authenticate!
+  p session[:user].inspect
+  unless user?
+    flash[:error] = 'You need to be logged in!'
+    session[:return_to] = request.path_info
+    redirect '/login'
+  end
+end
+
+def user?
+  @user != nil
+end

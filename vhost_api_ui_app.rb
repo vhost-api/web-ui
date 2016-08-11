@@ -7,6 +7,7 @@ require 'sinatra/contrib'
 require 'sinatra/flash'
 require 'tilt/haml'
 require 'json'
+require 'base64'
 require 'securerandom'
 require 'digest/sha1'
 require 'sass'
@@ -31,18 +32,7 @@ configure do
   end
 end
 
-configure :development do
-  require 'pry'
-  require 'better_errors'
-  require 'binding_of_caller'
-  set :show_exceptions, :after_handler
-  set :raise_errors, false
-  use BetterErrors::Middleware
-  BetterErrors.application_root = settings.root
-  BetterErrors.use_pry!
-end
-
-configure :test do
+configure :development, :test do
   require 'pry'
   require 'better_errors'
   require 'binding_of_caller'
@@ -58,16 +48,16 @@ configure :production do
   set :raise_errors, false
 end
 
-# use Rack::Session::Cookie, secret: File.read('config/session.secret'),
-# key: settings.session[:key].to_s,
-# domain: settings.session[:domain].to_s,
-# expire_after: settings.session[:timeout],
-# path: settings.session[:path].to_s
+use Rack::Session::Cookie, secret: File.read('config/session.secret'),
+                           key: settings.session[:key].to_s,
+                           domain: settings.session[:domain].to_s,
+                           expire_after: settings.session[:timeout],
+                           path: settings.session[:path].to_s
 
 before do
+  @user = session[:user] unless session[:user].nil?
   set_title
   set_sidebar_title
-  @cookie = request.cookies[settings.session_key]
 end
 
 get '/js/*.js' do
