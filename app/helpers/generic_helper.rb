@@ -39,8 +39,6 @@ def sidebar_current?(path = '/')
 end
 
 def authenticate!
-  p '--- authenticate! ---'
-  p session.to_hash
   @user = session[:user] unless session[:user].nil?
   unless user?
     flash[:error] = 'You need to be logged in!'
@@ -50,8 +48,6 @@ def authenticate!
 end
 
 def user?
-  p '--- user? ---'
-  p session[:user]
   @user != nil
 end
 

@@ -45,30 +45,77 @@ def select_element(label, name, value, options)
   element
 end
 
-# @param value [Hash]
+# @param label [String]
+# @param name [String]
+# @param value [Fixnum]
+# @param options [Hash]
+# @return [Hash]
+def select_multi_element(label, name, value, options)
+  element = { label: label, type: 'select', name: name, multiple: true }
+  element[:options] = send("#{name[0..-4]}_select_options", value, options)
+  element
+end
+
+# @param selected [Hash]
 # @param options [Hash]
 # @return [Hash]
 def user_select_options(selected, users)
   result = []
-  result.push(
-    value: selected['id'], text: selected['name'], selected: 'selected'
-  )
-  users.each do |u|
-    result.push(value: u[1]['id'], text: u[1]['name'])
+  users.each_value do |u|
+    opt = if u['id'] == selected['id']
+            { value: u['id'], text: u['name'], selected: 'selected' }
+          else
+            { value: u['id'], text: u['name'] }
+          end
+    result.push(opt)
   end
   result
 end
 
-# @param value [Hash]
+# @param selected [Hash]
 # @param options [Hash]
 # @return [Hash]
 def domain_select_options(selected, domains)
   result = []
-  result.push(
-    value: selected['id'], text: selected['name'], selected: 'selected'
-  )
-  domains.each do |d|
-    result.push(value: d[1]['id'], text: d[1]['name'])
+  domains.each_value do |d|
+    opt = if d['id'] == selected['id']
+            { value: d['id'], text: d['name'], selected: 'selected' }
+          else
+            { value: d['id'], text: d['name'] }
+          end
+    result.push(opt)
+  end
+  result
+end
+
+# @param selected [Array(Hash)]
+# @param options [Hash]
+# @return [Hash]
+def mail_aliases_select_options(selected, mailaliases)
+  result = []
+  mailaliases.each_value do |a|
+    opt = if selected.map(&:values).map(&:first).include?(a['id'])
+            { value: a['id'], text: a['address'], selected: 'selected' }
+          else
+            { value: a['id'], text: a['address'] }
+          end
+    result.push(opt)
+  end
+  result
+end
+
+# @param selected [Array(Hash)]
+# @param options [Hash]
+# @return [Hash]
+def mail_sources_select_options(selected, mailsources)
+  result = []
+  mailsources.each_value do |s|
+    opt = if selected.map(&:values).map(&:first).include?(s['id'])
+            { value: s['id'], text: s['address'], selected: 'selected' }
+          else
+            { value: s['id'], text: s['address'] }
+          end
+    result.push(opt)
   end
   result
 end
@@ -117,24 +164,27 @@ end
 # @return [Hash]
 def generate_mailaccount_form(mailaccount)
   fdata = { hidden_fields: [], visible_fields: [] }
+  fdata[:visible_fields].push(password_element('Password', 'password'))
+  fdata[:visible_fields].push(password_element('Confirm Password', 'password2'))
   mailaccount.each_pair do |key, value|
     field = mailaccount_form_visible_field(key.to_s, value)
     fdata[:visible_fields].push(field) unless field.nil?
   end
-  fdata[:visible_fields].push(password_element('Password', 'password'))
   fdata
 end
 
-# @param key [String]
-# @param value [Boolean, String, Hash, Fixnum]
-def mailaccount_form_visible_field(key, value)
-  result = nil
-  case key
-  when %r{(id|ed_at$)} then nil
-  when %r{enabled$} then result = checkbox_element(key, key, value)
-  when %r{(domain)} then
-    result = select_element(key, "#{key}_id", value, @domains)
-  else result = text_element(key, key, value)
+# @param k [String]
+# @param v [Boolean, String, Hash, Fixnum]
+def mailaccount_form_visible_field(k, v)
+  case k
+  when %r{(id|ed_at$|usage($|_rel$)|customer)} then nil
+  when %r{enabled$} then result = checkbox_element(k, k, v)
+  when %r{(mail_aliases)} then
+    result = select_multi_element(k, "#{k}_id", v, @mailaliases)
+  when %r{(mail_sources)} then
+    result = select_multi_element(k, "#{k}_id", v, @mailsources)
+  when %r{(domain)} then result = select_element(k, "#{k}_id", v, @domains)
+  else result = text_element(k, k, v)
   end
   result
 end

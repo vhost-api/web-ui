@@ -59,8 +59,6 @@ configure :production do
 end
 
 before do
-  p '--- before (global) ---'
-  p session.to_hash
   @user = session[:user] unless session[:user].nil?
   authenticate! unless request.path_info =~ %r{/(login|css)}
   set_title

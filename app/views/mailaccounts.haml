@@ -1,96 +1,52 @@
 .table-wrapper
-  %table.table.table-striped
+  %table.table.table-triped
     %caption MailAccounts
-    - unless @result.nil? || @result.empty?
-      %thead
+    %thead
+      %tr
+        %th< id
+        %th< enabled
+        %th< email
+        %th< realname
+        %th< receiving
+        %th< usage
+        %th< quota
+        %th<
+    %tbody
+      - @result.each_value do |mailaccount|
+        - acc_id = mailaccount['id']
+        - edit_link = "/mail/accounts/#{acc_id}/edit"
+        - en = 'icon-check item-enabled'
+        - dis = 'icon-cross item-disabled'
+        - en_suff = mailaccount['enabled'] ? en : dis
+        - en_textval = mailaccount['enabled'] ? ' yes' : ' no'
+        - rcv_suff = mailaccount['receiving_enabled'] ? en : dis
+        - rcv_textval = mailaccount['receiving_enabled'] ? ' yes' : ' no'
+        - progress_class = 'progress-bar progress-bar-info'
+        - thresh_warn = settings.threshholds[:display][:mailquota_warn]
+        - thresh_crit = settings.threshholds[:display][:mailquota_crit]
+        - if mailaccount['quotausage_rel'] >= thresh_warn
+          - progress_class = 'progress-bar progress-bar-warning'
+        - if mailaccount['quotausage_rel'] >= thresh_crit
+          - progress_class = 'progress-bar progress-bar-danger'
         %tr
-          - @result.first[1].keys.each do |key|
-            %th<= key
-      %tbody
-        - @result.each do |d|
-          %tr
-            - d[1].keys.each do |key|
-              - if key =~ %r{email}
-                %td
-                  %a{ href: "/mail/accounts/#{d[0]}/edit" }<= d[1][key]
-              - elsif key =~ %r{domain}
-                - did = d[1][key]['id'].to_i
-                - dname = d[1][key]['name']
-                %td
-                  %a{ href: "/domains/#{did}/edit" }<= dname
-              - elsif key =~ %r{ed_at$}
-                %td<= Time.at(d[1][key].to_i)
-              - elsif key =~ %r{enabled$}
-                - en = 'icon-check item-enabled'
-                - dis = 'icon-cross item-disabled'
-                - suff = d[1][key] ? en : dis
-                - textval = d[1][key] ? ' yes' : ' no'
-                %td.icon{ class: "icon #{suff}" }= textval
-              - else
-                %td<= d[1][key]
--# .table-wrapper
-  -# %table.table.table-triped
-    -# %caption Mailaccounts
-    -# %thead
-      -# %tr
-        -# %th<
-          -# enabled
-        -# %th<
-          -# email
-        -# %th<
-          -# realname
-        -# %th<
-          -# receiving
-        -# %th<
-          -# usage
-        -# %th<
-          -# quota
-        -# %th<
-    -# %tbody
-      -# -# - policy_scope(MailAccount).each do |mailaccount|
-      -# - @mailaccounts.each do |mailaccount|
-        -# - id = mailaccount['id']
-        -# - edit_link = "/mail/accounts/#{id}/edit"
-        -# %tr
-          -# %td.icon<
-            -# - en = 'icon-check item-enabled'
-            -# - dis = 'icon-cross item-disabled'
-            -# - enable_class_suffix = mailaccount['enabled'] ? en : dis
-            -# - enable_link_text = mailaccount['enabled'] ? 'yes' : 'no'
-            -# %a{ href: edit_link,
-              -# class: "icon #{enable_class_suffix}" }= enable_link_text
-          -# %td<
-            -# %a{ href: edit_link }<
-              -# = mailaccount['email']
-          -# %td<= mailaccount['realname']
-          -# %td.icon<
-            -# - en = 'icon-check item-enabled'
-            -# - dis = 'icon-cross item-disabled'
-            -#-en_recv_class_suf= mailaccount['receiving_enabled'] ? en : dis
-            -#-en_recv_link_txt= mailaccount['receiving_enabled'] ? 'yes' : 'no'
-            -# %a{ href: edit_link,
-              -# class: "icon #{en_recv_class_suf}" }= en_recv_link_txt
-          -# %td<
-            -# .progress
-              -# - progress_class = 'progress-bar progress-bar-info'
-              -# - thresh_warn = settings.threshholds[:display][:mailquota_warn]
-              -# - thresh_crit = settings.threshholds[:display][:mailquota_crit]
-              -# - if mailaccount['quotausage_rel'] >= thresh_warn
-                -# - progress_class = 'progress-bar progress-bar-warning'
-              -# - if mailaccount['quotausage_rel'] >= thresh_crit
-                -# - progress_class = 'progress-bar progress-bar-danger'
-              -# %div{ class: progress_class,
-                    -# 'role': 'progress',
-                    -# 'aria-valuemin': '0',
-                    -# 'aria-valuemax': '100',
-                    -# style: "width:#{mailaccount['quotausage_rel']}%" }
-                -# %span<
-                  -# - q_usage = mailaccount['quotausage']
-                  -# - if q_usage.is_a?(Fixnum)
-                    -# = Filesize.from("#{mailaccount['quotausage']} B").pretty
-                  -# - else
-                    -# N/A
-          -# %td.number<= Filesize.from("#{mailaccount['quota'].to_i} B").pretty
-          -# %td.icon.item-delete<
-            -# - delete_path = "/mail/accounts/#{id}/delete"
-            -# %a.icon.icon-trash.item-delete{ href: delete_path }< delete
+          %td<= acc_id
+          %td.icon{ class: en_suff }= en_textval
+          %td<
+            %a{ href: edit_link }<= mailaccount['email']
+          %td<= mailaccount['realname']
+          %td.icon{ class: rcv_suff }= rcv_textval
+          %td<
+            .progress<
+              %div{ class: progress_class,
+                    'role': 'progress',
+                    'aria-valuemin': '0',
+                    'aria-valuemax': '100',
+                    style: "width:#{mailaccount['quotausage_rel']}%" }<
+                %span<
+                  - q_usage = mailaccount['quotausage']
+                  - if q_usage.is_a?(Fixnum)
+                    = Filesize.from("#{mailaccount['quotausage']} B").pretty
+                  - else
+                    N/A
+          %td.number<= Filesize.from("#{mailaccount['quota'].to_i} B").pretty
+          %td.icon.item-delete.icon-trash= ' delete'

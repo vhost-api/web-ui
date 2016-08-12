@@ -3,7 +3,7 @@
 # @return [Hash, nil]
 def api_query(endpoint)
   apiresponse = RestClient.get(
-    api_url(endpoint),
+    gen_api_url(endpoint),
     Authorization: auth_secret_apikey
   )
   [apiresponse.headers[:etag], parse_apiresponse(apiresponse)]
@@ -17,7 +17,7 @@ end
 def api_update(resource, params)
   apiresponse = RestClient::Request.execute(
     method: :patch,
-    url: api_url(resource),
+    url: gen_api_url(resource),
     headers: { Authorization: auth_secret_apikey },
     payload: params.to_json
   )
@@ -37,7 +37,7 @@ end
 
 # @param endpoint [String]
 # @return [String]
-def api_url(endpoint)
+def gen_api_url(endpoint)
   "#{settings.api_url}/api/v#{settings.api_ver}/#{endpoint}"
 end
 

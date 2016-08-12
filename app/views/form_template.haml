@@ -17,7 +17,8 @@
     - elsif field[:type] == 'select'
       %label.col-sm-2.control-label<= field[:label]
       .col-sm-4<
-        %select.form-control{ name: field[:name] }<
+        - en_multiple = field[:multiple] ||= false
+        %select.form-control{ name: field[:name], multiple: en_multiple }<
           - field[:options].each do |opt|
             - if opt[:selected]
               %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
@@ -28,7 +29,8 @@
       .col-sm-4<
         %input.form-control{ type: field[:type],
           name: field[:name],
-          value: field[:value] }<
+          value: field[:value],
+          placeholder: field[:placeholder].to_s }<
       - if field[:errors]
         %p.help-block.error<
           - field[:errors].each do |err|
