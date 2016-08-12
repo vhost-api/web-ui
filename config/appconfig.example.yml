@@ -2,7 +2,12 @@ development:
   :site_title: 'vhost-API UI'
   :api_url: 'http://localhost:9393'
   :api_ver: 1
-  :session_key: 'rack.session'
+  :api_key_id: 'vhost-api-ui'
+  :session:
+    :timeout: 86400 # 1 day
+    :domain: 'localhost'
+    :key: 'rack.session'
+    :path: '/'
   :threshholds:
     :display:
       :mailquota_warn: 65
@@ -13,7 +18,12 @@ test:
   :site_title: 'vhost-API UI'
   :api_url: 'http://localhost:9393'
   :api_ver: 1
-  :session_key: 'rack.session'
+  :api_key_id: 'vhost-api-ui'
+  :session:
+    :timeout: 86400 # 1 day
+    :domain: 'localhost'
+    :key: 'rack.session'
+    :path: '/'
   :threshholds:
     :display:
       :mailquota_warn: 65
@@ -24,9 +34,14 @@ production:
   :site_title: 'vhost-API UI'
   :api_url: 'https://api.example.com'
   :api_ver: 1
-  :session_key: 'rack.session'
+  :api_key_id: 'vhost-api-ui'
+  :session:
+    :timeout: 86400 # 1 day
+    :domain: 'localhost'
+    :key: 'rack.session'
+    :path: '/'
   :threshholds:
     :display:
       :mailquota_warn: 65
       :mailquota_crit: 90
-  :webmail_link: 'https://webmail.example.com'
+  :webmail_link: 'https://webmail.exmaple.com'
