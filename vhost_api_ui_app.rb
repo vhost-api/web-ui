@@ -62,7 +62,7 @@ before do
   p '--- before (global) ---'
   p session.to_hash
   @user = session[:user] unless session[:user].nil?
-  authenticate! unless request.path_info.include?('/login')
+  authenticate! unless request.path_info =~ %r{/(login|css)}
   set_title
   set_sidebar_title
 end
