@@ -2,6 +2,8 @@
 require 'bundler/setup'
 
 require 'rest-client'
+require 'restclient/components'
+require 'rack/cache'
 require 'sinatra'
 require 'sinatra/contrib'
 require 'sinatra/flash'
@@ -13,7 +15,6 @@ require 'digest/sha1'
 require 'sass'
 require 'filesize'
 
-Dir.glob('./app/controllers/*.rb').each { |file| require file }
 Dir.glob('./app/helpers/*.rb').each { |file| require file }
 
 configure do
@@ -30,6 +31,15 @@ configure do
   @appconfig.keys.each do |key|
     set key, @appconfig[key]
   end
+  RestClient.enable Rack::CommonLogger
+  RestClient.enable Rack::Cache,
+                    metastore: 'file:./tmp/cache/meta',
+                    entitystore: 'file:./tmp/cache/body'
+  use Rack::Session::Cookie, secret: File.read('config/session.secret'),
+                             key: settings.session[:key].to_s,
+                             domain: settings.session[:domain].to_s,
+                             expire_after: settings.session[:timeout],
+                             path: settings.session[:path].to_s
 end
 
 configure :development, :test do
@@ -48,17 +58,16 @@ configure :production do
   set :raise_errors, false
 end
 
-use Rack::Session::Cookie, secret: File.read('config/session.secret'),
-                           key: settings.session[:key].to_s,
-                           domain: settings.session[:domain].to_s,
-                           expire_after: settings.session[:timeout],
-                           path: settings.session[:path].to_s
-
 before do
+  p '--- before (global) ---'
+  p session.to_hash
   @user = session[:user] unless session[:user].nil?
+  authenticate! unless request.path_info.include?('/login')
   set_title
   set_sidebar_title
 end
+
+Dir.glob('./app/controllers/*.rb').each { |file| require file }
 
 get '/js/*.js' do
   pass unless settings.coffeescript?
@@ -78,6 +87,10 @@ end
 
 get '/' do
   haml :home, layout: :layout
+end
+
+get '/session' do
+  session.to_hash.to_json
 end
 
 not_found do

@@ -1,13 +1,13 @@
 .table-wrapper
   %table.table.table-striped
     %caption Domains
-    - unless @domains.nil? || @domains.empty?
+    - unless @result.nil? || @result.empty?
       %thead
         %tr
-          - @domains.first[1].keys.each do |key|
+          - @result.first[1].keys.each do |key|
             %th<= key
       %tbody
-        - @domains.each do |d|
+        - @result.each do |d|
           %tr
             - d[1].keys.each do |key|
               - if key =~ %r{name}

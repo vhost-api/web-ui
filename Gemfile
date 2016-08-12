@@ -3,6 +3,10 @@ source 'https://rubygems.org'
 
 # core
 gem 'rest-client'
+gem 'rest-client-components',
+    git: 'https://github.com/amatriain/rest-client-components',
+    branch: 'rest-client-2-compatibility'
+gem 'rack-cache'
 gem 'sinatra'
 gem 'sinatra-contrib'
 # tools

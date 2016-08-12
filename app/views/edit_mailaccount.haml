@@ -1,6 +1,4 @@
-%h1 Edit MailAccount
-%form{ id: 'edit_mailaccount',
-  method: 'PATCH',
-  action: "/mail/accounts/#{@mailaccount[:id]}" }<
-    %input{ type: 'hidden', name: '_method', value: 'PATCH' }
-    = haml :form_mailaccount
+%h3 Edit MailAccount
+%form.form-horizontal{ id: 'edit_mailaccount',
+  method: 'POST',
+  action: "/mail/accounts/#{@record['id']}" }<= haml :form_template

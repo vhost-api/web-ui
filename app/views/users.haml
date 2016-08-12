@@ -1,13 +1,30 @@
 .table-wrapper
-  %table.table.table-triped
+  %table.table.table-striped
     %caption Users
-    - unless @users.nil? || @users.empty?
+    - unless @result.nil? || @result.empty?
       %thead
         %tr
-          - @users[0].keys.each do |key|
+          - @result.first[1].keys.each do |key|
             %th<= key
       %tbody
-        - @users.each do |u|
+        - @result.each do |u|
           %tr
-          - u.keys.each do |key|
-            %td<= u[key]
+            - u[1].keys.each do |key|
+              - if key =~ %r{name}
+                %td
+                  %a{ href: "/users/#{u[0]}/edit" }<= u[1][key]
+              - elsif key =~ %r{group}
+                - gid = u[1][key]['id'].to_i
+                - gname = u[1][key]['name']
+                %td
+                  %a{ href: "/users/#{gid}/edit" }<= gname
+              - elsif key =~ %r{ed_at$}
+                %td<= Time.at(u[1][key].to_i)
+              - elsif key =~ %r{enabled$}
+                - en = 'icon-check item-enabled'
+                - dis = 'icon-cross item-disabled'
+                - suff = u[1][key] ? en : dis
+                - textval = u[1][key] ? ' yes' : ' no'
+                %td.icon{ class: "icon #{suff}" }= textval
+              - else
+                %td<= u[1][key]

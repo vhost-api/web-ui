@@ -1,0 +1,39 @@
+- @form[:hidden_fields].each do |f|
+  %input{ type: 'hidden', name: f[:name], value: f[:value] }<
+
+- @form[:visible_fields].each do |field|
+  - class_suffix = 'has-error' if field[:errors]
+  .form-group{ class: class_suffix }<
+    - if field[:type] == 'checkbox'
+      - type = 'checkbox'
+      .col-sm-4.col-sm-offset-2<
+        .checkbox<
+          %label<
+            - if field[:checked]
+              %input{ type: type, name: field[:name],
+              checked: 'checked' }<= field[:label]
+            - else
+              %input{ type: type, name: field[:name] }<= field[:label]
+    - elsif field[:type] == 'select'
+      %label.col-sm-2.control-label<= field[:label]
+      .col-sm-4<
+        %select.form-control{ name: field[:name] }<
+          - field[:options].each do |opt|
+            - if opt[:selected]
+              %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
+            - else
+              %option{ value: opt[:value] }<= opt[:text]
+    - else
+      %label.col-sm-2.control-label<= field[:label]
+      .col-sm-4<
+        %input.form-control{ type: field[:type],
+          name: field[:name],
+          value: field[:value] }<
+      - if field[:errors]
+        %p.help-block.error<
+          - field[:errors].each do |err|
+            = err
+            %br<
+.form-group<
+  .col-sm-offset-2.col-sm-4<
+    %button.btn.btn-default{ type: 'submit', value: 'submit' }< Submit

@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/amatriain/rest-client-components
+  revision: 236ac31ed1a061d479332ff179bf78fcb11edb74
+  branch: rest-client-2-compatibility
+  specs:
+    rest-client-components (1.4.0)
+      rack (>= 1.0.1)
+      rest-client (>= 1.6.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -43,6 +52,8 @@ GEM
       slop (~> 3.4)
     puma (3.6.0)
     rack (1.6.4)
+    rack-cache (1.6.1)
+      rack (>= 0.4)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -96,8 +107,10 @@ DEPENDENCIES
   haml-lint
   pry
   puma
+  rack-cache
   rake
   rest-client
+  rest-client-components!
   rubocop
   sass
   shotgun

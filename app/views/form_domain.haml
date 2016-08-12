@@ -1,0 +1,58 @@
+.table-wrapper
+  %table.table.table-striped{ style: 'width:50%;' }<
+    - @record.each_pair do |key, value|
+      - if key.to_s =~ %r{customer}
+        - next
+      %tr
+        %td<
+          %label{ for: key }<= key
+        %td<
+          - suffix = { key: nil, val: nil }
+          - disable_input = false
+          - if key.to_s == 'id'
+            - disable_input = true
+          - elsif [true, false].include?(value)
+            - input_type = 'checkbox'
+            - input_value = value.to_s
+            - if value
+              - suffix[:key] = 'checked'
+              - suffix[:val] = 'checked'
+          - elsif key.to_s =~ %r{ed_at$}
+            - disable_input = true
+            - value = Time.at(value)
+          - elsif key.to_s == 'user'
+            - key += '_id'
+            - input_type = 'select'
+            - sled_val = value['id']
+            - sled_txt = value['name']
+            - select_contents = []
+            - select_contents.push(value: sled_val,
+                                   text: sled_txt,
+                                   selected: 'selected')
+            - @users.each do |u|
+              - select_contents.push(value: u[1]['id'], text: u[1]['name'])
+          - else
+            - input_type = 'text'
+            - input_value = value
+          - if disable_input
+            = value
+          - elsif input_type == 'select'
+            %select{ id: key, name: key }<
+              - select_contents.each do |s|
+                - if s[:selected] == 'selected'
+                  %option{ value: s[:value], selected: 'selected' }<= s[:text]
+                - else
+                  %option{ value: s[:value] }<= s[:text]
+          - elsif input_type == 'checkbox'
+            - if suffix[:key].nil?
+              %input{ id: key, name: key, type: input_type }<
+            - else
+              %input{ id: key, name: key, type: input_type,
+                suffix[:key].to_sym => suffix[:val] }<
+          - else
+            %input{ id: key, name: key, type: input_type, value: input_value }<
+    %tr
+      %td{ colspan: 2, style: 'text-align: center' }<
+        %input{ type: 'submit',
+                value: 'Submit',
+                style: 'display:inline-block;' }<

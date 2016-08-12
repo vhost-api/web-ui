@@ -39,7 +39,9 @@ def sidebar_current?(path = '/')
 end
 
 def authenticate!
-  p session[:user].inspect
+  p '--- authenticate! ---'
+  p session.to_hash
+  @user = session[:user] unless session[:user].nil?
   unless user?
     flash[:error] = 'You need to be logged in!'
     session[:return_to] = request.path_info
@@ -48,5 +50,15 @@ def authenticate!
 end
 
 def user?
+  p '--- user? ---'
+  p session[:user]
   @user != nil
+end
+
+# @param str [String]
+# @return [Boolean]
+def string_to_bool(str)
+  return true if str =~ %r{^(true|yes|TRUE|YES|y|1|on|ON)$}
+  return false if str =~ %r{^(false|no|FALSE|NO|n|0|off|OFF)$}
+  raise ArgumentError
 end
