@@ -5,7 +5,7 @@ development:
   :api_key_id: 'vhost-api-ui'
   :session:
     :timeout: 86400 # 1 day
-    :domain: 'localhost'
+    :domain: 'localhost.localdomain'
     :key: 'rack.session'
     :path: '/'
   :threshholds:
@@ -21,7 +21,7 @@ test:
   :api_key_id: 'vhost-api-ui'
   :session:
     :timeout: 86400 # 1 day
-    :domain: 'localhost'
+    :domain: 'localhost.localdomain'
     :key: 'rack.session'
     :path: '/'
   :threshholds:
