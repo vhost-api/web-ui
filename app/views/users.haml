@@ -12,7 +12,7 @@
             - u.each_key do |key|
               - if key =~ %r{name}
                 %td
-                  %a{ href: "/users/#{u[0]}/edit" }<= u[key]
+                  %a{ href: "/users/#{u['id']}/edit" }<= u[key]
               - elsif key =~ %r{group}
                 %td<= u[key]['name']
               - elsif key =~ %r{ed_at$}

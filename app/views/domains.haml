@@ -12,7 +12,7 @@
             - d.each_key do |key|
               - if key =~ %r{name}
                 %td
-                  %a{ href: "/domains/#{d[0]}/edit" }<= d[key]
+                  %a{ href: "/domains/#{d['id']}/edit" }<= d[key]
               - elsif key =~ %r{user}
                 - uid = d[key]['id'].to_i
                 - uname = d[key]['name']
