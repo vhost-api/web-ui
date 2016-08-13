@@ -1,18 +1,30 @@
 # frozen_string_literal: true
 post '/login' do
-  halt 400, 'invalid request' unless params['user'] && params['password']
+  unless params['user'] && params['password']
+    flash[:error] = 'Missing parameters'
+    redirect '/login'
+  end
 
   # perform the login request on the api to get an apikey for future requests
-  apiresponse = RestClient.post(
-    gen_api_url('auth/login'),
-    user: params['user'],
-    password: params['password'],
-    apikey: settings.api_key_id.to_s
-  )
-  data = parse_apiresponse(apiresponse)
+  begin
+    apiresponse = RestClient.post(
+      gen_api_url('auth/login'),
+      user: params['user'],
+      password: params['password'],
+      apikey: settings.api_key_id.to_s
+    )
+    data = parse_apiresponse(apiresponse)
+  rescue => err
+    data = parse_apiresponse(err.response)
+    data[:code] = err.response.code
+  end
 
-  unless apiresponse.code.eql?(200)
-    flash[:error] = 'Invalid Login'
+  if data.key?(:code)
+    msg = 'Invalid Login'
+    if settings.environment == :development
+      msg += "</br>#{data['status']}: #{data['error_id']}, #{data['message']}"
+    end
+    flash[:error] = msg
     redirect '/login'
   end
 
