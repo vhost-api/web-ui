@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 namespace '/domains' do
   before do
-    p '--- before (/domains) ---'
-    p session.to_hash
     @sidebar_title = 'Domains'
     @sidebar_elements = []
   end
@@ -13,8 +11,9 @@ namespace '/domains' do
 
   namespace'/:id' do
     get '/edit' do
+      _dummy, @record = api_query("domains/#{params['id']}")
       _dummy, @users = api_query('users')
-      ui_edit(request.path_info.sub(%r{^/}, ''))
+      ui_edit('Domain', user_opts: 'user_select_options')
     end
 
     post do

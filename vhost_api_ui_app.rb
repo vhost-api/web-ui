@@ -15,6 +15,7 @@ require 'digest/sha1'
 require 'sass'
 require 'filesize'
 
+Dir.glob('./app/classes/*.rb').each { |file| require file }
 Dir.glob('./app/helpers/*.rb').each { |file| require file }
 
 configure do
@@ -40,6 +41,10 @@ configure do
                              domain: settings.session[:domain].to_s,
                              expire_after: settings.session[:timeout],
                              path: settings.session[:path].to_s
+  include GenericHelpers
+  include APIHelpers
+  include UIHelpers
+  include FormHelpers
 end
 
 configure :development, :test do
