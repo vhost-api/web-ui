@@ -1,0 +1,13 @@
+.table-wrapper<
+  %table.table.table-triped<
+    %caption< API Error
+    %thead<
+      %tr<
+        %th< Status
+        %th< Error ID
+        %th< Message
+    %tbody
+      %tr<
+        %td<= @result['status']
+        %td<= @result['error_id']
+        %td<= @result['message']

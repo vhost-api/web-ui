@@ -10,7 +10,9 @@ module APIHelpers
     )
     [apiresponse.headers[:etag], parse_apiresponse(apiresponse)]
   rescue RestClient::ExceptionWithResponse => err
-    [nil, parse_apiresponse(err.response)]
+    parsed_data = parse_apiresponse(err.response)
+    parsed_data[:code] = err.response.code
+    [nil, parsed_data]
   end
 
   # @param resource [String]

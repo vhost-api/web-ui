@@ -22,13 +22,18 @@ namespace '/mail' do
 
     namespace'/:id' do
       get '/edit' do
+        _dummy, @record = api_query("mailaccounts/#{params['id']}")
         _dummy, @domains = api_query('domains')
-        _dummy, @mailaliases = api_query('mailaliases')
-        _dummy, @mailsources = api_query('mailsources')
-        ui_edit("mailaccounts/#{params['id']}/edit")
+        _dummy, @mail_aliases = api_query('mailaliases')
+        _dummy, @mail_sources = api_query('mailsources')
+        ui_edit('MailAccount',
+                domain_opts: 'domain_select_options',
+                mail_alias_opts: 'mail_aliases_select_options',
+                mail_source_opts: 'mail_sources_select_options')
       end
 
       post do
+        # TODO: mail_aliases/mail_sources stuff
         update_params = {}
         # passwords must match
         passwd = params['password']

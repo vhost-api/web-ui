@@ -4,7 +4,7 @@ post '/login' do
 
   # perform the login request on the api to get an apikey for future requests
   apiresponse = RestClient.post(
-    api_url('auth/login'),
+    gen_api_url('auth/login'),
     user: params['user'],
     password: params['password'],
     apikey: settings.api_key_id.to_s

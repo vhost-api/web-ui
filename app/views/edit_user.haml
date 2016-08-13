@@ -1,0 +1,4 @@
+%h3 Edit User
+%form.form-horizontal{ id: 'edit_user',
+  method: 'POST',
+  action: "/users/#{@record['id']}" }<= haml :form_template

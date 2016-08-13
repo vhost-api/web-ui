@@ -4,27 +4,27 @@
     - unless @result.nil? || @result.empty?
       %thead
         %tr
-          - @result.first[1].keys.each do |key|
+          - @result.each_value.first.each_key do |key|
             %th<= key
       %tbody
-        - @result.each do |d|
+        - @result.each_value do |d|
           %tr
-            - d[1].keys.each do |key|
+            - d.each_key do |key|
               - if key =~ %r{name}
                 %td
-                  %a{ href: "/domains/#{d[0]}/edit" }<= d[1][key]
+                  %a{ href: "/domains/#{d[0]}/edit" }<= d[key]
               - elsif key =~ %r{user}
-                - uid = d[1][key]['id'].to_i
-                - uname = d[1][key]['name']
+                - uid = d[key]['id'].to_i
+                - uname = d[key]['name']
                 %td
                   %a{ href: "/users/#{uid}/edit" }<= uname
               - elsif key =~ %r{ed_at$}
-                %td<= Time.at(d[1][key].to_i)
+                %td<= Time.at(d[key].to_i)
               - elsif key =~ %r{enabled$}
                 - en = 'icon-check item-enabled'
                 - dis = 'icon-cross item-disabled'
-                - suff = d[1][key] ? en : dis
-                - textval = d[1][key] ? ' yes' : ' no'
+                - suff = d[key] ? en : dis
+                - textval = d[key] ? ' yes' : ' no'
                 %td.icon{ class: "icon #{suff}" }= textval
               - else
-                %td<= d[1][key]
+                %td<= d[key]

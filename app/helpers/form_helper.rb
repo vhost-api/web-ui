@@ -14,6 +14,16 @@ module FormHelpers
   end
 
   # @return [Hash]
+  def group_select_options
+    return [] if @groups.nil? || @groups.empty?
+    @groups.each_value.map do |g|
+      opt = { value: g['id'], text: g['name'] }
+      opt[:selected] = 'selected' if g['id'] == @record['id']
+      opt
+    end
+  end
+
+  # @return [Hash]
   def user_select_options
     return [] if @users.nil? || @users.empty?
     @users.each_value.map do |u|
@@ -26,44 +36,33 @@ module FormHelpers
   # @return [Hash]
   def domain_select_options
     return [] if @domains.nil? || @domains.empty?
-    result = []
-    @domains.each_value do |d|
+    active_domain = @record['domain']['id']
+    @domains.each_value.map do |d|
       opt = { value: d['id'], text: d['name'] }
-      opt[:selected] = 'selected' if d['id'] == @record['id']
-      result.push(opt)
+      opt[:selected] = 'selected' if d['id'] == active_domain
+      opt
     end
-    result
   end
 
-  # @param selected [Array(Hash)]
-  # @param options [Hash]
   # @return [Hash]
-  def mail_aliases_select_options(selected, mailaliases)
-    result = []
-    mailaliases.each_value do |a|
-      opt = if selected.map(&:values).map(&:first).include?(a['id'])
-              { value: a['id'], text: a['address'], selected: 'selected' }
-            else
-              { value: a['id'], text: a['address'] }
-            end
-      result.push(opt)
+  def mail_aliases_select_options
+    return [] if @mail_aliases.nil? || @mail_aliases.empty?
+    active_aliases = @record['mail_aliases'].map { |x| x['id'] }
+    @mail_aliases.each_value.map do |a|
+      opt = { value: a['id'], text: a['address'] }
+      opt[:selected] = 'selected' if active_aliases.include?(a['id'])
+      opt
     end
-    result
   end
 
-  # @param selected [Array(Hash)]
-  # @param options [Hash]
   # @return [Hash]
-  def mail_sources_select_options(selected, mailsources)
-    result = []
-    mailsources.each_value do |s|
-      opt = if selected.map(&:values).map(&:first).include?(s['id'])
-              { value: s['id'], text: s['address'], selected: 'selected' }
-            else
-              { value: s['id'], text: s['address'] }
-            end
-      result.push(opt)
+  def mail_sources_select_options
+    return [] if @mail_sources.nil? || @mail_sources.empty?
+    active_sources = @record['mail_sources'].map { |x| x['id'] }
+    @mail_sources.each_value.map do |s|
+      opt = { value: s['id'], text: s['address'] }
+      opt[:selected] = 'selected' if active_sources.include?(s['id'])
+      opt
     end
-    result
   end
 end

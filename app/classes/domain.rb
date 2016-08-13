@@ -17,6 +17,7 @@ class Domain
                 :mail_enabled,
                 :dns_enabled,
                 :created_at,
+                :updated_at,
                 :enabled,
                 :user_opts
 
