@@ -9,7 +9,7 @@
         %th< Realname
         %th< Receiving
         %th< Usage
-        %th< Quota
+        %th{ style: 'text-align: right;' }< Quota
         %th<
     %tbody
       - @result.each_value do |mailaccount|
@@ -22,6 +22,7 @@
         - rcv_suff = mailaccount['receiving_enabled'] ? en : dis
         - rcv_textval = mailaccount['receiving_enabled'] ? ' yes' : ' no'
         - a_del = "/mail/accounts/#{mailaccount['id']}/delete"
+        - quota_pretty = Filesize.from("#{mailaccount['quota'].to_i} B").pretty
         - progress_class = 'progress-bar progress-bar-info'
         - thresh_warn = settings.threshholds[:display][:mailquota_warn]
         - thresh_crit = settings.threshholds[:display][:mailquota_crit]
@@ -49,6 +50,6 @@
                     = Filesize.from("#{mailaccount['quotausage']} B").pretty
                   - else
                     N/A
-          %td.number<= Filesize.from("#{mailaccount['quota'].to_i} B").pretty
+          %td.number{ style: 'text-align: right;' }<= quota_pretty
           %td<
             %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
