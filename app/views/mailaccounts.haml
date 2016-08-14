@@ -21,6 +21,7 @@
         - en_textval = mailaccount['enabled'] ? ' yes' : ' no'
         - rcv_suff = mailaccount['receiving_enabled'] ? en : dis
         - rcv_textval = mailaccount['receiving_enabled'] ? ' yes' : ' no'
+        - a_del = "/mail/accounts/#{mailaccount['id']}/delete"
         - progress_class = 'progress-bar progress-bar-info'
         - thresh_warn = settings.threshholds[:display][:mailquota_warn]
         - thresh_crit = settings.threshholds[:display][:mailquota_crit]
@@ -49,4 +50,5 @@
                   - else
                     N/A
           %td.number<= Filesize.from("#{mailaccount['quota'].to_i} B").pretty
-          %td.icon.item-delete.icon-trash= ' delete'
+          %td<
+            %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'

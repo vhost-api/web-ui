@@ -11,7 +11,11 @@ namespace '/mail' do
 
   namespace '/domains' do
     get do
-      ui_output('domains')
+      ui_output(
+        'domains',
+        fields: %w(id name mail_enabled dns_enabled created_at updated_at
+                   enabled user).join(',')
+      )
     end
   end
 
@@ -88,6 +92,37 @@ namespace '/mail' do
           end
         end
       end
+
+      get '/delete' do
+        _dummy, record = api_query("mailaccounts/#{params['id']}")
+        @delete = {
+          class_name: 'MailAcccount',
+          name: 'delete_mailaccount',
+          endpoint: 'mail/accounts',
+          id: record['id'],
+          detail: record['email']
+        }
+        ui_delete
+      end
+
+      post '/delete' do
+        resource = "mailaccounts/#{params['id']}"
+        _dummy, record = api_query(resource)
+        result = api_delete(resource)
+
+        if result['status'] == 'success'
+          msg = "Successfully deleted MailAccount #{record['id']}"
+          msg += " (#{record['email']})"
+          flash[:success] = msg
+        else
+          s = result['status']
+          e = result['error_id']
+          m = result['message']
+          msg = "#{s}: #{e}, #{m}"
+          flash[:error] = msg
+        end
+        redirect '/mail/accounts'
+      end
     end
   end
 
@@ -99,6 +134,39 @@ namespace '/mail' do
                    mail_accounts).join(',')
       )
     end
+
+    namespace'/:id' do
+      get '/delete' do
+        _dummy, record = api_query("mailaliases/#{params['id']}")
+        @delete = {
+          class_name: 'MailAlias',
+          name: 'delete_mailalias',
+          endpoint: 'mail/aliases',
+          id: record['id'],
+          detail: record['address']
+        }
+        ui_delete
+      end
+
+      post '/delete' do
+        resource = "mailaliases/#{params['id']}"
+        _dummy, record = api_query(resource)
+        result = api_delete(resource)
+
+        if result['status'] == 'success'
+          msg = "Successfully deleted MailAlias #{record['id']}"
+          msg += " (#{record['address']})"
+          flash[:success] = msg
+        else
+          s = result['status']
+          e = result['error_id']
+          m = result['message']
+          msg = "#{s}: #{e}, #{m}"
+          flash[:error] = msg
+        end
+        redirect '/mail/aliases'
+      end
+    end
   end
 
   namespace '/sources' do
@@ -108,6 +176,39 @@ namespace '/mail' do
         fields: %w(id address created_at updated_at enabled domain
                    mail_accounts).join(',')
       )
+    end
+
+    namespace'/:id' do
+      get '/delete' do
+        _dummy, record = api_query("mailsources/#{params['id']}")
+        @delete = {
+          class_name: 'MailSource',
+          name: 'delete_mailsource',
+          endpoint: 'mail/sources',
+          id: record['id'],
+          detail: record['address']
+        }
+        ui_delete
+      end
+
+      post '/delete' do
+        resource = "mailsources/#{params['id']}"
+        _dummy, record = api_query(resource)
+        result = api_delete(resource)
+
+        if result['status'] == 'success'
+          msg = "Successfully deleted MailSource #{record['id']}"
+          msg += " (#{record['address']})"
+          flash[:success] = msg
+        else
+          s = result['status']
+          e = result['error_id']
+          m = result['message']
+          msg = "#{s}: #{e}, #{m}"
+          flash[:error] = msg
+        end
+        redirect '/mail/sources'
+      end
     end
   end
 
@@ -122,6 +223,78 @@ namespace '/mail' do
         fields: 'id,author,created_at,updated_at,enabled,dkim'
       )
       haml :dkim
+    end
+
+    namespace'/:id' do
+      get '/delete' do
+        _dummy, record = api_query("dkims/#{params['id']}")
+        txt = "Domain: #{record['domain']['name']}"
+        txt += ", Selector: #{record['selector']}"
+        @delete = {
+          class_name: 'DKIM',
+          name: 'delete_dkim',
+          endpoint: 'mail/dkim',
+          id: record['id'],
+          detail: txt
+        }
+        ui_delete
+      end
+
+      post '/delete' do
+        resource = "dkims/#{params['id']}"
+        _dummy, record = api_query(resource)
+        result = api_delete(resource)
+
+        if result['status'] == 'success'
+          msg = "Successfully deleted DKIM #{record['id']}"
+          msg += " (#{record['selector']})"
+          flash[:success] = msg
+        else
+          s = result['status']
+          e = result['error_id']
+          m = result['message']
+          msg = "#{s}: #{e}, #{m}"
+          flash[:error] = msg
+        end
+        redirect '/mail/dkim'
+      end
+    end
+  end
+
+  namespace '/dkimsigning' do
+    namespace'/:id' do
+      get '/delete' do
+        _dummy, record = api_query("dkimsignings/#{params['id']}")
+        txt = "Author: #{record['author']}"
+        txt += ", DKIM ID: #{record['dkim']['id']}"
+        @delete = {
+          class_name: 'DkimSigning',
+          name: 'delete_dkimsigning',
+          endpoint: 'mail/dkimsigning',
+          id: record['id'],
+          detail: txt
+        }
+        ui_delete
+      end
+
+      post '/delete' do
+        resource = "dkimsignings/#{params['id']}"
+        _dummy, record = api_query(resource)
+        result = api_delete(resource)
+
+        if result['status'] == 'success'
+          msg = "Successfully deleted DkimSigning #{record['id']}"
+          msg += " (#{record['author']})"
+          flash[:success] = msg
+        else
+          s = result['status']
+          e = result['error_id']
+          m = result['message']
+          msg = "#{s}: #{e}, #{m}"
+          flash[:error] = msg
+        end
+        redirect '/mail/dkim'
+      end
     end
   end
 end

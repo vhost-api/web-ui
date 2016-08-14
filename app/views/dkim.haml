@@ -10,13 +10,14 @@
         %th< Domain
         %th< Enabled
         %th< Authors
+        %th<
     %tbody
       - @dkims.each_value do |dkim|
-        - p dkim
         - en = 'icon-check item-enabled'
         - dis = 'icon-cross item-disabled'
         - suff = dkim['enabled'] ? en : dis
         - textval = dkim['enabled'] ? ' yes' : ' no'
+        - a_del = "/mail/dkim/#{dkim['id']}/delete"
         %tr
           %td<= dkim['id']
           %td<
@@ -28,6 +29,8 @@
           %td<
             - dkim['dkim_signings'].each do |dksgn|
               %p<= dksgn['author']
+          %td<
+            %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
 
 .table-wrapper
   %table.table.table-triped
@@ -40,6 +43,7 @@
         %th< Updated
         %th< Enabled
         %th< DKIM Key
+        %th<
     %tbody
       - @dkimsignings.each_value do |dkimsgn|
         - dksgnid = dkimsgn['id']
@@ -47,6 +51,7 @@
         - dis = 'icon-cross item-disabled'
         - suff = dkimsgn['enabled'] ? en : dis
         - textval = dkimsgn['enabled'] ? ' yes' : ' no'
+        - a_del = "/mail/dkimsigning/#{dkimsgn['id']}/delete"
         %tr
           %td<= dkimsgn['id']
           %td<
@@ -55,3 +60,5 @@
           %td<= Time.at(dkimsgn['updated_at'].to_i)
           %td.icon{ class: suff }= textval
           %td<= dkimsgn['dkim']['id']
+          %td<
+            %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'

@@ -11,6 +11,7 @@
           %th< Enabled
           %th< Domain
           %th< Destinations
+          %th<
       %tbody
         - @result.each_value do |mailalias|
           - aliasid = mailalias['id']
@@ -18,6 +19,7 @@
           - dis = 'icon-cross item-disabled'
           - suff = mailalias['enabled'] ? en : dis
           - textval = mailalias['enabled'] ? ' yes' : ' no'
+          - a_del = "/mail/aliases/#{mailalias['id']}/delete"
           %tr
             %td<= aliasid
             %td<
@@ -29,3 +31,5 @@
             %td<
               - mailalias['mail_accounts'].each do |dest|
                 %p<= dest['email']
+            %td<
+              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
