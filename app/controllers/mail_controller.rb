@@ -284,7 +284,8 @@ namespace '/mail' do
 
         if result['status'] == 'success'
           msg = "Successfully deleted DkimSigning #{record['id']}"
-          msg += " (#{record['author']})"
+          msg += " (Author: #{record['author']}"
+          msg += ", DKIM ID: #{record['dkim']['id']})"
           flash[:success] = msg
         else
           s = result['status']
