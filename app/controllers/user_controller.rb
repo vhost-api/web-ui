@@ -68,5 +68,35 @@ namespace '/users' do
         end
       end
     end
+
+    get '/delete' do
+      _dummy, record = api_query("users/#{params['id']}")
+      @delete = {
+        class_name: 'User',
+        name: 'delete_user',
+        endpoint: 'users',
+        id: record['id'],
+        detail: record['name']
+      }
+      ui_delete
+    end
+
+    post '/delete' do
+      resource = "users/#{params['id']}"
+      _dummy, record = api_query(resource)
+      result = api_delete(resource)
+
+      if result['status'] == 'success'
+        msg = "Successfully deleted User #{record['id']} (#{record['name']})"
+        flash[:success] = msg
+      else
+        s = result['status']
+        e = result['error_id']
+        m = result['message']
+        msg = "#{s}: #{e}, #{m}"
+        flash[:error] = msg
+      end
+      redirect '/users'
+    end
   end
 end

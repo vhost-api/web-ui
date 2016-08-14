@@ -21,6 +21,10 @@ module UIHelpers
     haml "edit_#{class_name.downcase}".to_sym
   end
 
+  def ui_delete
+    haml :delete_template
+  end
+
   def session_expired
     session[:user] = nil
     flash[:error] = 'Session expired, please login again'

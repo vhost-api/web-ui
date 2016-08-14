@@ -1,0 +1,13 @@
+%h3<= 'Delete ' + @delete[:class_name]
+%form.form-horizontal{ name: @delete[:name], method: 'POST',
+  action: "/#{@delete[:endpoint]}/#{@delete[:id]}/delete" }<
+  .form-group<
+    .col-sm-6<
+      - r_id = @delete[:id]
+      - r_detail = @delete[:detail]
+      - record = "#{@delete[:class_name]} with ID #{r_id} (#{r_detail})"
+      %label<= 'Are you sure you want to delete ' + record + '?'
+  .form-group<
+    .col-sm-offset-1.col-sm-4<
+      %button.btn.btn-default.btn-delete{ type: 'submit',
+                                          value: 'submit' }< Delete!

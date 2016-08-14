@@ -31,6 +31,19 @@ module APIHelpers
     parse_apiresponse(err.response)
   end
 
+  # @param resource [String]
+  # @return [Hash, nil]
+  def api_delete(resource)
+    apiresponse = RestClient::Request.execute(
+      method: :delete,
+      url: gen_api_url(resource),
+      headers: { Authorization: auth_secret_apikey }
+    )
+    parse_apiresponse(apiresponse)
+  rescue RestClient::ExceptionWithResponse => err
+    parse_apiresponse(err.response)
+  end
+
   def auth_secret_apikey
     return nil if @user.nil?
     method = 'VHOSTAPI-KEY'

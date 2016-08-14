@@ -152,3 +152,16 @@ div#flash .error {
 	width: 100%;
 	color: black;
 }
+
+/*
+ * red color for delete links / trash icon
+ */
+.item-delete {
+	color: #c70f19;
+	text-decoration: none;
+}
+
+.btn-delete {
+	background-color: #ff9090;
+	color: #c70f19;
+}
