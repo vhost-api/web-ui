@@ -12,6 +12,7 @@
           %th< Updated
           %th< Enabled
           %th< User
+          %th<
       %tbody
         - @result.each_value do |d|
           - en = 'icon-check item-enabled'
@@ -22,6 +23,7 @@
           - mail_en_textval = d['mail_enabled'] ? ' yes' : ' no'
           - dns_en_suff = d['dns_enabled'] ? en : dis
           - dns_en_textval = d['dns_enabled'] ? ' yes' : ' no'
+          - a_del = "/domains/#{d['id']}/delete"
           %tr
             %td<= d['id']
             %td<
@@ -32,3 +34,5 @@
             %td<= Time.at(d['updated_at'].to_i)
             %td.icon{ class: "icon #{en_suff}" }= en_textval
             %td<= d['user']['name']
+            %td<
+              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'

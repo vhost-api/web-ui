@@ -58,5 +58,35 @@ namespace '/domains' do
         end
       end
     end
+
+    get '/delete' do
+      _dummy, record = api_query("domains/#{params['id']}")
+      @delete = {
+        class_name: 'Domain',
+        name: 'delete_domain',
+        endpoint: 'domains',
+        id: record['id'],
+        detail: record['name']
+      }
+      ui_delete
+    end
+
+    post '/delete' do
+      resource = "domains/#{params['id']}"
+      _dummy, record = api_query(resource)
+      result = api_delete(resource)
+
+      if result['status'] == 'success'
+        msg = "Successfully deleted Domain #{record['id']} (#{record['name']})"
+        flash[:success] = msg
+      else
+        s = result['status']
+        e = result['error_id']
+        m = result['message']
+        msg = "#{s}: #{e}, #{m}"
+        flash[:error] = msg
+      end
+      redirect '/domains'
+    end
   end
 end
