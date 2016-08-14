@@ -154,7 +154,7 @@ div#flash .error {
 }
 
 /*
- * red color for delete links / trash icon
+ * red color for delete links / trash icon / disabled cross
  */
 .item-delete {
 	color: #c70f19;
@@ -164,4 +164,17 @@ div#flash .error {
 .btn-delete {
 	background-color: #ff9090;
 	color: #c70f19;
+}
+
+.item-disabled {
+	color: #c70f19;
+	text-decoration: none;
+}
+
+/*
+ * green color for enabled check
+ */
+.item-enabled {
+	color: #008000;
+	text-decoration: none;
 }
