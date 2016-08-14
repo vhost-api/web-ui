@@ -1,13 +1,31 @@
 .table-wrapper
-  %table.table.table-triped
-    %caption Mailsources
-    - unless @mailsources.nil? || @mailsources.empty?
+  %table.table.table-striped
+    %caption MailSources
+    - unless @result.nil? || @result.empty?
       %thead
         %tr
-          - @mailsources[0].keys.each do |key|
-            %th<= key
+          %th< ID
+          %th< Address
+          %th< Created
+          %th< Updated
+          %th< Enabled
+          %th< Domain
+          %th< Allowed From
       %tbody
-        - @mailsources.each do |mailsource|
+        - @result.each_value do |mailsource|
+          - s_id = mailsource['id']
+          - en = 'icon-check item-enabled'
+          - dis = 'icon-cross item-disabled'
+          - suff = mailsource['enabled'] ? en : dis
+          - textval = mailsource['enabled'] ? ' yes' : ' no'
           %tr
-          - mailsource.keys.each do |key|
-            %td<= mailsource[key]
+            %td<= s_id
+            %td<
+              %a{ href: "/mail/sources/#{s_id}/edit" }<= mailsource['address']
+            %td<= Time.at(mailsource['created_at'].to_i)
+            %td<= Time.at(mailsource['updated_at'].to_i)
+            %td.icon{ class: "icon #{suff}" }= textval
+            %td<= mailsource['domain']['name']
+            %td<
+              - mailsource['mail_accounts'].each do |acc|
+                %p<= acc['email']

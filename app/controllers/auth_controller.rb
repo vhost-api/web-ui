@@ -37,6 +37,10 @@ post '/login' do
   # store stuff for later use
   session[:user] = @user
 
+  # fetch enabled modules
+  _dummy, modules = api_query("users/#{@user[:id]}/enabled_modules")
+  session[:modules] = modules
+
   flash[:success] = 'Successfully logged in.'
 
   status 200

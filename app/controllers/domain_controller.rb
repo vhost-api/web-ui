@@ -6,7 +6,11 @@ namespace '/domains' do
   end
 
   get do
-    ui_output('domains')
+    ui_output(
+      'domains',
+      fields: %w(id name mail_enabled dns_enabled created_at updated_at enabled
+                 user).join(',')
+    )
   end
 
   namespace'/:id' do

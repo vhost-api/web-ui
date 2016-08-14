@@ -3,8 +3,8 @@
 module UIHelpers
   # @param endpoint [String]
   # rubocop:disable Metrics/AbcSize
-  def ui_output(endpoint)
-    response_digest, @result = api_query(endpoint)
+  def ui_output(endpoint, params = {})
+    response_digest, @result = api_query(endpoint, params)
     if @result.is_a?(Hash) && @result.key?(:code)
       status @result[:code]
       halt haml :api_error if @result[:code].to_s =~ %r{(4|5)[0-9]{2}}
@@ -19,5 +19,11 @@ module UIHelpers
   def ui_edit(class_name, options_helpers = {})
     @form = form_content(class_name, options_helpers)
     haml "edit_#{class_name.downcase}".to_sym
+  end
+
+  def session_expired
+    session[:user] = nil
+    flash[:error] = 'Session expired, please login again'
+    redirect '/login'
   end
 end

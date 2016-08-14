@@ -3,13 +3,14 @@
 module APIHelpers
   # @param endpoint [String]
   # @return [Hash, nil]
-  def api_query(endpoint)
+  def api_query(endpoint, params = {})
     apiresponse = RestClient.get(
-      gen_api_url(endpoint),
-      Authorization: auth_secret_apikey
+      gen_api_url(endpoint), params: params, Authorization: auth_secret_apikey
     )
     [apiresponse.headers[:etag], parse_apiresponse(apiresponse)]
   rescue RestClient::ExceptionWithResponse => err
+    session_expired if err.response.code.eql?(401)
+
     parsed_data = parse_apiresponse(err.response)
     parsed_data[:code] = err.response.code
     [nil, parsed_data]

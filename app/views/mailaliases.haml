@@ -1,13 +1,31 @@
 .table-wrapper
-  %table.table.table-triped
-    %caption Mailaliases
-    - unless @mailaliases.nil? || @mailaliases.empty?
+  %table.table.table-striped
+    %caption MailAliases
+    - unless @result.nil? || @result.empty?
       %thead
         %tr
-          - @mailaliases[0].keys.each do |key|
-            %th<= key
+          %th< ID
+          %th< Address
+          %th< Created
+          %th< Updated
+          %th< Enabled
+          %th< Domain
+          %th< Destinations
       %tbody
-        - @mailaliases.each do |mailalias|
+        - @result.each_value do |mailalias|
+          - aliasid = mailalias['id']
+          - en = 'icon-check item-enabled'
+          - dis = 'icon-cross item-disabled'
+          - suff = mailalias['enabled'] ? en : dis
+          - textval = mailalias['enabled'] ? ' yes' : ' no'
           %tr
-          - mailalias.keys.each do |key|
-            %td<= mailalias[key]
+            %td<= aliasid
+            %td<
+              %a{ href: "/mail/aliases/#{aliasid}/edit" }<= mailalias['address']
+            %td<= Time.at(mailalias['created_at'].to_i)
+            %td<= Time.at(mailalias['updated_at'].to_i)
+            %td.icon{ class: "icon #{suff}" }= textval
+            %td<= mailalias['domain']['name']
+            %td<
+              - mailalias['mail_accounts'].each do |dest|
+                %p<= dest['email']

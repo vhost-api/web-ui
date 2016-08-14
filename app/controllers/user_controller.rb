@@ -6,7 +6,11 @@ namespace '/users' do
   end
 
   get do
-    ui_output('users')
+    ui_output(
+      'users',
+      fields: %w(id name login contact_email created_at updated_at reseller
+                 group enabled).join(',')
+    )
   end
 
   namespace'/:id' do

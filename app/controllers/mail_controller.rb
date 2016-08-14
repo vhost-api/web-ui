@@ -17,7 +17,11 @@ namespace '/mail' do
 
   namespace '/accounts' do
     get do
-      ui_output('mailaccounts')
+      ui_output(
+        'mailaccounts',
+        fields: %w(id enabled email realname receiving_enabled quota quotausage
+                   quotausage_rel).join(',')
+      )
     end
 
     namespace'/:id' do
@@ -89,20 +93,34 @@ namespace '/mail' do
 
   namespace '/aliases' do
     get do
-      ui_output('mailaliases')
+      ui_output(
+        'mailaliases',
+        fields: %w(id address created_at updated_at enabled domain
+                   mail_accounts).join(',')
+      )
     end
   end
 
   namespace '/sources' do
     get do
-      ui_output('mailaliases')
+      ui_output(
+        'mailsources',
+        fields: %w(id address created_at updated_at enabled domain
+                   mail_accounts).join(',')
+      )
     end
   end
 
   namespace '/dkim' do
     get do
-      @dkims = api_query('dkims')
-      @dkimsignings = api_query('dkimsignings')
+      _dummy, @dkims = api_query(
+        'dkims',
+        fields: 'id,selector,created_at,updated_at,enabled,domain,dkim_signings'
+      )
+      _dummy, @dkimsignings = api_query(
+        'dkimsignings',
+        fields: 'id,author,created_at,updated_at,enabled,dkim'
+      )
       haml :dkim
     end
   end

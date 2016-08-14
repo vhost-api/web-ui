@@ -4,24 +4,30 @@
     - unless @result.nil? || @result.empty?
       %thead
         %tr
-          - @result.each_value.first.each_key do |key|
-            %th<= key
+          %th< ID
+          %th< Name
+          %th< Login
+          %th< Contact Email
+          %th< Created
+          %th< Updated
+          %th< Enabled
+          %th< Group
+          %th< Reseller
       %tbody
         - @result.each_value do |u|
+          - en = 'icon-check item-enabled'
+          - dis = 'icon-cross item-disabled'
+          - suff = u['enabled'] ? en : dis
+          - textval = u['enabled'] ? ' yes' : ' no'
+          - reseller = u['reseller'] ? u['reseller']['name'] : ''
           %tr
-            - u.each_key do |key|
-              - if key =~ %r{name}
-                %td
-                  %a{ href: "/users/#{u['id']}/edit" }<= u[key]
-              - elsif key =~ %r{group}
-                %td<= u[key]['name']
-              - elsif key =~ %r{ed_at$}
-                %td<= Time.at(u[key].to_i)
-              - elsif key =~ %r{enabled$}
-                - en = 'icon-check item-enabled'
-                - dis = 'icon-cross item-disabled'
-                - suff = u[key] ? en : dis
-                - textval = u[key] ? ' yes' : ' no'
-                %td.icon{ class: "icon #{suff}" }= textval
-              - else
-                %td<= u[key]
+            %td<= u['id']
+            %td<
+              %a{ href: "/users/#{u['id']}/edit" }<= u['name']
+            %td<= u['login']
+            %td<= u['contact_email']
+            %td<= Time.at(u['created_at'].to_i)
+            %td<= Time.at(u['updated_at'].to_i)
+            %td.icon{ class: "icon #{suff}" }= textval
+            %td<= u['group']['name']
+            %td<= reseller

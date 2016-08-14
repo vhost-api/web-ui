@@ -4,27 +4,31 @@
     - unless @result.nil? || @result.empty?
       %thead
         %tr
-          - @result.each_value.first.each_key do |key|
-            %th<= key
+          %th< ID
+          %th< Domain Name
+          %th< Email Enabled
+          %th< DNS Enabled
+          %th< Created
+          %th< Updated
+          %th< Enabled
+          %th< User
       %tbody
         - @result.each_value do |d|
+          - en = 'icon-check item-enabled'
+          - dis = 'icon-cross item-disabled'
+          - en_suff = d['enabled'] ? en : dis
+          - en_textval = d['enabled'] ? ' yes' : ' no'
+          - mail_en_suff = d['mail_enabled'] ? en : dis
+          - mail_en_textval = d['mail_enabled'] ? ' yes' : ' no'
+          - dns_en_suff = d['dns_enabled'] ? en : dis
+          - dns_en_textval = d['dns_enabled'] ? ' yes' : ' no'
           %tr
-            - d.each_key do |key|
-              - if key =~ %r{name}
-                %td
-                  %a{ href: "/domains/#{d['id']}/edit" }<= d[key]
-              - elsif key =~ %r{user}
-                - uid = d[key]['id'].to_i
-                - uname = d[key]['name']
-                %td
-                  %a{ href: "/users/#{uid}/edit" }<= uname
-              - elsif key =~ %r{ed_at$}
-                %td<= Time.at(d[key].to_i)
-              - elsif key =~ %r{enabled$}
-                - en = 'icon-check item-enabled'
-                - dis = 'icon-cross item-disabled'
-                - suff = d[key] ? en : dis
-                - textval = d[key] ? ' yes' : ' no'
-                %td.icon{ class: "icon #{suff}" }= textval
-              - else
-                %td<= d[key]
+            %td<= d['id']
+            %td<
+              %a{ href: "/domains/#{d['id']}/edit" }<= d['name']
+            %td.icon{ class: "icon #{mail_en_suff}" }= mail_en_textval
+            %td.icon{ class: "icon #{dns_en_suff}" }= dns_en_textval
+            %td<= Time.at(d['created_at'].to_i)
+            %td<= Time.at(d['updated_at'].to_i)
+            %td.icon{ class: "icon #{en_suff}" }= en_textval
+            %td<= d['user']['name']

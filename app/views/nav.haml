@@ -7,29 +7,35 @@
     .icon.icon-user.icon-title
     .title Users
 %li<
-  %a{ href: '/stats', title: 'DNS', class: nav_current?('stats') }<
+  %a{ href: '/stats', title: 'Stats', class: nav_current?('stats') }<
     .icon.icon-stats.icon-title
     .title Stats
-%li<
-  %a{ href: '/domains', title: 'Domains', class: nav_current?('domains') }<
-    .icon.icon-domain.icon-title
-    .title Domains
-%li<
-  %a{ href: '/mail', title: 'Mail', class: nav_current?('mail') }<
-    .icon.icon-mail.icon-title
-    .title Mail
-%li<
-  %a{ href: '/webhosting', title: 'VHosts', class: nav_current?('webhosting') }<
-    .icon.icon-web.icon-title
-    .title VHosts
-%li<
-  %a{ href: '/databases', title: 'DBs', class: nav_current?('databases') }<
-    .icon.icon-database.icon-title
-    .title DBs
-%li<
-  %a{ href: '/dns', title: 'DNS', class: nav_current?('dns') }<
-    .icon.icon-dns.icon-title
-    .title DNS
+- if session[:modules].include?('domain')
+  %li<
+    %a{ href: '/domains', title: 'Domains', class: nav_current?('domains') }<
+      .icon.icon-domain.icon-title
+      .title Domains
+- if session[:modules].include?('email')
+  %li<
+    %a{ href: '/mail', title: 'Mail', class: nav_current?('mail') }<
+      .icon.icon-mail.icon-title
+      .title Mail
+- if session[:modules].include?('vhost')
+  %li<
+    %a{ href: '/webhosting', title: 'VHosts',
+        class: nav_current?('webhosting') }<
+      .icon.icon-web.icon-title
+      .title VHosts
+- if session[:modules].include?('database')
+  %li<
+    %a{ href: '/databases', title: 'DBs', class: nav_current?('databases') }<
+      .icon.icon-database.icon-title
+      .title DBs
+- if session[:modules].include?('dns')
+  %li<
+    %a{ href: '/dns', title: 'DNS', class: nav_current?('dns') }<
+      .icon.icon-dns.icon-title
+      .title DNS
 %li<
   %a{ href: '/settings', title: 'Settings',
       class: nav_current?('settings') }<
