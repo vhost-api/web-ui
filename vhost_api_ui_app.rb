@@ -32,6 +32,7 @@ configure do
   @appconfig.keys.each do |key|
     set key, @appconfig[key]
   end
+  use Rack::Deflater
   RestClient.enable Rack::CommonLogger
   RestClient.enable Rack::Cache,
                     metastore: 'file:./tmp/cache/meta',
@@ -98,4 +99,8 @@ end
 
 not_found do
   haml :not_found
+end
+
+error Errno::ENETUNREACH do
+  haml :api_unavailable
 end

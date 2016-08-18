@@ -1,13 +1,29 @@
 # frozen_string_literal: true
 # collection of helpers for communication with the API
 module APIHelpers
+  # @param etag [String]
+  # @param response [Hash]
+  # @return [Array((nil, String), Hash)]
+  def extract_api_data(etag = '', apiresponse = {})
+    parsed_response = parse_apiresponse(apiresponse)
+    return [nil, { error: 'invalid response' }] if parsed_response['data'].nil?
+    if parsed_response['data'].key?('object')
+      [etag, parsed_response['data']['object']]
+    elsif parsed_response['data'].key?('objects')
+      [etag, parsed_response['data']['objects']]
+    else
+      # just passthrough
+      [etag, parsed_response]
+    end
+  end
+
   # @param endpoint [String]
   # @return [Hash, nil]
   def api_query(endpoint, params = {})
     apiresponse = RestClient.get(
       gen_api_url(endpoint), params: params, Authorization: auth_secret_apikey
     )
-    [apiresponse.headers[:etag], parse_apiresponse(apiresponse)]
+    extract_api_data(apiresponse.headers[:etag], apiresponse)
   rescue RestClient::ExceptionWithResponse => err
     session_expired if err.response.code.eql?(401)
 
