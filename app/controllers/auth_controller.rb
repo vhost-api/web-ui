@@ -39,7 +39,6 @@ post '/login' do
 
   # fetch enabled modules
   _dummy, modules = api_query("users/#{@user[:id]}/enabled_modules")
-  p(modules)
   session[:modules] = modules
 
   flash[:success] = 'Successfully logged in.'
