@@ -11,7 +11,7 @@ post '/login' do
       gen_api_url('auth/login'),
       user: params['user'],
       password: params['password'],
-      apikey: settings.api_key_id.to_s
+      apikey_comment: settings.api_key_comment.to_s
     )
     data = parse_apiresponse(apiresponse)
   rescue => err
