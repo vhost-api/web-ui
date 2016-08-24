@@ -66,7 +66,7 @@ module APIHelpers
   def api_create(resource, params)
     apiresponse = RestClient::Request.execute(
       method: :post,
-      url: gen_api_url(resource),
+      url: gen_api_url(resource) + '?verbose',
       headers: { Authorization: auth_secret_apikey },
       payload: params.to_json
     )
@@ -82,6 +82,20 @@ module APIHelpers
     auth_secret = Base64.encode64(credentials).delete("\n")
 
     "#{method} #{auth_secret}"
+  end
+
+  # @return [String]
+  def parse_api_error(result)
+    s = result['status']
+    e = result['error_id']
+    m = result['message']
+    msg = "#{s}: #{e}, #{m}"
+    errors = result.fetch('data', {}).fetch('errors', {})
+                   .fetch('validation', {})
+    errors.each do |err|
+      msg += "</br>field: #{err['field']}, errors: #{err['errors']}"
+    end
+    [e, msg]
   end
 
   # @param endpoint [String]

@@ -40,12 +40,9 @@ namespace '/domains' do
       flash[:success] = msg
       redirect '/domains'
     else
-      s = result['status']
-      e = result['error_id']
-      m = result['message']
-      msg = "#{s}: #{e}, #{m}"
+      err_id, msg = parse_api_error(result)
       flash[:error] = msg
-      case e
+      case err_id
       when '1003' then
         # not found
         redirect '/domains'
@@ -86,12 +83,9 @@ namespace '/domains' do
         @record = result['data']['object']
         redirect '/domains'
       else
-        s = result['status']
-        e = result['error_id']
-        m = result['message']
-        msg = "#{s}: #{e}, #{m}"
+        err_id, msg = parse_api_error(result)
         flash[:error] = msg
-        case e
+        case err_id
         when '1003' then
           # not found
           redirect '/domains'

@@ -40,10 +40,13 @@ module FormHelpers
   # @return [Hash]
   def domain_select_options
     return [] if @domains.nil? || @domains.empty?
-    active_domain = @record['domain']['id']
     @domains.each_value.map do |d|
       opt = { value: d['id'], text: d['name'] }
-      opt[:selected] = 'selected' if d['id'] == active_domain
+      if @record.nil?
+        opt[:selected] = 'selected' if (d['id']).zero?
+      elsif d['id'] == @record['domain']['id']
+        opt[:selected] = 'selected'
+      end
       opt
     end
   end

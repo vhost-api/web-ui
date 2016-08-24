@@ -5,8 +5,8 @@ class MailAccount
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def initialize(params = {})
     @id = params.fetch(:id, 0)
-    @email = params.fetch(:email, 'unknown@example.com')
-    @realname = params.fetch(:realname, 'Un Known')
+    @email = params.fetch(:email, '')
+    @realname = params.fetch(:realname, '')
     @quota = params.fetch(:quota, 0)
     @quota_sieve_script = params.fetch(:quota_sieve_script, 0)
     @quota_sieve_actions = params.fetch(:quota_sieve_actions, 0)
@@ -49,13 +49,15 @@ class MailAccount
 
   def email_field
     FormField::Text.new(
-      label: 'Email Address', name: 'email', value: @email
+      label: 'Email Address', name: 'email', value: @email,
+      placeholder: 'Email Address'
     ).to_hash
   end
 
   def realname_field
     FormField::Text.new(
-      label: 'Realname', name: 'realname', value: @realname
+      label: 'Realname', name: 'realname', value: @realname,
+      placeholder: 'Forename Surname'
     ).to_hash
   end
 

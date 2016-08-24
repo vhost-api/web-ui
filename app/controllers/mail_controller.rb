@@ -28,6 +28,63 @@ namespace '/mail' do
       )
     end
 
+    get '/new' do
+      @domains = { '0' => { 'id' => 0, 'name' => 'Please select a domain...' } }
+      _dummy, existing_domains = api_query('domains')
+      @domains.merge!(existing_domains)
+      ui_create('MailAccount', domain_opts: 'domain_select_options')
+    end
+
+    post do
+      # TODO: mail_aliases/mail_sources stuff
+      create_params = {}
+      # passwords must match
+      passwd = params['password']
+      unless passwd == params['password2']
+        flash[:error] = 'Passwords must match'
+        redirect "/mail/accounts/#{params['id']}/edit"
+      end
+
+      create_params[:password] = passwd unless passwd.nil? || passwd == ''
+
+      create_params[:domain_id] = params['domain_id'].to_i
+      %w(realname email quota quota_sieve_script quota_sieve_actions
+         quota_sieve_redirects).each do |k|
+        create_params[k.to_sym] = params[k]
+      end
+      %w(receiving_enabled enabled).each do |k|
+        create_params[k.to_sym] = if params[k].nil?
+                                    false
+                                  else
+                                    string_to_bool(params[k])
+                                  end
+      end
+
+      result = api_create('mailaccounts', create_params)
+
+      if result['status'] == 'success'
+        @record = result['data']['object']
+        msg = "Successfully created MailAcccount #{@record['id']}"
+        msg += ", #{@record['email']}"
+        flash[:success] = msg
+        redirect '/mail/accounts'
+      else
+        err_id, msg = parse_api_error(result)
+        flash[:error] = msg
+        case err_id
+        when '1003' then
+          # not found
+          redirect '/mail/accounts'
+        when '1002' then
+          # permission denied or quota exhausted
+          redirect '/mail/accounts'
+        else
+          # try again
+          redirect '/mail/accounts/new'
+        end
+      end
+    end
+
     namespace'/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailaccounts/#{params['id']}")
@@ -74,12 +131,9 @@ namespace '/mail' do
           @record = result['data']['object']
           redirect '/mail/accounts'
         else
-          s = result['status']
-          e = result['error_id']
-          m = result['message']
-          msg = "#{s}: #{e}, #{m}"
+          err_id, msg = parse_api_error(result)
           flash[:error] = msg
-          case e
+          case err_id
           when '1003' then
             # not found
             redirect '/mail/accounts'
@@ -115,10 +169,7 @@ namespace '/mail' do
           msg += " (#{record['email']})"
           flash[:success] = msg
         else
-          s = result['status']
-          e = result['error_id']
-          m = result['message']
-          msg = "#{s}: #{e}, #{m}"
+          _err_id, msg = parse_api_error(result)
           flash[:error] = msg
         end
         redirect '/mail/accounts'
