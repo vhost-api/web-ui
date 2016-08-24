@@ -3,7 +3,7 @@
 class Domain
   def initialize(params = {})
     @id = params.fetch(:id, 0)
-    @name = params.fetch(:name, 'unknown')
+    @name = params.fetch(:name, '')
     @mail_enabled = params.fetch(:mail_enabled, false)
     @dns_enabled = params.fetch(:dns_enabled, false)
     @created_at = params.fetch(:created_at, Time.now.to_i)
@@ -38,7 +38,8 @@ class Domain
 
   def name_field
     FormField::Text.new(
-      label: 'Domain Name', name: 'name', value: @name
+      label: 'Domain Name', name: 'name', value: @name,
+      placeholder: 'Domain Name'
     ).to_hash
   end
 

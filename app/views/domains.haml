@@ -1,4 +1,6 @@
 .table-wrapper
+  %a{ href: '/domains/new' }<
+    %button.btn.btn-default.btn-create.icon-add{ value: 'new' }= ' New Domain'
   %table.table.table-striped
     %caption Domains
     - unless @result.nil? || @result.empty?

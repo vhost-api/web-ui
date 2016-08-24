@@ -13,6 +13,52 @@ namespace '/domains' do
     )
   end
 
+  get '/new' do
+    @users = { '0' => { 'id' => 0, 'name' => 'Please select a user...' } }
+    _dummy, existing_users = api_query('users')
+    @users.merge!(existing_users)
+    ui_create('Domain', user_opts: 'user_select_options')
+  end
+
+  post do
+    create_params = {}
+    create_params[:user_id] = params['user_id'].to_i
+    create_params[:name] = params['name']
+    %w(mail_enabled dns_enabled enabled).each do |k|
+      create_params[k.to_sym] = if params[k].nil?
+                                  false
+                                else
+                                  string_to_bool(params[k])
+                                end
+    end
+
+    result = api_create('domains', create_params)
+
+    if result['status'] == 'success'
+      @record = result['data']['object']
+      msg = "Successfully created Domain #{@record['id']}, #{@record['name']}"
+      flash[:success] = msg
+      redirect '/domains'
+    else
+      s = result['status']
+      e = result['error_id']
+      m = result['message']
+      msg = "#{s}: #{e}, #{m}"
+      flash[:error] = msg
+      case e
+      when '1003' then
+        # not found
+        redirect '/domains'
+      when '1002' then
+        # permission denied or quota exhausted
+        redirect '/domains'
+      else
+        # try again
+        redirect '/domains/new'
+      end
+    end
+  end
+
   namespace'/:id' do
     get '/edit' do
       _dummy, @record = api_query("domains/#{params['id']}")

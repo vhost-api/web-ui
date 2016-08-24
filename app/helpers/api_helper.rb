@@ -60,6 +60,21 @@ module APIHelpers
     parse_apiresponse(err.response)
   end
 
+  # @param resource [String]
+  # @param params [Hash]
+  # @return [Hash, nil]
+  def api_create(resource, params)
+    apiresponse = RestClient::Request.execute(
+      method: :post,
+      url: gen_api_url(resource),
+      headers: { Authorization: auth_secret_apikey },
+      payload: params.to_json
+    )
+    parse_apiresponse(apiresponse)
+  rescue RestClient::ExceptionWithResponse => err
+    parse_apiresponse(err.response)
+  end
+
   def auth_secret_apikey
     return nil if @user.nil?
     method = 'VHOSTAPI-KEY'

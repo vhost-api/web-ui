@@ -25,6 +25,12 @@ module UIHelpers
     haml :delete_template
   end
 
+  # @param class_name [String]
+  def ui_create(class_name, options_helpers = {})
+    @form = form_content(class_name, options_helpers)
+    haml "new_#{class_name.downcase}".to_sym
+  end
+
   def session_expired
     session[:user] = nil
     flash[:error] = 'Session expired, please login again'

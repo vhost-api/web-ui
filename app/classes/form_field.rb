@@ -62,14 +62,16 @@ class FormField
 
   # text field
   class Text
-    def initialize(label: 'Text', name: 'text', value: '')
+    def initialize(label: 'Text', name: 'text', value: '', placeholder: '')
       @label = label
       @name = name
       @value = value
+      @placeholder = placeholder
     end
 
     def to_hash
-      { label: @label, name: @name, type: 'text', value: @value }
+      { label: @label, name: @name, type: 'text', value: @value,
+        placeholder: @placeholder }
     end
   end
 end
