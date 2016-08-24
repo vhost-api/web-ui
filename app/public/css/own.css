@@ -170,10 +170,18 @@ div#flash .error {
 	color: #c70f19;
 	text-decoration: none;
 }
-
 /*
- * green color for enabled check
+ * green color for create links / plus icon / enabled check
  */
+.btn-create {
+	background: #90e090;
+	color: #006500;
+}
+.btn-text .btn-icon {
+	float: left;
+	display: inline-block;
+}
+
 .item-enabled {
 	color: #008000;
 	text-decoration: none;
