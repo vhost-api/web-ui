@@ -6,7 +6,9 @@ module FormHelpers
   # @return [Hash]
   def form_content(class_name, options_helpers = {})
     klass = Object.const_get(class_name)
-    object = klass.new(symbolize_hash(@record))
+    params = symbolize_hash(@record)
+    params[:_user] = @user
+    object = klass.new(params)
     options_helpers.each do |opt, attr|
       object.public_send("#{opt}=", public_send(attr))
     end
@@ -18,9 +20,35 @@ module FormHelpers
     return [] if @groups.nil? || @groups.empty?
     @groups.each_value.map do |g|
       opt = { value: g['id'], text: g['name'] }
-      opt[:selected] = 'selected' if g['id'] == @record['id']
+      if @record.nil?
+        opt[:selected] = 'selected' if (g['id']).zero?
+      elsif g['id'] == @record['group']['id']
+        opt[:selected] = 'selected'
+      end
       opt
     end
+  end
+
+  # @return [Hash]
+  # rubocop:disable Metrics/MethodLength
+  def package_select_options
+    return [] if @packages.nil? || @packages.empty?
+    active_pkgs = extract_active_pkg_ids
+    @packages.each_value.map do |p|
+      opt = { value: p['id'], text: p['name'] }
+      if @record.nil?
+        opt[:selected] = 'selected' if (p['id']).zero?
+      elsif active_pkgs.include?(p['id'])
+        opt[:selected] = 'selected'
+      end
+      opt
+    end
+  end
+
+  # @return [Array(Fixnum)]
+  def extract_active_pkg_ids
+    return @record['packages'].map { |x| x['id'] } unless @record.nil?
+    []
   end
 
   # @return [Hash]

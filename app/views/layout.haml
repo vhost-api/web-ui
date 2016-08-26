@@ -31,20 +31,23 @@
             = haml :nav
           %ul.nav.navbar-nav.navbar-right
             - if !@user.nil?
-              %li.dropdown
+              %li
+                %a.icon.icon-logout{ href: '/logout',
+                  title: 'Logout' }= ' Logout (' + @user[:login] + ')'
+              -# %li.dropdown
 
-                %a.dropdown-toggle{ 'aria-expanded': 'false',
-                                    'aria-haspopup': 'true',
-                                    'data-toggle': 'dropdown',
-                                    href: '#',
-                                    role: 'button' }
-                  = @user[:login]
-                  %span.caret
-                %ul.dropdown-menu
-                  %li
-                    %a{ href: '/logout' }
-                      .icon.icon-logout<
-                        Logout
+                -# %a.dropdown-toggle{ 'aria-expanded': 'false',
+                                    -# 'aria-haspopup': 'true',
+                                    -# 'data-toggle': 'dropdown',
+                                    -# href: '#',
+                                    -# role: 'button' }
+                  -# = @user[:login]
+                  -# %span.caret
+                -# %ul.dropdown-menu
+                  -# %li
+                    -# %a{ href: '/logout' }
+                      -# .icon.icon-logout<
+                        -# Logout
             - else
               %li
                 %a{ href: '/login',

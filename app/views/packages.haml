@@ -1,0 +1,69 @@
+.table-wrapper
+  - if admin? || reseller?
+    %a{ href: '/packages/new' }<
+      %button.btn.btn-default.btn-create.icon-add= ' New Package'
+  %table.table.table-striped
+    %caption Packages
+    - unless @result.nil? || @result.empty?
+      %thead
+        %tr
+          %th< ID
+          %th< Package Name
+          %th< Price Unit
+          %th< Created
+          %th< Updated
+          %th< Enabled
+          %th< Owner ID
+          %th< Apikeys
+          %th< Customers
+          %th< Custom Packages
+          %th< Domains
+          %th< Mail Accounts
+          %th< Mail Aliases
+          %th< Mail Sources
+          %th< Mail Storage
+          %th< VHosts
+          %th< VHost Storage
+          %th< Databases
+          %th< Database Users
+          %th< DNS Records
+          %th< DNS Zones
+          %th< SFTP Users
+          %th< Shell Users
+          %th< SSH Pubkeys
+          %th<
+      %tbody
+        - @result.each_value do |p|
+          - en = 'icon-check item-enabled'
+          - dis = 'icon-cross item-disabled'
+          - en_suff = p['enabled'] ? en : dis
+          - en_textval = p['enabled'] ? ' yes' : ' no'
+          - a_del = "/packages/#{p['id']}/delete"
+          %tr
+            %td<= p['id']
+            %td<
+              %a{ href: "/packages/#{p['id']}/edit" }<= p['name']
+            %td<= p['price_unit']
+            %td<= Time.at(p['created_at'].to_i)
+            %td<= Time.at(p['updated_at'].to_i)
+            %td.icon{ class: "icon #{en_suff}" }= en_textval
+            %td<= p['user_id']
+            %td<= p['quota_apikeys']
+            %td<= p['quota_customers']
+            %td<= p['quota_custom_packages']
+            %td<= p['quota_databases']
+            %td<= p['quota_database_users']
+            %td<= p['quota_dns_records']
+            %td<= p['quota_dns_zones']
+            %td<= p['quota_domains']
+            %td<= p['quota_mail_accounts']
+            %td<= p['quota_mail_aliases']
+            %td<= p['quota_mail_sources']
+            %td<= p['quota_mail_storage']
+            %td<= p['quota_sftp_users']
+            %td<= p['quota_shell_users']
+            %td<= p['quota_ssh_pubkeys']
+            %td<= p['quota_vhosts']
+            %td<= p['quota_vhost_storage']
+            %td<
+              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'

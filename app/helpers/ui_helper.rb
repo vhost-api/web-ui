@@ -36,4 +36,16 @@ module UIHelpers
     flash[:error] = 'Session expired, please login again'
     redirect '/login'
   end
+
+  def reseller?
+    return false if @user.nil?
+    return true if @user[:group] == 'reseller'
+    false
+  end
+
+  def admin?
+    return false if @user.nil?
+    return true if @user[:group] == 'admin'
+    false
+  end
 end

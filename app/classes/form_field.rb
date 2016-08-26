@@ -18,7 +18,7 @@ class FormField
   class SelectMultiple
     def initialize(label: 'Select Multiple', name: 'select_multi', options: [])
       @label = label
-      @name = name
+      @name = name + '[]'
       @options = options
     end
 

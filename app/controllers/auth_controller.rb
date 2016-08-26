@@ -37,6 +37,13 @@ post '/login' do
   # store stuff for later use
   session[:user] = @user
 
+  # fetch group
+  _dummy, my_user = api_query("users/#{@user[:id]}")
+  @user[:group] = my_user['group']['name']
+
+  # update cookie
+  session[:user] = @user
+
   # fetch enabled modules
   _dummy, modules = api_query("users/#{@user[:id]}/enabled_modules")
   session[:modules] = modules

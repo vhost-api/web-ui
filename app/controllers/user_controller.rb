@@ -13,11 +13,75 @@ namespace '/users' do
     )
   end
 
+  get '/new' do
+    # prefetch groups
+    @groups = { '0' => { 'id' => 0, 'name' => 'Please select a group...' } }
+    _dummy, existing_groups = api_query('groups')
+    @groups.merge!(existing_groups)
+
+    # prefetch packages
+    _dummy, @packages = api_query('packages')
+
+    ui_create('User',
+              group_opts: 'group_select_options',
+              package_opts: 'package_select_options')
+  end
+
+  post do
+    create_params = {}
+
+    # passwords must match
+    passwd = params['password']
+    unless passwd == params['password2']
+      flash[:error] = 'Passwords must match'
+      redirect '/users/new'
+    end
+    create_params[:password] = passwd unless passwd.nil? || passwd == ''
+    p(passwd)
+    p(create_params[:password])
+
+    create_params[:group_id] = params['group_id'].to_i
+    create_params[:name] = params['name']
+    create_params[:login] = params['login']
+    create_params[:contact_email] = params['contact_email']
+    create_params[:enabled] = if params['enabled'].nil?
+                                false
+                              else
+                                string_to_bool(params['enabled'])
+                              end
+
+    result = api_create('users', create_params)
+
+    if result['status'] == 'success'
+      @record = result['data']['object']
+      msg = "Successfully created User #{@record['id']}, #{@record['login']}"
+      flash[:success] = msg
+      redirect '/users'
+    else
+      err_id, msg = parse_api_error(result)
+      flash[:error] = msg
+      case err_id
+      when '1003' then
+        # not found
+        redirect '/users'
+      when '1002' then
+        # permission denied or quota exhausted
+        redirect '/users'
+      else
+        # try again
+        redirect '/users/new'
+      end
+    end
+  end
+
   namespace'/:id' do
     get '/edit' do
       _dummy, @record = api_query("users/#{params['id']}")
       _dummy, @groups = api_query('groups')
-      ui_edit('User', group_opts: 'group_select_options')
+      _dummy, @packages = api_query('packages')
+      ui_edit('User',
+              group_opts: 'group_select_options',
+              package_opts: 'package_select_options')
     end
 
     post do
@@ -30,17 +94,15 @@ namespace '/users' do
         redirect "/users/#{params['id']}/edit"
       end
 
+      pkgs = params['packages']
+      update_params[:packages] = pkgs.map(&:to_i) unless pkgs.nil? || pkgs == ''
+
       update_params[:password] = passwd unless passwd.nil? || passwd == ''
       update_params[:group_id] = params['group_id'].to_i
       update_params[:name] = params['name']
       update_params[:login] = params['login']
       update_params[:contact_email] = params['contact_email']
       update_params[:enabled] = string_to_bool(params['enabled'])
-
-      # quota stuff
-      params.each_key do |k|
-        update_params[k.to_sym] = params[k] if k =~ %r{^quota}
-      end
 
       result = api_update("users/#{params['id']}", update_params)
 

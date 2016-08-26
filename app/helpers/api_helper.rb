@@ -86,14 +86,14 @@ module APIHelpers
 
   # @return [String]
   def parse_api_error(result)
-    s = result['status']
     e = result['error_id']
-    m = result['message']
-    msg = "#{s}: #{e}, #{m}"
-    errors = result.fetch('data', {}).fetch('errors', {})
-                   .fetch('validation', {})
-    errors.each do |err|
-      msg += "</br>field: #{err['field']}, errors: #{err['errors']}"
+    msg = "#{result['status']}: #{e}, #{result['message']}"
+    unless result['data'].nil?
+      errors = result.fetch('data', {}).fetch('errors', {})
+                     .fetch('validation', {})
+      errors.each do |err|
+        msg += "</br>field: #{err['field']}, errors: #{err['errors']}"
+      end
     end
     [e, msg]
   end
