@@ -1,1 +1,50 @@
-%p< Welcome to Vhost API
+-# rubocop:disable Style/ElseAlignment
+- if @user[:name].nil? || @user[:name].empty?
+  %p< Welcome to Vhost API
+- else
+  %p< Welcome #{@user[:name]} to Vhost API
+%br
+.table-wrapper
+  %table.table.table-striped
+    %caption Account Limits
+    - unless @result.nil? || @result.empty?
+      %thead
+        %tr
+          %th{ style: 'width:40%;' }<
+          %th{ style: 'width:15%;' }< Used
+          %th{ style: 'width:15%;' }< Limit
+          %th{ style: 'width:30%;' }<
+      %tbody
+        - thresh_warn = 65
+        - thresh_crit = 90
+        - @result.each_pair do |k, v|
+          - pretty_key = k.to_s[6..-1].split('_').map(&:capitalize).join('')
+          - title = "Number of #{pretty_key}"
+          - progress_class = 'progress-bar progress-bar-info'
+          - usage_rel = if v['total'].to_i.zero?
+            - 0.0
+          - else
+            - (v['used'].to_i * 100 / v['total'].to_i).round(1)
+          - if k.to_s =~ %r{_storage$}
+            - title = "Allocated #{pretty_key}"
+            - v['used'] = Filesize.from("#{v['used'].to_i} B").pretty
+            - v['total'] = Filesize.from("#{v['total'].to_i} B").pretty
+          - if usage_rel >= thresh_warn
+            - progress_class = 'progress-bar progress-bar-warning'
+          - if usage_rel >= thresh_crit
+            - progress_class = 'progress-bar progress-bar-danger'
+          - if admin?
+            - usage_rel = 0.0
+            - v['total'] = 'unlimited'
+            - progress_class = 'progress-bar progress-bar-info'
+          %tr
+            %td<= title
+            %td<= v['used']
+            %td<= v['total']
+            %td<
+              .progress<
+                %div{ class: progress_class,
+                      'role': 'progress',
+                      'aria-valuemin': '0',
+                      'aria-valuemax': '100',
+                      style: "width:#{usage_rel}%" }<

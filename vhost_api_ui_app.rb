@@ -90,6 +90,8 @@ get '/css/*.css' do
 end
 
 get '/' do
+  response_digest, @result = api_query("users/#{@user[:id]}/quota_stats", {})
+  etag response_digest if session[:flash].nil? || session[:flash].empty?
   haml :home, layout: :layout
 end
 

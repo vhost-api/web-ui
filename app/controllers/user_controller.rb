@@ -37,8 +37,6 @@ namespace '/users' do
       redirect '/users/new'
     end
     create_params[:password] = passwd unless passwd.nil? || passwd == ''
-    p(passwd)
-    p(create_params[:password])
 
     create_params[:group_id] = params['group_id'].to_i
     create_params[:name] = params['name']

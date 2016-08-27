@@ -37,8 +37,9 @@ post '/login' do
   # store stuff for later use
   session[:user] = @user
 
-  # fetch group
+  # fetch name and group
   _dummy, my_user = api_query("users/#{@user[:id]}")
+  @user[:name] = my_user['name']
   @user[:group] = my_user['group']['name']
 
   # update cookie
