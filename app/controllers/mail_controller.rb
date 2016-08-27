@@ -47,8 +47,11 @@ namespace '/mail' do
 
       create_params[:password] = passwd unless passwd.nil? || passwd == ''
 
-      create_params[:domain_id] = params['domain_id'].to_i
-      %w(realname email quota quota_sieve_script quota_sieve_actions
+      _dummy, domain = api_query("domains/#{params['domain_id']}")
+      create_params[:domain_id] = domain['id'].to_i
+      create_params[:email] = "#{params['localpart']}@#{domain['name']}"
+
+      %w(realname quota quota_sieve_script quota_sieve_actions
          quota_sieve_redirects).each do |k|
         create_params[k.to_sym] = params[k]
       end

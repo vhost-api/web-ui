@@ -1,44 +1,142 @@
-%table
-  - @mailaccount.each_pair do |key, value|
-    - if key.to_s =~ %r{customer}
-      - next
-    %tr
-      %td<
-        %label{ for: key }<= key
-      %td<
-        - suffix = { key: nil, val: nil }
-        - disable_input = false
-        - if %w(id created_at updated_at).include? key.to_s
-          - disable_input = true
-        - if key.to_s == 'password'
-          - input_type = 'password'
-          - input_value = ''
-        - elsif [true, false].include?(value)
-          - input_type = 'checkbox'
-          - input_value = value.to_s
-          - if value
-            - suffix[:key] = 'checked'
-            - suffix[:val] = 'checked'
-        - elsif key.to_s =~ %r{_at$}
-          - value = Time.at(value)
-        - elsif key.to_s =~ %r{^(quota|sieve)usage_rel}
-          - disable_input = true
-          - value = "#{value} %"
-        - elsif key.to_s =~ %r{^(quota|sieve)usage}
-          - disable_input = true
-          - value = Filesize.from("#{value} B").pretty
+- @form[:hidden_fields].each do |f|
+  %input{ type: 'hidden', name: f[:name], value: f[:value] }<
+- f = @form[:visible_fields]
+
+-# EMAIL ADDRESS WITH DOMAIN SELECT
+- field = f.index { |x| x[:name] == 'localpart' }
+- domain_field = f.index { |x| x[:name] == 'domain_id' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-3<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+  .col-sm-3<
+    %div{ style: 'width:8%; display:inline-block; align:left;' }< @
+    %select.form-control{ style: 'width:90%; display:inline-block; align:left;',
+                          name: f[domain_field][:name] }<
+      - f[domain_field][:options].each do |opt|
+        - if opt[:selected]
+          %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
         - else
-          - input_type = 'text'
-          - input_value = value
-        - if disable_input
-          = value
-        - elsif suffix[:key].nil?
-          %input{ id: key, name: key, type: input_type, value: input_value }<
+          %option{ value: opt[:value] }<= opt[:text]
+
+-# REALNAME
+- field = f.index { |x| x[:name] == 'realname' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+
+-# PASSWORD
+- field = f.index { |x| x[:name] == 'password' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name] }<
+
+-# PASSWORD CONFIRMATION
+- field = f.index { |x| x[:name] == 'password2' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name] }<
+
+-# QUOTA
+- field = f.index { |x| x[:name] == 'quota' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+
+-# QUOTA SIEVE SCRIPT
+- field = f.index { |x| x[:name] == 'quota_sieve_script' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+
+-# QUOTA SIEVE ACTIONS
+- field = f.index { |x| x[:name] == 'quota_sieve_actions' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+
+-# QUOTA SIEVE REDIRECTS
+- field = f.index { |x| x[:name] == 'quota_sieve_redirects' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+
+-# RECEIVING ENABLED
+- field = f.index { |x| x[:name] == 'receiving_enabled' }
+.form-group<
+  .col-sm-6.col-sm-offset-3<
+    .checkbox<
+      %label<
+        - if f[field][:checked]
+          %input{ type: 'checkbox', name: f[field][:name],
+                  checked: 'checked' }<= f[field][:label]
         - else
-          %input{ id: key, name: key, type: input_type, value: input_value,
-            suffix[:key].to_sym => suffix[:val] }<
-  %tr
-    %td{ colspan: 2, style: 'text-align: center' }<
-      %input{ type: 'submit', value: 'Submit',
-        onclick: 'submitMyForm(); return false;',
-        style: 'display:inline-block;' }<
+          %input{ type: 'checkbox', name: f[field][:name] }<= f[field][:label]
+
+-# ENABLED
+- field = f.index { |x| x[:name] == 'enabled' }
+.form-group<
+  .col-sm-6.col-sm-offset-3<
+    .checkbox<
+      %label<
+        - if f[field][:checked]
+          %input{ type: 'checkbox', name: f[field][:name],
+                  checked: 'checked' }<= f[field][:label]
+        - else
+          %input{ type: 'checkbox', name: f[field][:name] }<= f[field][:label]
+
+-# ALIASES
+- field = f.index { |x| x[:name] == 'aliases[]' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %select.form-control{ name: f[field][:name], multiple: true }<
+      - f[field][:options].each do |opt|
+        - if opt[:selected]
+          %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
+        - else
+          %option{ value: opt[:value] }<= opt[:text]
+
+-# SOURCES
+- field = f.index { |x| x[:name] == 'sources[]' }
+.form-group<
+  %label.col-sm-3.control-label<= f[field][:label]
+  .col-sm-6<
+    %select.form-control{ name: f[field][:name], multiple: true }<
+      - f[field][:options].each do |opt|
+        - if opt[:selected]
+          %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
+        - else
+          %option{ value: opt[:value] }<= opt[:text]
+
+-# SUBMIT
+.form-group<
+  .col-sm-offset-3.col-sm-6<
+    %button.btn.btn-default{ type: 'submit', value: 'submit' }< Submit

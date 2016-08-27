@@ -49,8 +49,8 @@ class MailAccount
 
   def email_field
     FormField::Text.new(
-      label: 'Email Address', name: 'email', value: @email,
-      placeholder: 'Email Address'
+      label: 'Email Address', name: 'localpart', value: @email.split('@')[0],
+      placeholder: ''
     ).to_hash
   end
 
