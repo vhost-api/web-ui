@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 # collection of helpers for communication with the API
 module APIHelpers
   # @param etag [String]
@@ -25,10 +26,12 @@ module APIHelpers
     )
     extract_api_data(apiresponse.headers[:etag], apiresponse)
   rescue RestClient::ExceptionWithResponse => err
-    session_expired if err.response.code.eql?(401)
+    c = err.response.code
+    session_expired if c.eql?(401)
+    api_unreachable if c.eql?(502)
 
     parsed_data = parse_apiresponse(err.response)
-    parsed_data[:code] = err.response.code
+    parsed_data[:code] = c
     [nil, parsed_data]
   end
 
@@ -38,7 +41,7 @@ module APIHelpers
   def api_update(resource, params)
     apiresponse = RestClient::Request.execute(
       method: :patch,
-      url: gen_api_url(resource),
+      url: gen_api_url(resource) + '?verbose',
       headers: { Authorization: auth_secret_apikey },
       payload: params.to_json
     )
@@ -52,7 +55,7 @@ module APIHelpers
   def api_delete(resource)
     apiresponse = RestClient::Request.execute(
       method: :delete,
-      url: gen_api_url(resource),
+      url: gen_api_url(resource) + '?verbose',
       headers: { Authorization: auth_secret_apikey }
     )
     parse_apiresponse(apiresponse)
@@ -90,9 +93,13 @@ module APIHelpers
     msg = "#{result['status']}: #{e}, #{result['message']}"
     unless result['data'].nil?
       errors = result.fetch('data', {}).fetch('errors', {})
-                     .fetch('validation', {})
-      errors.each do |err|
-        msg += "</br>field: #{err['field']}, errors: #{err['errors']}"
+      errors = errors.fetch('validation', {}) if errors.is_a?(Hash)
+      if errors.is_a?(Array)
+        errors.each do |err|
+          msg += "</br>field: #{err['field']}, errors: #{err['errors']}"
+        end
+      else
+        msg += "</br>#{errors}"
       end
     end
     [e, msg]

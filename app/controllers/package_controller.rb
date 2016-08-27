@@ -65,7 +65,8 @@ namespace '/packages' do
 
     post do
       update_params = {}
-      update_params[:user_id] = params['user_id'].to_i
+      user_id = params['user_id'].to_i
+      update_params[:user_id] = user_id unless user_id.zero?
       update_params[:name] = params['name']
       update_params[:price_unit] = params['price_unit']
       update_params[:enabled] = if params['enabled'].nil?

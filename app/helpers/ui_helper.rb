@@ -37,6 +37,10 @@ module UIHelpers
     redirect '/login'
   end
 
+  def api_unreachable
+    halt 200, haml(:api_unreachable)
+  end
+
   def reseller?
     return false if @user.nil?
     return true if @user[:group] == 'reseller'

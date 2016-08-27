@@ -26,8 +26,8 @@
           %th< VHost Storage
           %th< Databases
           %th< Database Users
-          %th< DNS Records
           %th< DNS Zones
+          %th< DNS Records
           %th< SFTP Users
           %th< Shell Users
           %th< SSH Pubkeys
@@ -51,19 +51,19 @@
             %td<= p['quota_apikeys']
             %td<= p['quota_customers']
             %td<= p['quota_custom_packages']
-            %td<= p['quota_databases']
-            %td<= p['quota_database_users']
-            %td<= p['quota_dns_records']
-            %td<= p['quota_dns_zones']
             %td<= p['quota_domains']
             %td<= p['quota_mail_accounts']
             %td<= p['quota_mail_aliases']
             %td<= p['quota_mail_sources']
             %td<= p['quota_mail_storage']
+            %td<= p['quota_vhosts']
+            %td<= p['quota_vhost_storage']
+            %td<= p['quota_databases']
+            %td<= p['quota_database_users']
+            %td<= p['quota_dns_zones']
+            %td<= p['quota_dns_records']
             %td<= p['quota_sftp_users']
             %td<= p['quota_shell_users']
             %td<= p['quota_ssh_pubkeys']
-            %td<= p['quota_vhosts']
-            %td<= p['quota_vhost_storage']
             %td<
               %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'

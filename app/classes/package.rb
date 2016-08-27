@@ -50,7 +50,7 @@ class Package
     unless @_user.nil?
       visible.push(user_field) if @_user[:group] == 'admin'
       visible.push(quota_custom_packages_field) if @_user[:group] == 'admin'
-      visible.push(quota_customers_field) unless @_user[:group] == 'user'
+      visible.push(quota_customers_field) if @_user[:group] == 'admin'
     end
 
     visible.push(quota_ssh_pubkeys_field)
@@ -84,7 +84,7 @@ class Package
 
   def price_unit_field
     FormField::Text.new(
-      label: 'Price Unit', name: 'price_unit', value: @login,
+      label: 'Price Unit', name: 'price_unit', value: @price_unit,
       placeholder: '299'
     ).to_hash
   end
