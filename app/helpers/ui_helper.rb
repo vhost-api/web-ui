@@ -5,7 +5,6 @@ module UIHelpers
   # rubocop:disable Metrics/AbcSize
   def ui_output(endpoint, params = {})
     response_digest, @result = api_query(endpoint, params)
-    p(@result)
     if @result.is_a?(Hash) && @result.key?(:code)
       status @result[:code]
       halt haml :api_error if @result[:code].to_s =~ %r{(4|5)[0-9]{2}}
