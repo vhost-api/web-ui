@@ -91,9 +91,10 @@ namespace '/mail' do
     namespace'/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailaccounts/#{params['id']}")
+        d_id = @record['domain']['id']
         _dummy, @domains = api_query('domains')
-        _dummy, @mail_aliases = api_query('mailaliases')
-        _dummy, @mail_sources = api_query('mailsources')
+        _dummy, @mail_aliases = api_query("mailaliases?q[domain_id]=#{d_id}")
+        _dummy, @mail_sources = api_query("mailsources?q[domain_id]=#{d_id}")
         ui_edit('MailAccount',
                 domain_opts: 'domain_select_options',
                 mail_alias_opts: 'mail_aliases_select_options',
@@ -101,7 +102,7 @@ namespace '/mail' do
       end
 
       post do
-        # TODO: mail_aliases/mail_sources stuff
+        p(params)
         update_params = {}
         # passwords must match
         passwd = params['password']
@@ -113,10 +114,23 @@ namespace '/mail' do
         update_params[:password] = passwd unless passwd.nil? || passwd == ''
 
         update_params[:domain_id] = params['domain_id'].to_i
-        %w(realname email quota quota_sieve_script quota_sieve_actions
-           quota_sieve_redirects).each do |k|
-          update_params[k.to_sym] = params[k]
+        _dummy, domain = api_query("domains/#{params['domain_id']}")
+
+        update_params[:email] = [params['localpart'], domain['name']].join('@')
+
+        update_params[:realname] = params['realname']
+
+        %w(quota quota_sieve_script).each do |k|
+          input = params[k].to_f
+          mult = params["#{k}_unit"].to_i
+          value = (input * mult).round(0)
+          update_params[k.to_sym] = value
         end
+
+        %w(quota_sieve_actions quota_sieve_redirects).each do |k|
+          update_params[k.to_sym] = params[k].to_i
+        end
+
         %w(receiving_enabled enabled).each do |k|
           update_params[k.to_sym] = if params[k].nil?
                                       false
@@ -125,6 +139,13 @@ namespace '/mail' do
                                     end
         end
 
+        als = params['aliases']
+        update_params[:aliases] = als.map(&:to_i) unless als.nil? || als == ''
+
+        src = params['sources']
+        update_params[:sources] = src.map(&:to_i) unless src.nil? || src == ''
+
+        p(update_params)
         result = api_update("mailaccounts/#{params['id']}", update_params)
 
         if result['status'] == 'success'
@@ -263,6 +284,16 @@ namespace '/mail' do
         end
         redirect '/mail/sources'
       end
+    end
+  end
+
+  namespace '/forwardings' do
+    get do
+      ui_output(
+        'mailforwardings',
+        fields: %w(id address created_at updated_at enabled domain
+                   destinations).join(',')
+      )
     end
   end
 

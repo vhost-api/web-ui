@@ -74,4 +74,20 @@ class FormField
         placeholder: @placeholder }
     end
   end
+
+  # textarea field
+  class TextArea
+    def initialize(label: 'Textarea', name: 'textarea', value: '',
+                   placeholder: '')
+      @label = label
+      @name = name
+      @value = value
+      @placeholder = placeholder
+    end
+
+    def to_hash
+      { label: @label, name: @name, type: 'textarea', value: @value,
+        placeholder: @placeholder }
+    end
+  end
 end

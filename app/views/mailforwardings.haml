@@ -1,0 +1,36 @@
+.table-wrapper
+  %table.table.table-striped
+    %caption MailForwardings
+    - unless @result.nil? || @result.empty?
+      %thead
+        %tr
+          %th< ID
+          %th< Address
+          %th< Created
+          %th< Updated
+          %th< Enabled
+          %th< Domain
+          %th< Destinations
+          %th<
+      %tbody
+        - @result.each_value do |mailforwarding|
+          - fwdid = mailforwarding['id']
+          - en = 'icon-check item-enabled'
+          - dis = 'icon-cross item-disabled'
+          - suff = mailforwarding['enabled'] ? en : dis
+          - textval = mailforwarding['enabled'] ? ' yes' : ' no'
+          - a_del = "/mail/forwardings/#{mailforwarding['id']}/delete"
+          %tr
+            %td<= fwdid
+            %td<
+              %a{ href: "/mail/forwardings/#{fwdid}/edit" }<
+                = mailforwarding['address']
+            %td<= Time.at(mailforwarding['created_at'].to_i)
+            %td<= Time.at(mailforwarding['updated_at'].to_i)
+            %td.icon{ class: "icon #{suff}" }= textval
+            %td<= mailforwarding['domain']['name']
+            %td<
+              - mailforwarding['destinations'].split("\n").each do |dest|
+                %p<= dest
+            %td<
+              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'

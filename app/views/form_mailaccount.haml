@@ -6,27 +6,27 @@
 - field = f.index { |x| x[:name] == 'localpart' }
 - domain_field = f.index { |x| x[:name] == 'domain_id' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
+  %label.col-sm-2.control-label<= f[field][:label]
   .col-sm-3<
     %input.form-control{ type: f[field][:type],
                          name: f[field][:name],
                         value: f[field][:value],
                   placeholder: f[field][:placeholder].to_s }<
   .col-sm-3<
-    %div{ style: 'width:8%; display:inline-block; align:left;' }< @
-    %select.form-control{ style: 'width:90%; display:inline-block; align:left;',
-                          name: f[domain_field][:name] }<
-      - f[domain_field][:options].each do |opt|
-        - if opt[:selected]
-          %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
-        - else
-          %option{ value: opt[:value] }<= opt[:text]
+    .input-group<
+      %span.input-group-addon< @
+      %select.form-control{ name: f[domain_field][:name] }<
+        - f[domain_field][:options].each do |opt|
+          - if opt[:selected]
+            %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
+          - else
+            %option{ value: opt[:value] }<= opt[:text]
 
 -# REALNAME
 - field = f.index { |x| x[:name] == 'realname' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
     %input.form-control{ type: f[field][:type],
                          name: f[field][:name],
                         value: f[field][:value],
@@ -35,63 +35,77 @@
 -# PASSWORD
 - field = f.index { |x| x[:name] == 'password' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
     %input.form-control{ type: f[field][:type],
                          name: f[field][:name] }<
 
 -# PASSWORD CONFIRMATION
 - field = f.index { |x| x[:name] == 'password2' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
     %input.form-control{ type: f[field][:type],
                          name: f[field][:name] }<
 
 -# QUOTA
 - field = f.index { |x| x[:name] == 'quota' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
-    %input.form-control{ type: f[field][:type],
-                         name: f[field][:name],
-                        value: f[field][:value],
-                  placeholder: f[field][:placeholder].to_s }<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-2<
+    %input.form-control.byte-unit{ type: f[field][:type],
+                                   name: f[field][:name],
+                                     id: f[field][:name],
+                                  value: f[field][:value],
+                            placeholder: f[field][:placeholder].to_s }<
+  .col-sm-1<
+    %select.form-control.btn-primary.byte-unit{ id: 'quota_unit',
+                                              name: 'quota_unit' }<
+      %option{ value:             1, selected:  true }<   B
+      %option{ value:         1_024, selected: false }< KiB
+      %option{ value:     1_048_576, selected: false }< MiB
+      %option{ value: 1_073_741_824, selected: false }< GiB
 
 -# QUOTA SIEVE SCRIPT
 - field = f.index { |x| x[:name] == 'quota_sieve_script' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
-    %input.form-control{ type: f[field][:type],
-                         name: f[field][:name],
-                        value: f[field][:value],
-                  placeholder: f[field][:placeholder].to_s }<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-2<
+    %input.form-control.byte-unit{ type: f[field][:type],
+                                   name: f[field][:name],
+                                     id: f[field][:name],
+                                  value: f[field][:value],
+                            placeholder: f[field][:placeholder].to_s }<
+  .col-sm-1<
+    %select.form-control.btn-primary.byte-unit{ id: 'quota_sieve_script_unit',
+                                              name: 'quota_sieve_script_unit' }<
+      %option{ value:             1, selected:  true }<   B
+      %option{ value:         1_024, selected: false }< KiB
 
 -# QUOTA SIEVE ACTIONS
 - field = f.index { |x| x[:name] == 'quota_sieve_actions' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
-    %input.form-control{ type: f[field][:type],
-                         name: f[field][:name],
-                        value: f[field][:value],
-                  placeholder: f[field][:placeholder].to_s }<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-2<
+    %input.form-control.num-input{ type: f[field][:type],
+                                   name: f[field][:name],
+                                  value: f[field][:value],
+                            placeholder: f[field][:placeholder].to_s }<
 
 -# QUOTA SIEVE REDIRECTS
 - field = f.index { |x| x[:name] == 'quota_sieve_redirects' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
-    %input.form-control{ type: f[field][:type],
-                         name: f[field][:name],
-                        value: f[field][:value],
-                  placeholder: f[field][:placeholder].to_s }<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-2<
+    %input.form-control.num-input{ type: f[field][:type],
+                                   name: f[field][:name],
+                                  value: f[field][:value],
+                            placeholder: f[field][:placeholder].to_s }<
 
 -# RECEIVING ENABLED
 - field = f.index { |x| x[:name] == 'receiving_enabled' }
 .form-group<
-  .col-sm-6.col-sm-offset-3<
+  .col-sm-5.col-sm-offset-2<
     .checkbox<
       %label<
         - if f[field][:checked]
@@ -103,7 +117,7 @@
 -# ENABLED
 - field = f.index { |x| x[:name] == 'enabled' }
 .form-group<
-  .col-sm-6.col-sm-offset-3<
+  .col-sm-5.col-sm-offset-2<
     .checkbox<
       %label<
         - if f[field][:checked]
@@ -115,28 +129,58 @@
 -# ALIASES
 - field = f.index { |x| x[:name] == 'aliases[]' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
-    %select.form-control{ name: f[field][:name], multiple: true }<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %select.form-control{ name: 'from[]', id: 'aliases', multiple: true,
+                          size: 8 }<
+      - f[field][:options].each do |opt|
+        - unless opt[:selected]
+          %option{ value: opt[:value] }<= opt[:text]
+  .col-sm-1<
+    %br<
+    %button.btn.btn-block{ type: 'button', id: 'aliases_rightAll' }<
+      %i.icon.icon-arrow-right-double<
+    %button.btn.btn-block{ type: 'button', id: 'aliases_rightSelected' }<
+      %i.icon.icon-arrow-right<
+    %button.btn.btn-block{ type: 'button', id: 'aliases_leftSelected' }<
+      %i.icon.icon-arrow-left<
+    %button.btn.btn-block{ type: 'button', id: 'aliases_leftAll' }<
+      %i.icon.icon-arrow-left-double<
+  .col-sm-3<
+    %select.form-control{ name: 'aliases[]', id: 'aliases_to', multiple: true,
+                          size: 8 }
       - f[field][:options].each do |opt|
         - if opt[:selected]
-          %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
-        - else
           %option{ value: opt[:value] }<= opt[:text]
 
 -# SOURCES
 - field = f.index { |x| x[:name] == 'sources[]' }
 .form-group<
-  %label.col-sm-3.control-label<= f[field][:label]
-  .col-sm-6<
-    %select.form-control{ name: f[field][:name], multiple: true }<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %select.form-control{ name: 'from[]', id: 'sources', multiple: true,
+                          size: 8 }<
+      - f[field][:options].each do |opt|
+        - unless opt[:selected]
+          %option{ value: opt[:value] }<= opt[:text]
+  .col-sm-1<
+    %br<
+    %button.btn.btn-block{ type: 'button', id: 'sources_rightAll' }<
+      %i.icon.icon-arrow-right-double<
+    %button.btn.btn-block{ type: 'button', id: 'sources_rightSelected' }<
+      %i.icon.icon-arrow-right<
+    %button.btn.btn-block{ type: 'button', id: 'sources_leftSelected' }<
+      %i.icon.icon-arrow-left<
+    %button.btn.btn-block{ type: 'button', id: 'sources_leftAll' }<
+      %i.icon.icon-arrow-left-double<
+  .col-sm-3<
+    %select.form-control{ name: 'sources[]', id: 'sources_to', multiple: true,
+                          size: 8 }
       - f[field][:options].each do |opt|
         - if opt[:selected]
-          %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
-        - else
           %option{ value: opt[:value] }<= opt[:text]
 
 -# SUBMIT
 .form-group<
-  .col-sm-offset-3.col-sm-6<
-    %button.btn.btn-default{ type: 'submit', value: 'submit' }< Submit
+  .col-sm-offset-2.col-sm-5<
+    %button.btn.btn-primary{ type: 'submit', value: 'submit' }< Submit
