@@ -1,0 +1,105 @@
+- @form[:hidden_fields].each do |f|
+  %input{ type: 'hidden', name: f[:name], value: f[:value] }<
+- f = @form[:visible_fields]
+
+-# NAME
+- field = f.index { |x| x[:name] == 'name' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+
+-# LOGIN
+- field = f.index { |x| x[:name] == 'login' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+
+-# CONTACT EMAIL
+- field = f.index { |x| x[:name] == 'contact_email' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+
+-# PASSWORD
+- field = f.index { |x| x[:name] == 'password' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name] }<
+
+-# PASSWORD CONFIRMATION
+- field = f.index { |x| x[:name] == 'password2' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name] }<
+
+-# ENABLED
+- field = f.index { |x| x[:name] == 'enabled' }
+.form-group<
+  .col-sm-5.col-sm-offset-2<
+    .checkbox<
+      %label<
+        - if f[field][:checked]
+          %input{ type: 'checkbox', name: f[field][:name],
+                  checked: 'checked' }<= f[field][:label]
+        - else
+          %input{ type: 'checkbox', name: f[field][:name] }<= f[field][:label]
+
+-# GROUP
+- field = f.index { |x| x[:name] == 'group_id' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %select.form-control{ name: f[field][:name] }<
+      - f[field][:options].each do |opt|
+        - if opt[:selected]
+          %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
+        - else
+          %option{ value: opt[:value] }<= opt[:text]
+
+-# PACKAGES
+- field = f.index { |x| x[:name] == 'packages[]' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %select.form-control{ name: 'from[]', id: 'packages', multiple: true,
+                          size: 8 }<
+      - f[field][:options].each do |opt|
+        - unless opt[:selected]
+          %option{ value: opt[:value] }<= opt[:text]
+  .col-sm-1<
+    %br<
+    %button.btn.btn-block{ type: 'button', id: 'packages_rightAll' }<
+      %i.icon.icon-arrow-right-double<
+    %button.btn.btn-block{ type: 'button', id: 'packages_rightSelected' }<
+      %i.icon.icon-arrow-right<
+    %button.btn.btn-block{ type: 'button', id: 'packages_leftSelected' }<
+      %i.icon.icon-arrow-left<
+    %button.btn.btn-block{ type: 'button', id: 'packages_leftAll' }<
+      %i.icon.icon-arrow-left-double<
+  .col-sm-3<
+    %select.form-control{ name: 'packages[]', id: 'packages_to', multiple: true,
+                          size: 8 }
+      - f[field][:options].each do |opt|
+        - if opt[:selected]
+          %option{ value: opt[:value] }<= opt[:text]
+
+-# SUBMIT
+.form-group<
+  .col-sm-offset-2.col-sm-5<
+    %button.btn.btn-primary{ type: 'submit', value: 'submit' }< Submit
