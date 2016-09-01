@@ -1,4 +1,6 @@
 .table-wrapper
+  %a{ href: '/mail/sources/new' }<
+    %button.btn.btn-success.icon-add= ' New MailSource'
   %table.table.table-striped
     %caption MailSources
     - unless @result.nil? || @result.empty?

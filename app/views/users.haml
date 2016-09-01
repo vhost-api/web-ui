@@ -1,7 +1,7 @@
 .table-wrapper
   - if admin? || reseller?
     %a{ href: '/users/new' }<
-      %button.btn.btn-default.btn-create.icon-add{ value: 'new' }= ' New User'
+      %button.btn.btn-success.icon-add{ value: 'new' }= ' New User'
   %table.table.table-striped
     %caption Users
     - unless @result.nil? || @result.empty?

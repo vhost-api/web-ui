@@ -1,7 +1,7 @@
 .table-wrapper
   - if admin? || reseller?
     %a{ href: '/packages/new' }<
-      %button.btn.btn-default.btn-create.icon-add= ' New Package'
+      %button.btn.btn-success.icon-add= ' New Package'
   %table.table.table-striped
     %caption Packages
     - unless @result.nil? || @result.empty?

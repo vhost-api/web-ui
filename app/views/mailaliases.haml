@@ -1,4 +1,6 @@
 .table-wrapper
+  %a{ href: '/mail/aliases/new' }<
+    %button.btn.btn-success.icon-add= ' New MailAlias'
   %table.table.table-striped
     %caption MailAliases
     - unless @result.nil? || @result.empty?

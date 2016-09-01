@@ -1,4 +1,6 @@
 .table-wrapper
+  %a{ href: '/mail/forwardings/new' }<
+    %button.btn.btn-success.icon-add= ' New MailForwarding'
   %table.table.table-striped
     %caption MailForwardings
     - unless @result.nil? || @result.empty?
