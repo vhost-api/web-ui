@@ -66,9 +66,7 @@
 
 -# SUBMIT
 .form-group<
-  .col-sm-offset-2.col-sm-1<
-    %button.btn.btn-primary.btn-block{ type: 'submit', value: 'submit' }< Submit
+  .col-sm-offset-2.col-sm-1<= haml :submit_button
   .col-sm-1<
   .col-sm-1<
-    %a{ href: '/mail/aliases' }<
-      %button.btn.btn-danger.btn-block{ type: 'button', value: 'abort' }< Cancel
+    %a{ href: '/mail/aliases' }<= haml :cancel_button

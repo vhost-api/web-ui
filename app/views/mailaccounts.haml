@@ -1,6 +1,6 @@
 .table-wrapper
-  %a{ href: '/mail/accounts/new' }<
-    %button.btn.btn-success.icon-add= ' New MailAccount'
+  - @create_btn_txt = 'New MailAccount'
+  %a{ href: '/mail/accounts/new' }<= haml :create_button
   %table.table.table-triped
     %caption MailAccounts
     %thead

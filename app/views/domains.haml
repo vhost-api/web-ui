@@ -1,6 +1,6 @@
 .table-wrapper
-  %a{ href: '/domains/new' }<
-    %button.btn.btn-success.icon-add{ value: 'new' }= ' New Domain'
+  - @create_btn_txt = 'New Domain'
+  %a{ href: '/domains/new' }<= haml :create_button
   %table.table.table-striped
     %caption Domains
     - unless @result.nil? || @result.empty?

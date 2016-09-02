@@ -36,6 +36,9 @@
           - field[:errors].each do |err|
             = err
             %br<
+-# SUBMIT
 .form-group<
-  .col-sm-offset-2.col-sm-4<
-    %button.btn.btn-primary{ type: 'submit', value: 'submit' }< Submit
+  .col-sm-offset-2.col-sm-1<= haml :submit_button
+  .col-sm-1<
+  .col-sm-1<
+    %a{ href: '/users' }<= haml :cancel_button

@@ -1,6 +1,6 @@
 .table-wrapper
-  %a{ href: '/mail/sources/new' }<
-    %button.btn.btn-success.icon-add= ' New MailSource'
+  - @create_btn_txt = 'New MailSource'
+  %a{ href: '/mail/sources/new' }<= haml :create_button
   %table.table.table-striped
     %caption MailSources
     - unless @result.nil? || @result.empty?

@@ -1,7 +1,7 @@
 .table-wrapper
   - if admin? || reseller?
-    %a{ href: '/users/new' }<
-      %button.btn.btn-success.icon-add{ value: 'new' }= ' New User'
+    - @create_btn_txt = 'New User'
+    %a{ href: '/users/new' }<= haml :create_button
   %table.table.table-striped
     %caption Users
     - unless @result.nil? || @result.empty?
