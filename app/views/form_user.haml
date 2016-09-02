@@ -82,16 +82,8 @@
       - f[field][:options].each do |opt|
         - unless opt[:selected]
           %option{ value: opt[:value] }<= opt[:text]
-  .col-sm-1<
-    %br<
-    %button.btn.btn-block{ type: 'button', id: 'packages_rightAll' }<
-      %i.icon.icon-arrow-right-double<
-    %button.btn.btn-block{ type: 'button', id: 'packages_rightSelected' }<
-      %i.icon.icon-arrow-right<
-    %button.btn.btn-block{ type: 'button', id: 'packages_leftSelected' }<
-      %i.icon.icon-arrow-left<
-    %button.btn.btn-block{ type: 'button', id: 'packages_leftAll' }<
-      %i.icon.icon-arrow-left-double<
+  - @msel_id = 'packages'
+  .col-sm-1<= haml :multiselect_button_group
   .col-sm-3<
     %select.form-control{ name: 'packages[]', id: 'packages_to', multiple: true,
                           size: 8 }
@@ -104,4 +96,4 @@
   .col-sm-offset-2.col-sm-1<= haml :submit_button
   .col-sm-1<
   .col-sm-1<
-    %a{ href: '/users' }<= haml :cancel_button
+    %a.nounderline{ href: '/users' }<= haml :cancel_button

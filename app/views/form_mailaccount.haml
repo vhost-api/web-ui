@@ -137,17 +137,8 @@
       - f[field][:options].each do |opt|
         - unless opt[:selected]
           %option{ value: opt[:value] }<= opt[:text]
-  .col-sm-1<
-    %br<
-    %br<
-    %button.btn.btn-block{ type: 'button', id: 'aliases_rightAll' }<
-      %i.icon.icon-arrow-right-double<
-    %button.btn.btn-block{ type: 'button', id: 'aliases_rightSelected' }<
-      %i.icon.icon-arrow-right<
-    %button.btn.btn-block{ type: 'button', id: 'aliases_leftSelected' }<
-      %i.icon.icon-arrow-left<
-    %button.btn.btn-block{ type: 'button', id: 'aliases_leftAll' }<
-      %i.icon.icon-arrow-left-double<
+  - @msel_id = 'aliases'
+  .col-sm-1<= haml :multiselect_button_group
   .col-sm-3<
     %label{ style: 'margin-top: 0.5em;' }< Selected
     %select.form-control{ name: 'aliases[]', id: 'aliases_to', multiple: true,
@@ -167,17 +158,8 @@
       - f[field][:options].each do |opt|
         - unless opt[:selected]
           %option{ value: opt[:value] }<= opt[:text]
-  .col-sm-1<
-    %br<
-    %br<
-    %button.btn.btn-block{ type: 'button', id: 'sources_rightAll' }<
-      %i.icon.icon-arrow-right-double<
-    %button.btn.btn-block{ type: 'button', id: 'sources_rightSelected' }<
-      %i.icon.icon-arrow-right<
-    %button.btn.btn-block{ type: 'button', id: 'sources_leftSelected' }<
-      %i.icon.icon-arrow-left<
-    %button.btn.btn-block{ type: 'button', id: 'sources_leftAll' }<
-      %i.icon.icon-arrow-left-double<
+  - @msel_id = 'sources'
+  .col-sm-1<= haml :multiselect_button_group
   .col-sm-3<
     %label{ style: 'margin-top: 0.5em;' }< Selected
     %select.form-control{ name: 'sources[]', id: 'sources_to', multiple: true,
@@ -191,4 +173,4 @@
   .col-sm-offset-2.col-sm-1<= haml :submit_button
   .col-sm-1<
   .col-sm-1<
-    %a{ href: '/mail/accounts' }<= haml :cancel_button
+    %a.nounderline{ href: '/mail/accounts' }<= haml :cancel_button

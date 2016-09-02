@@ -210,6 +210,10 @@ div#flash .error {
 	background-color: buttonface;
 }
 
+a.nounderline {
+	text-decoration: none;
+}
+
 /*
  * form stuff
  */
