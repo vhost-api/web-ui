@@ -62,7 +62,7 @@ class User
 
   def enabled_field
     FormField::Checkbox.new(
-      label: 'Enabled', name: 'enabled', value: @enabled
+      label: 'Enable User', name: 'enabled', value: @enabled
     ).to_hash
   end
 

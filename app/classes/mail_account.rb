@@ -69,7 +69,7 @@ class MailAccount
 
   def enabled_field
     FormField::Checkbox.new(
-      label: 'Enabled', name: 'enabled', value: @enabled
+      label: 'Enable MailAccount', name: 'enabled', value: @enabled
     ).to_hash
   end
 
@@ -123,7 +123,7 @@ class MailAccount
 
   def receiving_enabled_field
     FormField::Checkbox.new(
-      label: 'Receiving Enabled',
+      label: 'Enable Receiving',
       name: 'receiving_enabled',
       value: @receiving_enabled
     ).to_hash

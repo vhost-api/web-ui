@@ -36,7 +36,7 @@ class MailSource
 
   def enabled_field
     FormField::Checkbox.new(
-      label: 'Enabled', name: 'enabled', value: @enabled
+      label: 'Enable MailSource', name: 'enabled', value: @enabled
     ).to_hash
   end
 

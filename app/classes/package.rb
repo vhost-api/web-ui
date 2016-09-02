@@ -91,7 +91,7 @@ class Package
 
   def enabled_field
     FormField::Checkbox.new(
-      label: 'Enabled', name: 'enabled', value: @enabled
+      label: 'Enable Package', name: 'enabled', value: @enabled
     ).to_hash
   end
 
