@@ -1,0 +1,4 @@
+%h3 Edit MailAlias
+%form.form-horizontal{ id: 'edit_mailalias',
+  method: 'POST',
+  action: "/mail/aliases/#{@record['id']}" }<= haml :form_mailalias

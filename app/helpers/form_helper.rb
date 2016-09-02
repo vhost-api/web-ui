@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# rubocop:disable Metrics/ModuleLength
 # collection of form helpers
 module FormHelpers
   # @param class_name [String]
@@ -82,7 +83,11 @@ module FormHelpers
   # @return [Hash]
   def mail_aliases_select_options
     return [] if @mail_aliases.nil? || @mail_aliases.empty?
-    active_aliases = @record['mail_aliases'].map { |x| x['id'] }
+    active_aliases = if @record.nil?
+                       []
+                     else
+                       @record['mail_aliases'].map { |x| x['id'] }
+                     end
     @mail_aliases.each_value.map do |a|
       opt = { value: a['id'], text: a['address'] }
       opt[:selected] = 'selected' if active_aliases.include?(a['id'])
@@ -93,10 +98,29 @@ module FormHelpers
   # @return [Hash]
   def mail_sources_select_options
     return [] if @mail_sources.nil? || @mail_sources.empty?
-    active_sources = @record['mail_sources'].map { |x| x['id'] }
+    active_sources = if @record.nil?
+                       []
+                     else
+                       @record['mail_sources'].map { |x| x['id'] }
+                     end
     @mail_sources.each_value.map do |s|
       opt = { value: s['id'], text: s['address'] }
       opt[:selected] = 'selected' if active_sources.include?(s['id'])
+      opt
+    end
+  end
+
+  # @return [Hash]
+  def mail_accounts_select_options
+    return [] if @mail_accounts.nil? || @mail_accounts.empty?
+    active_accounts = if @record.nil?
+                        []
+                      else
+                        @record['mail_accounts'].map { |x| x['id'] }
+                      end
+    @mail_accounts.each_value.map do |a|
+      opt = { value: a['id'], text: a['email'] }
+      opt[:selected] = 'selected' if active_accounts.include?(a['id'])
       opt
     end
   end

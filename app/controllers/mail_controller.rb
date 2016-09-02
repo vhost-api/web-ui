@@ -32,29 +32,43 @@ namespace '/mail' do
       @domains = { '0' => { 'id' => 0, 'name' => 'Please select a domain...' } }
       _dummy, existing_domains = api_query('domains')
       @domains.merge!(existing_domains)
-      ui_create('MailAccount', domain_opts: 'domain_select_options')
+      _dummy, @mail_aliases = api_query('mailaliases')
+      _dummy, @mail_sources = api_query('mailsources')
+      ui_create('MailAccount',
+                domain_opts: 'domain_select_options',
+                mail_alias_opts: 'mail_aliases_select_options',
+                mail_source_opts: 'mail_sources_select_options')
     end
 
     post do
-      # TODO: mail_aliases/mail_sources stuff
       create_params = {}
       # passwords must match
       passwd = params['password']
       unless passwd == params['password2']
         flash[:error] = 'Passwords must match'
-        redirect "/mail/accounts/#{params['id']}/edit"
+        redirect '/mail/accounts/new'
       end
 
       create_params[:password] = passwd unless passwd.nil? || passwd == ''
 
+      create_params[:domain_id] = params['domain_id'].to_i
       _dummy, domain = api_query("domains/#{params['domain_id']}")
-      create_params[:domain_id] = domain['id'].to_i
-      create_params[:email] = "#{params['localpart']}@#{domain['name']}"
 
-      %w(realname quota quota_sieve_script quota_sieve_actions
-         quota_sieve_redirects).each do |k|
-        create_params[k.to_sym] = params[k]
+      create_params[:email] = [params['localpart'], domain['name']].join('@')
+
+      create_params[:realname] = params['realname']
+
+      %w(quota quota_sieve_script).each do |k|
+        input = params[k].to_f
+        mult = params["#{k}_unit"].to_i
+        value = (input * mult).round(0)
+        create_params[k.to_sym] = value
       end
+
+      %w(quota_sieve_actions quota_sieve_redirects).each do |k|
+        create_params[k.to_sym] = params[k].to_i
+      end
+
       %w(receiving_enabled enabled).each do |k|
         create_params[k.to_sym] = if params[k].nil?
                                     false
@@ -63,6 +77,19 @@ namespace '/mail' do
                                   end
       end
 
+      als = params['aliases']
+      create_params[:aliases] = if als.nil? || als == ''
+                                  []
+                                else
+                                  als.map(&:to_i)
+                                end
+
+      src = params['sources']
+      create_params[:sources] = if src.nil? || src == ''
+                                  []
+                                else
+                                  src.map(&:to_i)
+                                end
       result = api_create('mailaccounts', create_params)
 
       if result['status'] == 'success'
@@ -102,8 +129,7 @@ namespace '/mail' do
       end
 
       post do
-        p(params)
-        update_params = {}
+        upd_params = {}
         # passwords must match
         passwd = params['password']
         unless passwd == params['password2']
@@ -111,42 +137,49 @@ namespace '/mail' do
           redirect "/mail/accounts/#{params['id']}/edit"
         end
 
-        update_params[:password] = passwd unless passwd.nil? || passwd == ''
+        upd_params[:password] = passwd unless passwd.nil? || passwd == ''
 
-        update_params[:domain_id] = params['domain_id'].to_i
+        upd_params[:domain_id] = params['domain_id'].to_i
         _dummy, domain = api_query("domains/#{params['domain_id']}")
 
-        update_params[:email] = [params['localpart'], domain['name']].join('@')
+        upd_params[:email] = [params['localpart'], domain['name']].join('@')
 
-        update_params[:realname] = params['realname']
+        upd_params[:realname] = params['realname']
 
         %w(quota quota_sieve_script).each do |k|
           input = params[k].to_f
           mult = params["#{k}_unit"].to_i
           value = (input * mult).round(0)
-          update_params[k.to_sym] = value
+          upd_params[k.to_sym] = value
         end
 
         %w(quota_sieve_actions quota_sieve_redirects).each do |k|
-          update_params[k.to_sym] = params[k].to_i
+          upd_params[k.to_sym] = params[k].to_i
         end
 
         %w(receiving_enabled enabled).each do |k|
-          update_params[k.to_sym] = if params[k].nil?
-                                      false
-                                    else
-                                      string_to_bool(params[k])
-                                    end
+          upd_params[k.to_sym] = if params[k].nil?
+                                   false
+                                 else
+                                   string_to_bool(params[k])
+                                 end
         end
 
         als = params['aliases']
-        update_params[:aliases] = als.map(&:to_i) unless als.nil? || als == ''
+        upd_params[:aliases] = if als.nil? || als == ''
+                                 []
+                               else
+                                 als.map(&:to_i)
+                               end
 
         src = params['sources']
-        update_params[:sources] = src.map(&:to_i) unless src.nil? || src == ''
+        upd_params[:sources] = if src.nil? || src == ''
+                                 []
+                               else
+                                 src.map(&:to_i)
+                               end
 
-        p(update_params)
-        result = api_update("mailaccounts/#{params['id']}", update_params)
+        result = api_update("mailaccounts/#{params['id']}", upd_params)
 
         if result['status'] == 'success'
           msg = "Successfully updated MailAcccount #{params['id']}"
@@ -211,6 +244,64 @@ namespace '/mail' do
     end
 
     namespace'/:id' do
+      get '/edit' do
+        _dummy, @record = api_query("mailaliases/#{params['id']}")
+        d_id = @record['domain']['id']
+        _dummy, @domains = api_query('domains')
+        _dummy, @mail_accounts = api_query("mailaccounts?q[domain_id]=#{d_id}")
+        ui_edit('MailAlias',
+                domain_opts: 'domain_select_options',
+                mail_account_opts: 'mail_accounts_select_options')
+      end
+
+      post do
+        upd_params = {}
+
+        upd_params[:domain_id] = params['domain_id'].to_i
+        _dummy, domain = api_query("domains/#{params['domain_id']}")
+
+        upd_params[:address] = [params['localpart'], domain['name']].join('@')
+
+        %w(enabled).each do |k|
+          upd_params[k.to_sym] = if params[k].nil?
+                                   false
+                                 else
+                                   string_to_bool(params[k])
+                                 end
+        end
+
+        acs = params['accounts']
+        upd_params[:dest] = if acs.nil? || acs == ''
+                              []
+                            else
+                              acs.map(&:to_i)
+                            end
+
+        result = api_update("mailaliases/#{params['id']}", upd_params)
+
+        if result['status'] == 'success'
+          msg = "Successfully updated MailAlias #{params['id']}"
+          msg += ", #{params['address']}"
+          flash[:success] = msg
+          @record = result['data']['object']
+          redirect '/mail/aliases'
+        else
+          err_id, msg = parse_api_error(result)
+          flash[:error] = msg
+          case err_id
+          when '1003' then
+            # not found
+            redirect '/mail/aliases'
+          when '1002' then
+            # permission denied or quota exhausted
+            redirect '/mail/aliases'
+          else
+            # try again
+            redirect "/mail/aliases/#{params['id']}/edit"
+          end
+        end
+      end
+
       get '/delete' do
         _dummy, record = api_query("mailaliases/#{params['id']}")
         @delete = {
@@ -254,6 +345,64 @@ namespace '/mail' do
     end
 
     namespace'/:id' do
+      get '/edit' do
+        _dummy, @record = api_query("mailsources/#{params['id']}")
+        d_id = @record['domain']['id']
+        _dummy, @domains = api_query('domains')
+        _dummy, @mail_accounts = api_query("mailaccounts?q[domain_id]=#{d_id}")
+        ui_edit('MailSource',
+                domain_opts: 'domain_select_options',
+                mail_account_opts: 'mail_accounts_select_options')
+      end
+
+      post do
+        upd_params = {}
+
+        upd_params[:domain_id] = params['domain_id'].to_i
+        _dummy, domain = api_query("domains/#{params['domain_id']}")
+
+        upd_params[:address] = [params['localpart'], domain['name']].join('@')
+
+        %w(enabled).each do |k|
+          upd_params[k.to_sym] = if params[k].nil?
+                                   false
+                                 else
+                                   string_to_bool(params[k])
+                                 end
+        end
+
+        acs = params['accounts']
+        upd_params[:dest] = if acs.nil? || acs == ''
+                              []
+                            else
+                              acs.map(&:to_i)
+                            end
+
+        result = api_update("mailsources/#{params['id']}", upd_params)
+
+        if result['status'] == 'success'
+          msg = "Successfully updated MailSource #{params['id']}"
+          msg += ", #{params['address']}"
+          flash[:success] = msg
+          @record = result['data']['object']
+          redirect '/mail/sources'
+        else
+          err_id, msg = parse_api_error(result)
+          flash[:error] = msg
+          case err_id
+          when '1003' then
+            # not found
+            redirect '/mail/sources'
+          when '1002' then
+            # permission denied or quota exhausted
+            redirect '/mail/sources'
+          else
+            # try again
+            redirect "/mail/sources/#{params['id']}/edit"
+          end
+        end
+      end
+
       get '/delete' do
         _dummy, record = api_query("mailsources/#{params['id']}")
         @delete = {
@@ -294,6 +443,137 @@ namespace '/mail' do
         fields: %w(id address created_at updated_at enabled domain
                    destinations).join(',')
       )
+    end
+
+    get '/new' do
+      @domains = { '0' => { 'id' => 0, 'name' => 'Please select a domain...' } }
+      _dummy, existing_domains = api_query('domains')
+      @domains.merge!(existing_domains)
+      ui_create('MailForwarding', domain_opts: 'domain_select_options')
+    end
+
+    post do
+      create_params = {}
+
+      create_params[:domain_id] = params['domain_id'].to_i
+      _dummy, domain = api_query("domains/#{params['domain_id']}")
+
+      create_params[:address] = [params['localpart'], domain['name']].join('@')
+      create_params[:destinations] = params['destinations']
+
+      %w(enabled).each do |k|
+        create_params[k.to_sym] = if params[k].nil?
+                                    false
+                                  else
+                                    string_to_bool(params[k])
+                                  end
+      end
+
+      result = api_create('mailforwardings', create_params)
+
+      if result['status'] == 'success'
+        @record = result['data']['object']
+        msg = "Successfully created MailForwarding #{@record['id']}"
+        msg += ", #{@record['address']}"
+        flash[:success] = msg
+        redirect '/mail/forwardings'
+      else
+        err_id, msg = parse_api_error(result)
+        flash[:error] = msg
+        case err_id
+        when '1003' then
+          # not found
+          redirect '/mail/forwardings'
+        when '1002' then
+          # permission denied or quota exhausted
+          redirect '/mail/forwardings'
+        else
+          # try again
+          redirect '/mail/forwardings/new'
+        end
+      end
+    end
+
+    namespace'/:id' do
+      get '/edit' do
+        _dummy, @record = api_query("mailforwardings/#{params['id']}")
+        _dummy, @domains = api_query('domains')
+        ui_edit('MailForwarding',
+                domain_opts: 'domain_select_options')
+      end
+
+      post do
+        upd_params = {}
+
+        upd_params[:domain_id] = params['domain_id'].to_i
+        _dummy, domain = api_query("domains/#{params['domain_id']}")
+
+        upd_params[:address] = [params['localpart'], domain['name']].join('@')
+        upd_params[:destinations] = params['destinations']
+
+        %w(enabled).each do |k|
+          upd_params[k.to_sym] = if params[k].nil?
+                                   false
+                                 else
+                                   string_to_bool(params[k])
+                                 end
+        end
+
+        result = api_update("mailforwardings/#{params['id']}", upd_params)
+
+        if result['status'] == 'success'
+          msg = "Successfully updated MailForwarding #{params['id']}"
+          msg += ", #{params['address']}"
+          flash[:success] = msg
+          @record = result['data']['object']
+          redirect '/mail/forwardings'
+        else
+          err_id, msg = parse_api_error(result)
+          flash[:error] = msg
+          case err_id
+          when '1003' then
+            # not found
+            redirect '/mail/forwardings'
+          when '1002' then
+            # permission denied or quota exhausted
+            redirect '/mail/forwardings'
+          else
+            # try again
+            redirect "/mail/forwardings/#{params['id']}/edit"
+          end
+        end
+      end
+
+      get '/delete' do
+        _dummy, record = api_query("mailsources/#{params['id']}")
+        @delete = {
+          class_name: 'MailSource',
+          name: 'delete_mailsource',
+          endpoint: 'mail/sources',
+          id: record['id'],
+          detail: record['address']
+        }
+        ui_delete
+      end
+
+      post '/delete' do
+        resource = "mailsources/#{params['id']}"
+        _dummy, record = api_query(resource)
+        result = api_delete(resource)
+
+        if result['status'] == 'success'
+          msg = "Successfully deleted MailSource #{record['id']}"
+          msg += " (#{record['address']})"
+          flash[:success] = msg
+        else
+          s = result['status']
+          e = result['error_id']
+          m = result['message']
+          msg = "#{s}: #{e}, #{m}"
+          flash[:error] = msg
+        end
+        redirect '/mail/sources'
+      end
     end
   end
 

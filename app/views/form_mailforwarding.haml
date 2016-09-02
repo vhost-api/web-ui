@@ -1,0 +1,53 @@
+- @form[:hidden_fields].each do |f|
+  %input{ type: 'hidden', name: f[:name], value: f[:value] }<
+- f = @form[:visible_fields]
+
+-# EMAIL ADDRESS WITH DOMAIN SELECT
+- field = f.index { |x| x[:name] == 'localpart' }
+- domain_field = f.index { |x| x[:name] == 'domain_id' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-3<
+    %input.form-control{ type: f[field][:type],
+                         name: f[field][:name],
+                        value: f[field][:value],
+                  placeholder: f[field][:placeholder].to_s }<
+  .col-sm-3<
+    .input-group<
+      %span.input-group-addon< @
+      %select.form-control{ name: f[domain_field][:name] }<
+        - f[domain_field][:options].each do |opt|
+          - if opt[:selected]
+            %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
+          - else
+            %option{ value: opt[:value] }<= opt[:text]
+
+-# ENABLED
+- field = f.index { |x| x[:name] == 'enabled' }
+.form-group<
+  .col-sm-5.col-sm-offset-2<
+    .checkbox<
+      %label<
+        - if f[field][:checked]
+          %input{ type: 'checkbox', name: f[field][:name],
+                  checked: 'checked' }<= f[field][:label]
+        - else
+          %input{ type: 'checkbox', name: f[field][:name] }<= f[field][:label]
+
+-# Destinations
+- field = f.index { |x| x[:name] == 'destinations' }
+.form-group<
+  %label.col-sm-2.control-label<= f[field][:label]
+  .col-sm-4<
+    %textarea.form-control{ name: 'destinations',
+                              id: 'destinations',
+                            rows: 12 }<= f[field][:value]
+
+-# SUBMIT
+.form-group<
+  .col-sm-offset-2.col-sm-1<
+    %button.btn.btn-primary.btn-block{ type: 'submit', value: 'submit' }< Submit
+  .col-sm-1<
+  .col-sm-1<
+    %a{ href: '/mail/forwardings' }<
+      %button.btn.btn-danger.btn-block{ type: 'button', value: 'abort' }< Cancel

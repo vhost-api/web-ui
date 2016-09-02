@@ -1,0 +1,4 @@
+%h3 Edit MailForwarding
+%form.form-horizontal{ id: 'edit_mailforwarding',
+  method: 'POST',
+  action: "/mail/forwardings/#{@record['id']}" }<= haml :form_mailforwarding

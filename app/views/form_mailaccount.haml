@@ -131,12 +131,14 @@
 .form-group<
   %label.col-sm-2.control-label<= f[field][:label]
   .col-sm-3<
+    %label{ style: 'margin-top: 0.5em;' }< Available
     %select.form-control{ name: 'from[]', id: 'aliases', multiple: true,
                           size: 8 }<
       - f[field][:options].each do |opt|
         - unless opt[:selected]
           %option{ value: opt[:value] }<= opt[:text]
   .col-sm-1<
+    %br<
     %br<
     %button.btn.btn-block{ type: 'button', id: 'aliases_rightAll' }<
       %i.icon.icon-arrow-right-double<
@@ -147,6 +149,7 @@
     %button.btn.btn-block{ type: 'button', id: 'aliases_leftAll' }<
       %i.icon.icon-arrow-left-double<
   .col-sm-3<
+    %label{ style: 'margin-top: 0.5em;' }< Selected
     %select.form-control{ name: 'aliases[]', id: 'aliases_to', multiple: true,
                           size: 8 }
       - f[field][:options].each do |opt|
@@ -158,12 +161,14 @@
 .form-group<
   %label.col-sm-2.control-label<= f[field][:label]
   .col-sm-3<
+    %label{ style: 'margin-top: 0.5em;' }< Available
     %select.form-control{ name: 'from[]', id: 'sources', multiple: true,
                           size: 8 }<
       - f[field][:options].each do |opt|
         - unless opt[:selected]
           %option{ value: opt[:value] }<= opt[:text]
   .col-sm-1<
+    %br<
     %br<
     %button.btn.btn-block{ type: 'button', id: 'sources_rightAll' }<
       %i.icon.icon-arrow-right-double<
@@ -174,6 +179,7 @@
     %button.btn.btn-block{ type: 'button', id: 'sources_leftAll' }<
       %i.icon.icon-arrow-left-double<
   .col-sm-3<
+    %label{ style: 'margin-top: 0.5em;' }< Selected
     %select.form-control{ name: 'sources[]', id: 'sources_to', multiple: true,
                           size: 8 }
       - f[field][:options].each do |opt|
@@ -182,5 +188,9 @@
 
 -# SUBMIT
 .form-group<
-  .col-sm-offset-2.col-sm-5<
-    %button.btn.btn-primary{ type: 'submit', value: 'submit' }< Submit
+  .col-sm-offset-2.col-sm-1<
+    %button.btn.btn-primary.btn-block{ type: 'submit', value: 'submit' }< Submit
+  .col-sm-1<
+  .col-sm-1<
+    %a{ href: '/mail/accounts' }<
+      %button.btn.btn-danger.btn-block{ type: 'button', value: 'abort' }< Cancel

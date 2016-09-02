@@ -93,12 +93,12 @@ module APIHelpers
     msg = "#{result['status']}: #{e}, #{result['message']}"
     unless result['data'].nil?
       errors = result.fetch('data', {}).fetch('errors', {})
-      validation = errors.fetch('validation', {}) if errors.key?('validation')
-      if validation.is_a?(Array)
-        validation.each do |err|
-          msg += "</br>field: #{err['field']}, errors: #{err['errors']}"
-        end
-      end
+      # validation = errors.fetch('validation', {}) if errors.key?('validation')
+      # if validation.is_a?(Array)
+      #   validation.each do |err|
+      #     msg += "</br>field: #{err['field']}, errors: #{err['errors']}"
+      #   end
+      # end
       msg += "</br>#{errors.inspect}" if errors
     end
     [e, msg]
