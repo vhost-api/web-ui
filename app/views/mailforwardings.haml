@@ -25,24 +25,24 @@
           %th<
           %th.no-sort<
       %tbody
-        - @result.each_value do |mailforwarding|
-          - fwdid = mailforwarding['id']
+        - @result.each_value do |mfwd|
+          - fwdid = mfwd['id']
           - en = 'icon-check item-enabled'
           - dis = 'icon-cross item-disabled'
-          - suff = mailforwarding['enabled'] ? en : dis
-          - textval = mailforwarding['enabled'] ? ' yes' : ' no'
-          - a_del = "/mail/forwardings/#{mailforwarding['id']}/delete"
+          - suff = mfwd['enabled'] ? en : dis
+          - textval = mfwd['enabled'] ? ' yes' : ' no'
+          - a_del = "/mail/forwardings/#{mfwd['id']}/delete"
           %tr
             %td<= fwdid
             %td<
               %a{ href: "/mail/forwardings/#{fwdid}/edit" }<
-                = mailforwarding['address']
-            %td<= Time.at(mailforwarding['created_at'].to_i).strftime('%F')
-            %td<= Time.at(mailforwarding['updated_at'].to_i).strftime('%F')
+                = mfwd['address']
+            %td.iso-date<= Time.at(mfwd['created_at'].to_i).strftime('%F')
+            %td.iso-date<= Time.at(mfwd['updated_at'].to_i).strftime('%F')
             %td.icon{ class: "icon #{suff}" }= textval
-            %td<= mailforwarding['domain']['name']
+            %td<= mfwd['domain']['name']
             %td<
-              - mailforwarding['destinations'].split("\n").each do |dest|
+              - mfwd['destinations'].split("\n").each do |dest|
                 %p<= dest
             %td<
               %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'

@@ -43,8 +43,8 @@
               %a{ href: "/domains/#{d['id']}/edit" }<= d['name']
             %td.icon{ class: "icon #{mail_en_suff}" }= mail_en_textval
             %td.icon{ class: "icon #{dns_en_suff}" }= dns_en_textval
-            %td<= Time.at(d['created_at'].to_i).strftime('%F')
-            %td<= Time.at(d['updated_at'].to_i).strftime('%F')
+            %td.iso-date<= Time.at(d['created_at'].to_i).strftime('%F')
+            %td.iso-date<= Time.at(d['updated_at'].to_i).strftime('%F')
             %td.icon{ class: "icon #{en_suff}" }= en_textval
             %td<= d['user']['name']
             %td<

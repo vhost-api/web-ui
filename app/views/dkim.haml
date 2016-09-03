@@ -32,8 +32,8 @@
           %td<= dkim['id']
           %td<
             %a{ href: "/mail/dkim/#{dkim['id']}/edit" }= dkim['selector']
-          %td<= Time.at(dkim['created_at'].to_i).strftime('%F')
-          %td<= Time.at(dkim['updated_at'].to_i).strftime('%F')
+          %td.iso-date<= Time.at(dkim['created_at'].to_i).strftime('%F')
+          %td.iso-date<= Time.at(dkim['updated_at'].to_i).strftime('%F')
           %td<= dkim['domain']['name']
           %td.icon{ class: suff }= textval
           %td<
@@ -78,8 +78,8 @@
           %td<= dkimsgn['id']
           %td<
             %a{ href: "/mail/dkimsigning/#{dksgnid}/edit" }= dkimsgn['author']
-          %td<= Time.at(dkimsgn['created_at'].to_i).strftime('%F')
-          %td<= Time.at(dkimsgn['updated_at'].to_i).strftime('%F')
+          %td.iso-date<= Time.at(dkimsgn['created_at'].to_i).strftime('%F')
+          %td.iso-date<= Time.at(dkimsgn['updated_at'].to_i).strftime('%F')
           %td.icon{ class: suff }= textval
           %td<= dkimsgn['dkim']['id']
           %td<

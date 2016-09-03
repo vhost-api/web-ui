@@ -43,8 +43,8 @@
               %a{ href: "/users/#{u['id']}/edit" }<= u['name']
             %td<= u['login']
             %td<= u['contact_email']
-            %td<= Time.at(u['created_at'].to_i).strftime('%F')
-            %td<= Time.at(u['updated_at'].to_i).strftime('%F')
+            %td.iso-date<= Time.at(u['created_at'].to_i).strftime('%F')
+            %td.iso-date<= Time.at(u['updated_at'].to_i).strftime('%F')
             %td.icon{ class: "icon #{suff}" }= textval
             %td<= u['group']['name']
             %td<= reseller

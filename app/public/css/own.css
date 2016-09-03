@@ -248,6 +248,11 @@ th.small-search {
 	white-space: nowrap;
 }
 
+td.iso-date {
+	width: 1%;
+	white-space: nowrap;
+}
+
 .progress {
 	min-width: 100px;
 }

@@ -36,8 +36,8 @@
             %td<= aliasid
             %td<
               %a{ href: "/mail/aliases/#{aliasid}/edit" }<= mailalias['address']
-            %td<= Time.at(mailalias['created_at'].to_i).strftime('%F')
-            %td<= Time.at(mailalias['updated_at'].to_i).strftime('%F')
+            %td.iso-date<= Time.at(mailalias['created_at'].to_i).strftime('%F')
+            %td.iso-date<= Time.at(mailalias['updated_at'].to_i).strftime('%F')
             %td.icon{ class: "icon #{suff}" }= textval
             %td<= mailalias['domain']['name']
             %td<
