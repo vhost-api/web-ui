@@ -1,17 +1,27 @@
 .table-wrapper
-  %table.table.table-triped
-    %caption DKIM Keys
-    %thead
-      %tr
+  %table.table.table-triped.data-table<
+    %caption< DKIM Keys
+    %thead<
+      %tr<
         %th< ID
         %th< Selector
         %th< Created
         %th< Updated
         %th< Domain
-        %th< Enabled
+        %th.bool< Enabled
         %th< Authors
+        %th.no-sort<
+    %tfoot<
+      %tr<
+        %th.no-search<
         %th<
-    %tbody
+        %th<
+        %th<
+        %th<
+        %th<
+        %th<
+        %th.no-sort<
+    %tbody<
       - @dkims.each_value do |dkim|
         - en = 'icon-check item-enabled'
         - dis = 'icon-cross item-disabled'
@@ -32,8 +42,11 @@
           %td<
             %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
 
+%br<
+%br<
+
 .table-wrapper
-  %table.table.table-triped
+  %table.table.table-triped.data-table
     %caption DKIM Author-Key Associations
     %thead
       %tr
@@ -41,9 +54,18 @@
         %th< Author
         %th< Created
         %th< Updated
-        %th< Enabled
+        %th.bool< Enabled
         %th< DKIM Key
         %th<
+    %tfoot<
+      %tr<
+        %th.no-search<
+        %th<
+        %th<
+        %th<
+        %th<
+        %th<
+        %th.no-sort<
     %tbody
       - @dkimsignings.each_value do |dkimsgn|
         - dksgnid = dkimsgn['id']

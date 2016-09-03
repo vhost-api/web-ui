@@ -1,7 +1,7 @@
 .table-wrapper
   - @create_btn_txt = 'New MailSource'
   %a{ href: '/mail/sources/new' }<= haml :create_button
-  %table.table.table-striped
+  %table.table.table-striped.data-table
     %caption MailSources
     - unless @result.nil? || @result.empty?
       %thead
@@ -10,10 +10,20 @@
           %th< Address
           %th< Created
           %th< Updated
-          %th< Enabled
+          %th.bool< Enabled
           %th< Domain
           %th< Allowed From
+          %th.no-sort<
+      %tfoot<
+        %tr<
+          %th.no-search<
           %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th.no-sort<
       %tbody
         - @result.each_value do |mailsource|
           - s_id = mailsource['id']

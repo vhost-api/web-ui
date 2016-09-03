@@ -1,20 +1,31 @@
 .table-wrapper
   - @create_btn_txt = 'New Domain'
   %a{ href: '/domains/new' }<= haml :create_button
-  %table.table.table-striped
+  %table.table.table-striped.data-table
     %caption Domains
     - unless @result.nil? || @result.empty?
       %thead
         %tr
           %th< ID
           %th< Domain Name
-          %th< Email Enabled
-          %th< DNS Enabled
+          %th.bool< Email Enabled
+          %th.bool< DNS Enabled
           %th< Created
           %th< Updated
-          %th< Enabled
+          %th.bool< Enabled
           %th< User
+          %th.no-sort<
+      %tfoot
+        %tr
+          %th.no-search<
           %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th.no-sort<
       %tbody
         - @result.each_value do |d|
           - en = 'icon-check item-enabled'

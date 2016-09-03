@@ -1,18 +1,28 @@
 .table-wrapper
   - @create_btn_txt = 'New MailAccount'
   %a{ href: '/mail/accounts/new' }<= haml :create_button
-  %table.table.table-triped
+  %table.table.table-triped.data-table
     %caption MailAccounts
     %thead
       %tr
         %th< ID
-        %th< Enabled
+        %th.bool< Enabled
         %th< Email Address
         %th< Realname
-        %th< Receiving
+        %th.bool< Receiving
         %th< Usage
-        %th{ style: 'text-align: right;' }< Quota
+        %th.quota-bytes< Quota
+        %th.no-sort<
+    %tfoot
+      %tr
+        %th.no-search<
         %th<
+        %th<
+        %th<
+        %th<
+        %th.no-search<
+        %th<
+        %th.no-sort<
     %tbody
       - @result.each_value do |mailaccount|
         - acc_id = mailaccount['id']

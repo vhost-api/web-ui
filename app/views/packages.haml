@@ -2,7 +2,7 @@
   - if admin? || reseller?
     - @create_btn_txt = 'New Package'
     %a{ href: '/packages/new' }<= haml :create_button
-  %table.table.table-striped
+  %table.table.table-striped.data-table
     %caption Packages
     - unless @result.nil? || @result.empty?
       %thead
@@ -31,7 +31,34 @@
           %th< SFTP Users
           %th< Shell Users
           %th< SSH Pubkeys
+          %th.no-sort<
+      %tfoot
+        %tr
+          %th.no-search<
           %th<
+          %th<
+          %th<
+          %th<
+          %th.bool<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th.no-sort<
       %tbody
         - @result.each_value do |p|
           - en = 'icon-check item-enabled'
@@ -55,9 +82,9 @@
             %td<= p['quota_mail_accounts']
             %td<= p['quota_mail_aliases']
             %td<= p['quota_mail_sources']
-            %td<= p['quota_mail_storage']
+            %td<= Filesize.from("#{p['quota_mail_storage'].to_i} b").pretty
             %td<= p['quota_vhosts']
-            %td<= p['quota_vhost_storage']
+            %td<= Filesize.from("#{p['quota_vhost_storage'].to_i} b").pretty
             %td<= p['quota_databases']
             %td<= p['quota_database_users']
             %td<= p['quota_dns_zones']

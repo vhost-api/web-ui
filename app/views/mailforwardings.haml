@@ -1,19 +1,29 @@
 .table-wrapper
   - @create_btn_txt = 'New MailForwarding'
   %a{ href: '/mail/forwardings/new' }<= haml :create_button
-  %table.table.table-striped
+  %table.table.table-striped.data-table
     %caption MailForwardings
     - unless @result.nil? || @result.empty?
-      %thead
-        %tr
+      %thead<
+        %tr<
           %th< ID
           %th< Address
           %th< Created
           %th< Updated
-          %th< Enabled
+          %th.bool< Enabled
           %th< Domain
           %th< Destinations
+          %th.no-sort<
+      %tfoot<
+        %tr<
+          %th.no-search<
           %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th.no-sort<
       %tbody
         - @result.each_value do |mailforwarding|
           - fwdid = mailforwarding['id']

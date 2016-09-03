@@ -2,7 +2,7 @@
   - if admin? || reseller?
     - @create_btn_txt = 'New User'
     %a{ href: '/users/new' }<= haml :create_button
-  %table.table.table-striped
+  %table.table.table-striped.data-table
     %caption Users
     - unless @result.nil? || @result.empty?
       %thead
@@ -13,10 +13,22 @@
           %th< Contact Email
           %th< Created
           %th< Updated
-          %th< Enabled
+          %th.bool< Enabled
           %th< Group
           %th< Reseller
+          %th.no-sort<
+      %tfoot
+        %tr
+          %th.no-search<
           %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th<
+          %th.no-sort<
       %tbody
         - @result.each_value do |u|
           - en = 'icon-check item-enabled'

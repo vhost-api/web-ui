@@ -78,4 +78,34 @@ $( document ).ready(function() {
 
 		input_field.data('bytes', value);
 	});
+
+	// setup text input for each footer cell
+	$('.data-table tfoot th:not(.no-sort):not(.no-search)').each(function() {
+		$(this).html('<input type="text" class="form-control table-search" placeholder="..." />');
+	});
+
+	// initializa datatables
+	$('.data-table').each(function() {
+		var table = $(this).DataTable({
+			paging: false,
+			columnDefs: [
+			{ targets: 'no-sort', orderable: false }
+			],
+			searching: true,
+			"sDom": 'lrtip'
+		});
+
+		// bind the search
+		table.columns().every(function() {
+			var that = this;
+
+			$( 'input', this.footer() ).on( 'keyup change', function () {
+				if ( that.search() !== this.value ) {
+					that
+						.search( this.value )
+						.draw();
+				}
+			} );
+		} );
+	});
 });
