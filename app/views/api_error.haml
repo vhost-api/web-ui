@@ -7,7 +7,10 @@
         %th< Error ID
         %th< Message
     %tbody
-      %tr<
+      %tr.danger<
         %td<= @result['status']
         %td<= @result['error_id']
         %td<= @result['message']
+%br<
+%br<
+.alert.alert-danger< Response from API was: #{@msg}

@@ -122,8 +122,7 @@ module APIHelpers
     halt 500, haml(:internal_error) if response.nil?
     if response.key?('status')
       return true if response['status'] == 'success'
-      err_id, msg = parse_api_error(response)
-      flash[:error] = msg
+      err_id, @msg = parse_api_error(response)
       case err_id
       when '1004' then
         halt 404, haml(:not_found)
