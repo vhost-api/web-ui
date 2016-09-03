@@ -2,7 +2,7 @@ development:
   :site_title: 'vhost-API UI'
   :api_url: 'http://localhost:9393'
   :api_ver: 1
-  :api_key_id: 'vhost-api-ui'
+  :api_key_comment: 'vhost-api-ui'
   :session:
     :timeout: 86400 # 1 day
     :domain: 'localhost.localdomain'
@@ -18,7 +18,7 @@ test:
   :site_title: 'vhost-API UI'
   :api_url: 'http://localhost:9393'
   :api_ver: 1
-  :api_key_id: 'vhost-api-ui'
+  :api_key_comment: 'vhost-api-ui'
   :session:
     :timeout: 86400 # 1 day
     :domain: 'localhost.localdomain'
@@ -34,7 +34,7 @@ production:
   :site_title: 'vhost-API UI'
   :api_url: 'https://api.example.com'
   :api_ver: 1
-  :api_key_id: 'vhost-api-ui'
+  :api_key_comment: 'vhost-api-ui'
   :session:
     :timeout: 86400 # 1 day
     :domain: 'localhost'
