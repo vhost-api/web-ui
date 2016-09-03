@@ -119,12 +119,9 @@ module APIHelpers
   # @param response [Hash]
   # @return [Boolean]
   def check_response(response)
-    p(response)
-    if response.nil?
-      halt 500, haml(:internal_error)
-    elsif response['status'] == 'success'
-      return true
-    else
+    halt 500, haml(:internal_error) if response.nil?
+    if response.key?('status')
+      return true if response['status'] == 'success'
       err_id, msg = parse_api_error(response)
       flash[:error] = msg
       case err_id
@@ -137,5 +134,6 @@ module APIHelpers
         halt 400, haml(:api_error)
       end
     end
+    true
   end
 end
