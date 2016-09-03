@@ -62,6 +62,10 @@
                     = Filesize.from("#{mailaccount['quotausage']} B").pretty
                   - else
                     N/A
-          %td.number{ style: 'text-align: right;' }<= quota_pretty
+          %td.number{ style: 'text-align: right;' }<
+            - if mailaccount['quota'].to_i.zero?
+              Unlimited
+            - else
+              = quota_pretty
           %td<
             %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
