@@ -115,4 +115,27 @@ module APIHelpers
   def parse_apiresponse(apiresponse)
     JSON.parse(apiresponse.body)
   end
+
+  # @param response [Hash]
+  # @return [Boolean]
+  def check_response(response)
+    p(response)
+    if response.nil?
+      halt 500, haml(:internal_error)
+    elsif response['status'] == 'success'
+      return true
+    else
+      err_id, msg = parse_api_error(response)
+      flash[:error] = msg
+      case err_id
+      when '1004' then
+        halt 404, haml(:not_found)
+      when '1003' then
+        halt 403, haml(:unauthorized)
+      else
+        @result = response
+        halt 400, haml(:api_error)
+      end
+    end
+  end
 end

@@ -22,7 +22,7 @@
           - title = "Number of #{pretty_key}"
           - progress_class = 'progress-bar progress-bar-info'
           - usage_rel = if v['total'].to_i.zero?
-            - 0.0
+            - v['used'].to_i.positive? ? 100.0 : 0.0
           - else
             - (v['used'].to_i * 100 / v['total'].to_i).round(1)
           - if k.to_s =~ %r{_storage$}

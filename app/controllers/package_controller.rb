@@ -59,6 +59,7 @@ namespace '/packages' do
   namespace'/:id' do
     get '/edit' do
       _dummy, @record = api_query("packages/#{params['id']}")
+      check_response(@record)
       _dummy, @users = api_query('users')
       ui_edit('Package', user_opts: 'user_select_options')
     end

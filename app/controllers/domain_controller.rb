@@ -59,6 +59,7 @@ namespace '/domains' do
   namespace'/:id' do
     get '/edit' do
       _dummy, @record = api_query("domains/#{params['id']}")
+      check_response(@record)
       _dummy, @users = api_query('users')
       ui_edit('Domain', user_opts: 'user_select_options')
     end

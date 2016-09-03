@@ -118,6 +118,7 @@ namespace '/mail' do
     namespace'/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailaccounts/#{params['id']}")
+        check_response(@record)
         d_id = @record['domain']['id']
         _dummy, @domains = api_query('domains')
         _dummy, @mail_aliases = api_query("mailaliases?q[domain_id]=#{d_id}")
@@ -246,6 +247,7 @@ namespace '/mail' do
     namespace'/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailaliases/#{params['id']}")
+        check_response(@record)
         d_id = @record['domain']['id']
         _dummy, @domains = api_query('domains')
         _dummy, @mail_accounts = api_query("mailaccounts?q[domain_id]=#{d_id}")
@@ -347,6 +349,7 @@ namespace '/mail' do
     namespace'/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailsources/#{params['id']}")
+        check_response(@record)
         d_id = @record['domain']['id']
         _dummy, @domains = api_query('domains')
         _dummy, @mail_accounts = api_query("mailaccounts?q[domain_id]=#{d_id}")
@@ -497,6 +500,7 @@ namespace '/mail' do
     namespace'/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailforwardings/#{params['id']}")
+        check_response(@record)
         _dummy, @domains = api_query('domains')
         ui_edit('MailForwarding',
                 domain_opts: 'domain_select_options')

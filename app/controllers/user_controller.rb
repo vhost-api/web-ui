@@ -75,6 +75,7 @@ namespace '/users' do
   namespace'/:id' do
     get '/edit' do
       _dummy, @record = api_query("users/#{params['id']}")
+      check_response(@record)
       _dummy, @groups = api_query('groups')
       _dummy, @packages = api_query('packages')
       ui_edit('User',

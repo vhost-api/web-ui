@@ -12,6 +12,7 @@ namespace '/groups' do
   namespace'/:id' do
     get '/edit' do
       _dummy, @record = api_query("groups/#{params['id']}")
+      check_response(@record)
       ui_edit('Group')
     end
 

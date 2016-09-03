@@ -2,18 +2,20 @@
   %a{ href: '/', title: 'Home', class: nav_current? }<
     .icon.icon-home.icon-title
     .title Home
-%li<
-  %a{ href: '/users', title: 'Users', class: nav_current?('users') }<
-    .icon.icon-user.icon-title
-    .title Users
+- if admin? || reseller?
+  %li<
+    %a{ href: '/users', title: 'Users', class: nav_current?('users') }<
+      .icon.icon-user.icon-title
+      .title Users
 %li<
   %a{ href: '/stats', title: 'Stats', class: nav_current?('stats') }<
     .icon.icon-stats.icon-title
     .title Stats
-%li<
-  %a{ href: '/packages', title: 'Packages', class: nav_current?('packages') }<
-    .icon.icon-package.icon-title
-    .title Packages
+- if admin? || reseller?
+  %li<
+    %a{ href: '/packages', title: 'Packages', class: nav_current?('packages') }<
+      .icon.icon-package.icon-title
+      .title Packages
 - if session[:modules].include?('domain')
   %li<
     %a{ href: '/domains', title: 'Domains', class: nav_current?('domains') }<
