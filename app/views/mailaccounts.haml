@@ -34,7 +34,8 @@
         - rcv_suff = mailaccount['receiving_enabled'] ? en : dis
         - rcv_textval = mailaccount['receiving_enabled'] ? ' yes' : ' no'
         - a_del = "/mail/accounts/#{mailaccount['id']}/delete"
-        - quota_pretty = Filesize.from("#{mailaccount['quota'].to_i} B").pretty
+        - quota = mailaccount['quota'].to_i
+        - quota_pretty = Filesize.from("#{quota} B").pretty
         - progress_class = 'progress-bar progress-bar-info'
         - thresh_warn = settings.threshholds[:display][:mailquota_warn]
         - thresh_crit = settings.threshholds[:display][:mailquota_crit]
@@ -42,6 +43,7 @@
           - progress_class = 'progress-bar progress-bar-warning'
         - if mailaccount['quotausage_rel'] >= thresh_crit
           - progress_class = 'progress-bar progress-bar-danger'
+        - quota_order = quota.zero? ? (2**63 - 2) : quota
         %tr
           %td<= acc_id
           %td.icon{ class: en_suff }= en_textval
@@ -62,8 +64,9 @@
                     = Filesize.from("#{mailaccount['quotausage']} B").pretty
                   - else
                     N/A
-          %td.number{ style: 'text-align: right;' }<
-            - if mailaccount['quota'].to_i.zero?
+          %td.number{ style: 'text-align: right;',
+                      data: { order: quota_order } }<
+            - if quota.zero?
               Unlimited
             - else
               = quota_pretty
