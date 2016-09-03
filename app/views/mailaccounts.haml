@@ -49,7 +49,7 @@
             %a{ href: edit_link }<= mailaccount['email']
           %td<= mailaccount['realname']
           %td.icon{ class: rcv_suff }= rcv_textval
-          %td<
+          %td{ data: { order: mailaccount['quotausage'].to_i } }<
             .progress<
               %div{ class: progress_class,
                     'role': 'progress',
