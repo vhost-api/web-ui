@@ -61,13 +61,13 @@ namespace '/users' do
       case err_id
       when '1003' then
         # not found
-        redirect '/users'
+        admin? || reseller? ? redirect('/users') : redirect('/')
       when '1002' then
         # permission denied or quota exhausted
-        redirect '/users'
+        admin? || reseller? ? redirect('/users') : redirect('/')
       else
         # try again
-        redirect '/users/new'
+        admin? || reseller? ? redirect('/users/new') : redirect('/')
       end
     end
   end

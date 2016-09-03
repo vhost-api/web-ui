@@ -7,6 +7,11 @@
     %a{ href: '/users', title: 'Users', class: nav_current?('users') }<
       .icon.icon-user.icon-title
       .title Users
+- else
+  %li<
+    %a{ href: "/users/#{@user[:id]}/edit", title: 'User' }<
+      .icon.icon-user.icon-title
+      .title User
 %li<
   %a{ href: '/stats', title: 'Stats', class: nav_current?('stats') }<
     .icon.icon-stats.icon-title

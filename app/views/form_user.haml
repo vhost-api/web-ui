@@ -48,52 +48,56 @@
     %input.form-control{ type: f[field][:type],
                          name: f[field][:name] }<
 
--# ENABLED
-- field = f.index { |x| x[:name] == 'enabled' }
-.form-group<
-  .col-sm-5.col-sm-offset-2<
-    .checkbox<
-      %label<
-        - if f[field][:checked]
-          %input{ type: 'checkbox', name: f[field][:name],
-                  checked: 'checked' }<= f[field][:label]
-        - else
-          %input{ type: 'checkbox', name: f[field][:name] }<= f[field][:label]
+- if admin? || reseller?
+  -# ENABLED
+  - field = f.index { |x| x[:name] == 'enabled' }
+  .form-group<
+    .col-sm-5.col-sm-offset-2<
+      .checkbox<
+        %label<
+          - if f[field][:checked]
+            %input{ type: 'checkbox', name: f[field][:name],
+                    checked: 'checked' }<= f[field][:label]
+          - else
+            %input{ type: 'checkbox', name: f[field][:name] }<= f[field][:label]
 
--# GROUP
-- field = f.index { |x| x[:name] == 'group_id' }
-.form-group<
-  %label.col-sm-2.control-label<= f[field][:label]
-  .col-sm-3<
-    %select.form-control{ name: f[field][:name] }<
-      - f[field][:options].each do |opt|
-        - if opt[:selected]
-          %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
-        - else
-          %option{ value: opt[:value] }<= opt[:text]
+  -# GROUP
+  - field = f.index { |x| x[:name] == 'group_id' }
+  .form-group<
+    %label.col-sm-2.control-label<= f[field][:label]
+    .col-sm-3<
+      %select.form-control{ name: f[field][:name] }<
+        - f[field][:options].each do |opt|
+          - if opt[:selected]
+            %option{ value: opt[:value], selected: 'selected' }<= opt[:text]
+          - else
+            %option{ value: opt[:value] }<= opt[:text]
 
--# PACKAGES
-- field = f.index { |x| x[:name] == 'packages[]' }
-.form-group<
-  %label.col-sm-2.control-label<= f[field][:label]
-  .col-sm-3<
-    %select.form-control{ name: 'from[]', id: 'packages', multiple: true,
-                          size: 8 }<
-      - f[field][:options].each do |opt|
-        - unless opt[:selected]
-          %option{ value: opt[:value] }<= opt[:text]
-  - @msel_id = 'packages'
-  .col-sm-1<= haml :multiselect_button_group
-  .col-sm-3<
-    %select.form-control{ name: 'packages[]', id: 'packages_to', multiple: true,
-                          size: 8 }
-      - f[field][:options].each do |opt|
-        - if opt[:selected]
-          %option{ value: opt[:value] }<= opt[:text]
+  -# PACKAGES
+  - field = f.index { |x| x[:name] == 'packages[]' }
+  .form-group<
+    %label.col-sm-2.control-label<= f[field][:label]
+    .col-sm-3<
+      %select.form-control{ name: 'from[]', id: 'packages', multiple: true,
+                            size: 8 }<
+        - f[field][:options].each do |opt|
+          - unless opt[:selected]
+            %option{ value: opt[:value] }<= opt[:text]
+    - @msel_id = 'packages'
+    .col-sm-1<= haml :multiselect_button_group
+    .col-sm-3<
+      %select.form-control{ name: 'packages[]', id: 'packages_to',
+                            multiple: true, size: 8 }
+        - f[field][:options].each do |opt|
+          - if opt[:selected]
+            %option{ value: opt[:value] }<= opt[:text]
 
 -# SUBMIT
 .form-group<
   .col-sm-offset-2.col-sm-1<= haml :submit_button
   .col-sm-1<
   .col-sm-1<
-    %a.nounderline{ href: '/users' }<= haml :cancel_button
+    - if admin? || reseller?
+      %a.nounderline{ href: '/users' }<= haml :cancel_button
+    - else
+      %a.nounderline{ href: '/' }<= haml :cancel_button
