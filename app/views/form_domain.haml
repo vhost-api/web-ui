@@ -19,7 +19,7 @@
               - suffix[:val] = 'checked'
           - elsif key.to_s =~ %r{ed_at$}
             - disable_input = true
-            - value = Time.at(value)
+            - value = Time.at(value).strftime('%F')
           - elsif key.to_s == 'user'
             - key += '_id'
             - input_type = 'select'

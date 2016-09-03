@@ -37,8 +37,8 @@
             %td<
               %a{ href: "/mail/forwardings/#{fwdid}/edit" }<
                 = mailforwarding['address']
-            %td<= Time.at(mailforwarding['created_at'].to_i)
-            %td<= Time.at(mailforwarding['updated_at'].to_i)
+            %td<= Time.at(mailforwarding['created_at'].to_i).strftime('%F')
+            %td<= Time.at(mailforwarding['updated_at'].to_i).strftime('%F')
             %td.icon{ class: "icon #{suff}" }= textval
             %td<= mailforwarding['domain']['name']
             %td<

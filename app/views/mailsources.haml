@@ -36,8 +36,8 @@
             %td<= s_id
             %td<
               %a{ href: "/mail/sources/#{s_id}/edit" }<= mailsource['address']
-            %td<= Time.at(mailsource['created_at'].to_i)
-            %td<= Time.at(mailsource['updated_at'].to_i)
+            %td<= Time.at(mailsource['created_at'].to_i).strftime('%F')
+            %td<= Time.at(mailsource['updated_at'].to_i).strftime('%F')
             %td.icon{ class: "icon #{suff}" }= textval
             %td<= mailsource['domain']['name']
             %td<

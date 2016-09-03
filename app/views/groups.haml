@@ -14,7 +14,7 @@
                 %td
                   %a{ href: "/groups/#{g['id']}/edit" }<= g[key]
               - elsif key =~ %r{ed_at$}
-                %td<= Time.at(g[key].to_i)
+                %td<= Time.at(g[key].to_i).strftime('%F')
               - elsif key =~ %r{enabled$}
                 - en = 'icon-check item-enabled'
                 - dis = 'icon-cross item-disabled'

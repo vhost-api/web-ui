@@ -71,8 +71,8 @@
             %td<
               %a{ href: "/packages/#{p['id']}/edit" }<= p['name']
             %td<= p['price_unit']
-            %td<= Time.at(p['created_at'].to_i)
-            %td<= Time.at(p['updated_at'].to_i)
+            %td<= Time.at(p['created_at'].to_i).strftime('%F')
+            %td<= Time.at(p['updated_at'].to_i).strftime('%F')
             %td.icon{ class: "icon #{en_suff}" }= en_textval
             %td<= p['user_id']
             %td<= p['quota_apikeys']
