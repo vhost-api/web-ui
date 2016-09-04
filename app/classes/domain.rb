@@ -45,13 +45,15 @@ class Domain
 
   def mail_enabled_field
     FormField::Checkbox.new(
-      label: 'Enable Email', name: 'mail_enabled', value: @mail_enabled
+      label: 'Enable Email module for this domain', name: 'mail_enabled',
+      value: @mail_enabled
     ).to_hash
   end
 
   def dns_enabled_field
     FormField::Checkbox.new(
-      label: 'Enable DNS', name: 'dns_enabled', value: @dns_enabled
+      label: 'Enable DNS module for this domain', name: 'dns_enabled',
+      value: @dns_enabled
     ).to_hash
   end
 
