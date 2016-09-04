@@ -24,7 +24,7 @@ namespace '/mail' do
       ui_output(
         'mailaccounts',
         fields: %w(id enabled email realname receiving_enabled quota quotausage
-                   quotausage_rel).join(',')
+                   quotausage_rel updated_at created_at).join(',')
       )
     end
 
