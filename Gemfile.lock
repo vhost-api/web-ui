@@ -56,6 +56,8 @@ GEM
       rack (>= 0.4)
     rack-protection (1.5.3)
       rack
+    rack-ssl (1.4.1)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rainbow (2.1.0)
@@ -108,6 +110,7 @@ DEPENDENCIES
   pry
   puma
   rack-cache
+  rack-ssl
   rake
   rest-client
   rest-client-components!

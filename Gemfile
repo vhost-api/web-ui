@@ -7,6 +7,7 @@ gem 'rest-client-components',
     git: 'https://github.com/amatriain/rest-client-components',
     branch: 'rest-client-2-compatibility'
 gem 'rack-cache'
+gem 'rack-ssl'
 gem 'sinatra'
 gem 'sinatra-contrib'
 # tools
