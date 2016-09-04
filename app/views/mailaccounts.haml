@@ -9,6 +9,8 @@
         %th.bool< Enabled
         %th< Email Address
         %th< Realname
+        %th< Created
+        %th< Updated
         %th.bool< Receiving
         %th< Usage
         %th.quota-bytes< Quota
@@ -16,6 +18,8 @@
     %tfoot
       %tr
         %th.no-search<
+        %th<
+        %th<
         %th<
         %th<
         %th<
@@ -50,6 +54,8 @@
           %td<
             %a{ href: edit_link }<= mailaccount['email']
           %td<= mailaccount['realname']
+          %td.iso-date<= Time.at(mailaccount['created_at'].to_i).strftime('%F')
+          %td.iso-date<= Time.at(mailaccount['updated_at'].to_i).strftime('%F')
           %td.icon{ class: rcv_suff }= rcv_textval
           %td{ data: { order: mailaccount['quotausage'].to_i } }<
             .progress<
