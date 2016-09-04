@@ -33,7 +33,6 @@ configure do
     set key, @appconfig[key]
   end
   use Rack::Deflater
-  RestClient.enable Rack::CommonLogger
   RestClient.enable Rack::Cache,
                     metastore: 'file:./tmp/cache/meta',
                     entitystore: 'file:./tmp/cache/body'
@@ -57,6 +56,7 @@ configure :development, :test do
   use BetterErrors::Middleware
   BetterErrors.application_root = settings.root
   BetterErrors.use_pry!
+  RestClient.enable Rack::CommonLogger
 end
 
 configure :production do
