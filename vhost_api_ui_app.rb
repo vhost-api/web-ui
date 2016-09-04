@@ -37,11 +37,6 @@ configure do
   RestClient.enable Rack::Cache,
                     metastore: 'file:./tmp/cache/meta',
                     entitystore: 'file:./tmp/cache/body'
-  use Rack::Session::Cookie, secret: File.read('config/session.secret'),
-                             key: settings.session[:key].to_s,
-                             domain: settings.session[:domain].to_s,
-                             expire_after: settings.session[:timeout],
-                             path: settings.session[:path].to_s
   include GenericHelpers
   include APIHelpers
   include UIHelpers
@@ -58,11 +53,22 @@ configure :development, :test do
   BetterErrors.application_root = settings.root
   BetterErrors.use_pry!
   RestClient.enable Rack::CommonLogger
+  use Rack::Session::Cookie, secret: File.read('config/session.secret'),
+                             key: settings.session[:key].to_s,
+                             domain: settings.session[:domain].to_s,
+                             expire_after: settings.session[:timeout],
+                             path: settings.session[:path].to_s
 end
 
 configure :production do
   set :show_exceptions, false
   set :raise_errors, false
+  use Rack::Session::Cookie, secret: File.read('config/session.secret'),
+                             key: settings.session[:key].to_s,
+                             domain: settings.session[:domain].to_s,
+                             expire_after: settings.session[:timeout],
+                             path: settings.session[:path].to_s,
+                             secure: true
 end
 
 before do
