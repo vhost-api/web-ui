@@ -4,7 +4,6 @@ require 'bundler/setup'
 require 'rest-client'
 require 'restclient/components'
 require 'rack/cache'
-require 'rack/ssl'
 require 'sinatra'
 require 'sinatra/contrib'
 require 'sinatra/flash'
@@ -62,7 +61,6 @@ configure :development, :test do
 end
 
 configure :production do
-  use Rack::SSL
   set :show_exceptions, false
   set :raise_errors, false
 end
