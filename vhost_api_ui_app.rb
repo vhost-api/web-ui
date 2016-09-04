@@ -26,6 +26,7 @@ configure do
   enable :coffeescript
   set :cssengine, 'scss'
   set :start_time, Time.now
+  set :logging, false
   @appconfig = YAML.load(
     File.read('config/appconfig.yml')
   )[settings.environment.to_s]
