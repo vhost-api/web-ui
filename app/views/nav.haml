@@ -1,59 +1,56 @@
-%li<
-  %a{ href: '/', title: 'Home', class: nav_current? }<
+%li{ class: nav_current?(%r{^(|\/)$}) }<
+  %a{ href: '/', title: 'Home' }<
     .icon.icon-home.icon-title
     .title Home
-- if admin? || reseller?
-  %li<
-    %a{ href: '/users', title: 'Users', class: nav_current?('users') }<
+
+%li{ class: nav_current?(%r{^/users}) }<
+  - if admin? || reseller?
+    %a{ href: '/users', title: 'Users' }<
       .icon.icon-user.icon-title
       .title Users
-- else
-  %li<
+  - else
     %a{ href: "/users/#{@user[:id]}/edit", title: 'User' }<
       .icon.icon-user.icon-title
       .title User
-%li<
-  %a{ href: '/stats', title: 'Stats', class: nav_current?('stats') }<
+%li{ class: nav_current?(%r{^/stats}) }<
+  %a{ href: '/stats', title: 'Stats' }<
     .icon.icon-stats.icon-title
     .title Stats
 - if admin? || reseller?
-  %li<
-    %a{ href: '/packages', title: 'Packages', class: nav_current?('packages') }<
+  %li{ class: nav_current?(%r{^/packages}) }<
+    %a{ href: '/packages', title: 'Packages' }<
       .icon.icon-package.icon-title
       .title Packages
 - if session[:modules].include?('domain')
-  %li<
-    %a{ href: '/domains', title: 'Domains', class: nav_current?('domains') }<
+  %li{ class: nav_current?(%r{^/domains}) }<
+    %a{ href: '/domains', title: 'Domains' }<
       .icon.icon-domain.icon-title
       .title Domains
 - if session[:modules].include?('email')
-  %li<
-    %a{ href: '/mail', title: 'Mail', class: nav_current?('mail') }<
+  %li{ class: nav_current?(%r{^/mail}) }<
+    %a{ href: '/mail', title: 'Mail' }<
       .icon.icon-mail.icon-title
       .title Mail
 - if session[:modules].include?('vhost')
-  %li<
-    %a{ href: '/webhosting', title: 'VHosts',
-        class: nav_current?('webhosting') }<
+  %li{ class: nav_current?(%r{^/webhosting}) }<
+    %a{ href: '/webhosting', title: 'VHosts' }<
       .icon.icon-web.icon-title
       .title VHosts
 - if session[:modules].include?('database')
-  %li<
-    %a{ href: '/databases', title: 'DBs', class: nav_current?('databases') }<
+  %li{ class: nav_current?(%r{^/databases}) }<
+    %a{ href: '/databases', title: 'DBs' }<
       .icon.icon-database.icon-title
       .title DBs
 - if session[:modules].include?('dns')
-  %li<
-    %a{ href: '/dns', title: 'DNS', class: nav_current?('dns') }<
+  %li{ class: nav_current?(%r{^/dns}) }<
+    %a{ href: '/dns', title: 'DNS' }<
       .icon.icon-dns.icon-title
       .title DNS
-%li<
-  %a{ href: '/settings', title: 'Settings',
-      class: nav_current?('settings') }<
+%li{ class: nav_current?(%r{^/settings}) }<
+  %a{ href: '/settings', title: 'Settings' }<
     .icon.icon-settings.icon-title
     .title Settings
 %li<
-  %a{ href: settings.webmail_link, target: '_blank',
-      title: 'Webmail' }<
+  %a{ href: settings.webmail_link, target: '_blank', title: 'Webmail' }<
     .icon.icon-webmail.icon-title
     .title Webmail

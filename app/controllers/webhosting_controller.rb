@@ -2,7 +2,12 @@
 namespace '/webhosting' do
   before do
     @sidebar_title = 'Webhosting'
-    @sidebar_elements = %w(VHosts SFTPUsers ShellUsers)
+    @sidebar_elements = [
+      { title: 'Dashboard', link: '/webhosting' },
+      { title: 'VHosts', link: '/webhosting/vhosts' },
+      { title: 'SFTP Users', link: '/webhosting/sftpusers' },
+      { title: 'Shell Users', link: '/webhosting/shellusers' }
+    ]
   end
 
   get do

@@ -55,6 +55,12 @@ div#flash .error {
 	border: 0;
 }
 
+.navbar-nav > li {
+	min-width: 80px;
+	vertical-align: middle;
+	text-align: center;
+}
+
 /*
  * Sidebar
  */

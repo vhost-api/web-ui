@@ -25,14 +25,13 @@ module GenericHelpers
     @sidebar_title ||= 'Sidebar'
   end
 
-  def nav_current?(path = '/')
-    req_path = request.path.to_s.split('/')[1]
-    req_path == path || req_path == path + '/' ? 'current' : nil
+  def nav_current?(regex = nil)
+    return nil if regex.nil?
+    request.path.to_s =~ regex ? 'active' : nil
   end
 
   def sidebar_current?(path = '/')
-    req_path = request.path.to_s.split('/')[2]
-    req_path == path || req_path == path + '/' ? 'current' : nil
+    request.path.to_s == path ? 'active' : nil
   end
 
   def authenticate!

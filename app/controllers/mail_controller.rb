@@ -2,21 +2,18 @@
 namespace '/mail' do
   before do
     @sidebar_title = 'Mail'
-    @sidebar_elements = %w(Domains Accounts Aliases Sources Forwardings DKIM)
+    @sidebar_elements = [
+      { title: 'Dashboard', link: '/mail' },
+      { title: 'Accounts', link: '/mail/accounts' },
+      { title: 'Aliases', link: '/mail/aliases' },
+      { title: 'Sources', link: '/mail/sources' },
+      { title: 'Forwardings', link: '/mail/forwardings' },
+      { title: 'DKIM', link: '/mail/dkim' }
+    ]
   end
 
   get do
     haml :mailhome
-  end
-
-  namespace '/domains' do
-    get do
-      ui_output(
-        'domains',
-        fields: %w(id name mail_enabled dns_enabled created_at updated_at
-                   enabled user).join(',')
-      )
-    end
   end
 
   namespace '/accounts' do
