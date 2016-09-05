@@ -3,7 +3,7 @@ namespace '/mail' do
   before do
     @sidebar_title = 'Mail'
     @sidebar_elements = [
-      { title: 'Dashboard', link: '/mail' },
+      { title: 'Help', link: '/mail' },
       { title: 'Accounts', link: '/mail/accounts' },
       { title: 'Aliases', link: '/mail/aliases' },
       { title: 'Sources', link: '/mail/sources' },

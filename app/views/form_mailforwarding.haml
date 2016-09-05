@@ -42,6 +42,12 @@
     %textarea.form-control{ name: 'destinations',
                               id: 'destinations',
                             rows: 12 }<= f[field][:value]
+    %span.help-block{ id: 'helpBlock' }<
+      %p<
+        One recipient address per line.
+      %p<
+        To create an Alias Domain leave the Address field empty and put exactly
+        one destination in the format of <strong>@domain.com</strong>.
 
 -# SUBMIT
 .form-group<

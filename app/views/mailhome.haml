@@ -1,1 +1,92 @@
-%p< mail home
+.page-header<
+  %h1< Mail Help
+
+.content<
+  .alert.alert-warning<
+    Please read the following guidelines carefully to avoid problems.
+  .number-heading<
+    %h2< Accounts
+    %p<
+      %p<
+        In this regard each <strong>Account</strong> is also an actual mailbox.
+      %p<
+        Multiple <strong>Aliases</strong> and <strong>Sources</strong> can be
+        assigned to an Account.
+        See the explanations of Aliases and Sources below for details.
+      %p<
+        To allow an Account to send from other addresses (Sources) than its own,
+        you have to create a Source for that address and assign that Source to
+        this Account.
+      %p<
+        An Account belongs to a Domain and can only use Aliases and Sources from
+        this Domain.
+
+    %h2< Aliases
+    %p<
+      %p<
+        An </strong>Alias</strong> is used to direct messages from an address to
+        an <strong>Account</strong>.
+      %p<
+        An Alias can have multiple destinations (Accounts) with only one
+        constraint:
+      %p<
+        As mentioned before, the Aliases and Accounts must belong to the same
+        Domain.
+      %p<
+        To direct messages to another Domain use a <strong>Forwarding</strong>
+        (see below).
+
+      %h3< Catchall
+      %p<
+        To direct all messages from a Domain whose recipient was not matched by
+        another Account or Alias, use a Catchall.
+      %p<
+        = precede 'The format is explained in the ' do
+          = succeed '.' do
+            %a{ href: '/mail/aliases/new',
+                target: '_blank' }< MailAlias Form
+
+
+    %h2< Sources
+    %p<
+      %p<
+        A <strong>Source</strong> is an address used to send mail from.
+      %p<
+        A Source can be assigned to multiple <strong>Accounts</strong> with only
+        one constraint:
+      %p<
+        As mentioned before, the Aliases and Accounts must belong to the same
+        Domain.
+
+
+    %h2< Forwardings
+    %p<
+      %p<
+        A <strong>Forwarding</strong> is used to forward messages to other
+        addresses and does not have the same-Domain restriction.
+      %p<
+        = precede 'A Forwarding can have multiple destinations,
+                   use the format explained in ' do
+          = succeed '.' do
+            %a{ href: '/mail/forwardings/new',
+                target: '_blank' }< MailForwarding Form
+
+    %h3< Alias Domain
+    %p<
+      %p<
+        To redirect all messages from one domain to another while preserving
+        the localpart of the recipient, use an Alias Domain.
+      %p<
+        For example, this will forward messages for
+        <strong>bob@domain.com</strong> to
+        <strong>bob@otherdomain.com</strong>.
+      %p<
+        = precede 'The format is explained in the ' do
+          = succeed '.' do
+            %a{ href: '/mail/forwardings/new',
+                target: '_blank' }< MailForwarding Form
+
+
+    %h2< DKIM
+    %p<
+      %p< Coming soon...

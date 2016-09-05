@@ -120,6 +120,18 @@ div#flash .error {
 	margin-top: 0;
 }
 
+.number-heading {counter-reset: h2}
+.number-heading h2 {counter-reset: h3}
+.number-heading h3 {counter-reset: h4}
+.number-heading h4 {counter-reset: h5}
+.number-heading h5 {counter-reset: h6}
+.number-heading h2:before {counter-increment: h2; content: counter(h2) ". "}
+.number-heading h3:before {counter-increment: h3; content: counter(h2) "." counter(h3) ". "}
+.number-heading h4:before {counter-increment: h4; content: counter(h2) "." counter(h3) "." counter(h4) ". "}
+.number-heading h5:before {counter-increment: h5; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ". "}
+.number-heading h6:before {counter-increment: h6; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". "}
+
+
 
 /*
  * Placeholder dashboard ideas
