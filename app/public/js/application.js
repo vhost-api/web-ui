@@ -43,8 +43,8 @@ $( document ).ready(function() {
 	// initialize multi selects
 	$(':input[multiple]:not([id$="_to"])').multiselect({
 		search: {
-			left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
-			right: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
+			left: '<input type="text" autocomplete="off" name="q" class="form-control" placeholder="Search..." />',
+			right: '<input type="text" autocomplete="off" name="q" class="form-control" placeholder="Search..." />',
 		}
 	});
 
@@ -81,7 +81,7 @@ $( document ).ready(function() {
 
 	// setup text input for each footer cell
 	$('.data-table tfoot th:not(.no-sort):not(.no-search)').each(function() {
-		$(this).html('<input type="text" class="form-control table-search" placeholder="..." />');
+		$(this).html('<input type="text" autocomplete="off" class="form-control table-search" placeholder="..." />');
 	});
 
 	// initializa datatables
