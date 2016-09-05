@@ -106,6 +106,14 @@ get '/session' do
   session.to_hash.to_json
 end
 
+get '/stats' do
+  haml :stats
+end
+
+get '/settings' do
+  haml :settings
+end
+
 not_found do
   haml :not_found
 end
