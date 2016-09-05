@@ -3,10 +3,13 @@ namespace '/webhosting' do
   before do
     @sidebar_title = 'Webhosting'
     @sidebar_elements = [
-      { title: 'Dashboard', link: '/webhosting' },
-      { title: 'VHosts', link: '/webhosting/vhosts' },
-      { title: 'SFTP Users', link: '/webhosting/sftpusers' },
-      { title: 'Shell Users', link: '/webhosting/shellusers' }
+      { title: 'Dashboard', link: '/webhosting', regex: %r{^/webhosting$} },
+      { title: 'VHosts', link: '/webhosting/vhosts',
+        regex: %r{^/webhosting/vhosts} },
+      { title: 'SFTP Users', link: '/webhosting/sftpusers',
+        regex: %r{^/webhosting/sftusers} },
+      { title: 'Shell Users', link: '/webhosting/shellusers',
+        regex: %r{^/webhosting/shellusers} }
     ]
   end
 

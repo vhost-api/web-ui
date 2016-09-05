@@ -3,12 +3,13 @@ namespace '/mail' do
   before do
     @sidebar_title = 'Mail'
     @sidebar_elements = [
-      { title: 'Help', link: '/mail' },
-      { title: 'Accounts', link: '/mail/accounts' },
-      { title: 'Aliases', link: '/mail/aliases' },
-      { title: 'Sources', link: '/mail/sources' },
-      { title: 'Forwardings', link: '/mail/forwardings' },
-      { title: 'DKIM', link: '/mail/dkim' }
+      { title: 'Help', link: '/mail', regex: %r{^/mail$} },
+      { title: 'Accounts', link: '/mail/accounts', regex: %r{^/mail/accounts} },
+      { title: 'Aliases', link: '/mail/aliases', regex: %r{^/mail/aliases} },
+      { title: 'Sources', link: '/mail/sources', regex: %r{^/mail/sources} },
+      { title: 'Forwardings', link: '/mail/forwardings',
+        regex: %r{^/mail/forwardings} },
+      { title: 'DKIM', link: '/mail/dkim', regex: %r{^/mail/dkim} }
     ]
   end
 

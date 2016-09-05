@@ -30,8 +30,9 @@ module GenericHelpers
     request.path.to_s =~ regex ? 'active' : nil
   end
 
-  def sidebar_current?(path = '/')
-    request.path.to_s == path ? 'active' : nil
+  def sidebar_current?(regex = nil)
+    return nil if regex.nil?
+    request.path.to_s =~ regex ? 'active' : nil
   end
 
   def authenticate!
