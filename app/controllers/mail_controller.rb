@@ -103,9 +103,6 @@ namespace '/mail' do
         flash[:error] = msg
         case err_id
         when '1003' then
-          # not found
-          redirect '/mail/accounts'
-        when '1002' then
           # permission denied or quota exhausted
           redirect '/mail/accounts'
         else
@@ -183,19 +180,19 @@ namespace '/mail' do
         result = api_update("mailaccounts/#{params['id']}", upd_params)
 
         if result['status'] == 'success'
-          msg = "Successfully updated MailAcccount #{params['id']}"
-          msg += ", #{params['email']}"
-          flash[:success] = msg
           @record = result['data']['object']
+          msg = "Successfully updated MailAcccount #{@record['id']}"
+          msg += ", #{@record['email']}"
+          flash[:success] = msg
           redirect '/mail/accounts'
         else
           err_id, msg = parse_api_error(result)
           flash[:error] = msg
           case err_id
-          when '1003' then
+          when '1004' then
             # not found
             redirect '/mail/accounts'
-          when '1002' then
+          when '1003' then
             # permission denied or quota exhausted
             redirect '/mail/accounts'
           else
@@ -244,6 +241,61 @@ namespace '/mail' do
       )
     end
 
+    get '/new' do
+      @domains = { '0' => { 'id' => 0, 'name' => 'Please select a domain...' } }
+      _dummy, existing_domains = api_query('domains')
+      @domains.merge!(existing_domains)
+      _dummy, @mail_accounts = api_query('mailaccounts')
+      ui_create('MailAlias',
+                domain_opts: 'domain_select_options',
+                mail_account_opts: 'mail_accounts_select_options')
+    end
+
+    post do
+      create_params = {}
+
+      create_params[:domain_id] = params['domain_id'].to_i
+      _dummy, domain = api_query("domains/#{params['domain_id']}")
+
+      create_params[:address] = [params['localpart'], domain['name']].join('@')
+
+      %w(enabled).each do |k|
+        create_params[k.to_sym] = if params[k].nil?
+                                    false
+                                  else
+                                    string_to_bool(params[k])
+                                  end
+      end
+
+      acs = params['accounts']
+      create_params[:dest] = if acs.nil? || acs == ''
+                               []
+                             else
+                               acs.map(&:to_i)
+                             end
+
+      result = api_create('mailaliases', create_params)
+
+      if result['status'] == 'success'
+        @record = result['data']['object']
+        msg = "Successfully created MailAlias #{@record['id']}"
+        msg += ", #{@record['address']}"
+        flash[:success] = msg
+        redirect '/mail/aliases'
+      else
+        err_id, msg = parse_api_error(result)
+        flash[:error] = msg
+        case err_id
+        when '1003' then
+          # permission denied or quota exhausted
+          redirect '/mail/aliases'
+        else
+          # try again
+          redirect '/mail/aliases/new'
+        end
+      end
+    end
+
     namespace'/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailaliases/#{params['id']}")
@@ -282,19 +334,19 @@ namespace '/mail' do
         result = api_update("mailaliases/#{params['id']}", upd_params)
 
         if result['status'] == 'success'
-          msg = "Successfully updated MailAlias #{params['id']}"
-          msg += ", #{params['address']}"
-          flash[:success] = msg
           @record = result['data']['object']
+          msg = "Successfully updated MailAlias #{@record['id']}"
+          msg += ", #{@record['address']}"
+          flash[:success] = msg
           redirect '/mail/aliases'
         else
           err_id, msg = parse_api_error(result)
           flash[:error] = msg
           case err_id
-          when '1003' then
+          when '1004' then
             # not found
             redirect '/mail/aliases'
-          when '1002' then
+          when '1003' then
             # permission denied or quota exhausted
             redirect '/mail/aliases'
           else
@@ -346,6 +398,61 @@ namespace '/mail' do
       )
     end
 
+    get '/new' do
+      @domains = { '0' => { 'id' => 0, 'name' => 'Please select a domain...' } }
+      _dummy, existing_domains = api_query('domains')
+      @domains.merge!(existing_domains)
+      _dummy, @mail_accounts = api_query('mailaccounts')
+      ui_create('MailSource',
+                domain_opts: 'domain_select_options',
+                mail_account_opts: 'mail_accounts_select_options')
+    end
+
+    post do
+      create_params = {}
+
+      create_params[:domain_id] = params['domain_id'].to_i
+      _dummy, domain = api_query("domains/#{params['domain_id']}")
+
+      create_params[:address] = [params['localpart'], domain['name']].join('@')
+
+      %w(enabled).each do |k|
+        create_params[k.to_sym] = if params[k].nil?
+                                    false
+                                  else
+                                    string_to_bool(params[k])
+                                  end
+      end
+
+      acs = params['accounts']
+      create_params[:src] = if acs.nil? || acs == ''
+                              []
+                            else
+                              acs.map(&:to_i)
+                            end
+
+      result = api_create('mailsources', create_params)
+
+      if result['status'] == 'success'
+        @record = result['data']['object']
+        msg = "Successfully created MailSource #{@record['id']}"
+        msg += ", #{@record['address']}"
+        flash[:success] = msg
+        redirect '/mail/sources'
+      else
+        err_id, msg = parse_api_error(result)
+        flash[:error] = msg
+        case err_id
+        when '1003' then
+          # permission denied or quota exhausted
+          redirect '/mail/sources'
+        else
+          # try again
+          redirect '/mail/sources/new'
+        end
+      end
+    end
+
     namespace'/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailsources/#{params['id']}")
@@ -375,28 +482,28 @@ namespace '/mail' do
         end
 
         acs = params['accounts']
-        upd_params[:dest] = if acs.nil? || acs == ''
-                              []
-                            else
-                              acs.map(&:to_i)
-                            end
+        upd_params[:src] = if acs.nil? || acs == ''
+                             []
+                           else
+                             acs.map(&:to_i)
+                           end
 
         result = api_update("mailsources/#{params['id']}", upd_params)
 
         if result['status'] == 'success'
-          msg = "Successfully updated MailSource #{params['id']}"
-          msg += ", #{params['address']}"
-          flash[:success] = msg
           @record = result['data']['object']
+          msg = "Successfully updated MailSource #{@record['id']}"
+          msg += ", #{@record['address']}"
+          flash[:success] = msg
           redirect '/mail/sources'
         else
           err_id, msg = parse_api_error(result)
           flash[:error] = msg
           case err_id
-          when '1003' then
+          when '1004' then
             # not found
             redirect '/mail/sources'
-          when '1002' then
+          when '1003' then
             # permission denied or quota exhausted
             redirect '/mail/sources'
           else
@@ -485,9 +592,6 @@ namespace '/mail' do
         flash[:error] = msg
         case err_id
         when '1003' then
-          # not found
-          redirect '/mail/forwardings'
-        when '1002' then
           # permission denied or quota exhausted
           redirect '/mail/forwardings'
         else
@@ -526,19 +630,19 @@ namespace '/mail' do
         result = api_update("mailforwardings/#{params['id']}", upd_params)
 
         if result['status'] == 'success'
-          msg = "Successfully updated MailForwarding #{params['id']}"
-          msg += ", #{params['address']}"
-          flash[:success] = msg
           @record = result['data']['object']
+          msg = "Successfully updated MailForwarding #{@record['id']}"
+          msg += ", #{@record['address']}"
+          flash[:success] = msg
           redirect '/mail/forwardings'
         else
           err_id, msg = parse_api_error(result)
           flash[:error] = msg
           case err_id
-          when '1003' then
+          when '1004' then
             # not found
             redirect '/mail/forwardings'
-          when '1002' then
+          when '1003' then
             # permission denied or quota exhausted
             redirect '/mail/forwardings'
           else

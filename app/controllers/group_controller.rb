@@ -35,10 +35,10 @@ namespace '/groups' do
         msg = "#{s}: #{e}, #{m}"
         flash[:error] = msg
         case e
-        when '1003' then
+        when '1004' then
           # not found
           redirect '/groups'
-        when '1002' then
+        when '1003' then
           # permission denied or quota exhausted
           redirect '/groups'
         else

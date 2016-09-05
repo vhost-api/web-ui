@@ -59,10 +59,10 @@ namespace '/users' do
       err_id, msg = parse_api_error(result)
       flash[:error] = msg
       case err_id
-      when '1003' then
+      when '1004' then
         # not found
         admin? || reseller? ? redirect('/users') : redirect('/')
-      when '1002' then
+      when '1003' then
         # permission denied or quota exhausted
         admin? || reseller? ? redirect('/users') : redirect('/')
       else
@@ -117,10 +117,10 @@ namespace '/users' do
         msg = "#{s}: #{e}, #{m}"
         flash[:error] = msg
         case e
-        when '1003' then
+        when '1004' then
           # not found
           redirect '/users'
-        when '1002' then
+        when '1003' then
           # permission denied or quota exhausted
           redirect '/users'
         else

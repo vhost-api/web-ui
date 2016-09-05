@@ -43,10 +43,10 @@ namespace '/domains' do
       err_id, msg = parse_api_error(result)
       flash[:error] = msg
       case err_id
-      when '1003' then
+      when '1004' then
         # not found
         redirect '/domains'
-      when '1002' then
+      when '1003' then
         # permission denied or quota exhausted
         redirect '/domains'
       else
@@ -87,10 +87,10 @@ namespace '/domains' do
         err_id, msg = parse_api_error(result)
         flash[:error] = msg
         case err_id
-        when '1003' then
+        when '1004' then
           # not found
           redirect '/domains'
-        when '1002' then
+        when '1003' then
           # permission denied or quota exhausted
           redirect '/domains'
         else
