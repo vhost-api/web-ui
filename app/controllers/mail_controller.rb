@@ -114,10 +114,9 @@ namespace '/mail' do
       get '/edit' do
         _dummy, @record = api_query("mailaccounts/#{params['id']}")
         check_response(@record)
-        d_id = @record['domain']['id']
         _dummy, @domains = api_query('domains')
-        _dummy, @mail_aliases = api_query("mailaliases?q[domain_id]=#{d_id}")
-        _dummy, @mail_sources = api_query("mailsources?q[domain_id]=#{d_id}")
+        _dummy, @mail_aliases = api_query('mailaliases')
+        _dummy, @mail_sources = api_query('mailsources')
         ui_edit('MailAccount',
                 domain_opts: 'domain_select_options',
                 mail_alias_opts: 'mail_aliases_select_options',
@@ -298,9 +297,8 @@ namespace '/mail' do
       get '/edit' do
         _dummy, @record = api_query("mailaliases/#{params['id']}")
         check_response(@record)
-        d_id = @record['domain']['id']
         _dummy, @domains = api_query('domains')
-        _dummy, @mail_accounts = api_query("mailaccounts?q[domain_id]=#{d_id}")
+        _dummy, @mail_accounts = api_query('mailaccounts')
         ui_edit('MailAlias',
                 domain_opts: 'domain_select_options',
                 mail_account_opts: 'mail_accounts_select_options')
@@ -455,9 +453,8 @@ namespace '/mail' do
       get '/edit' do
         _dummy, @record = api_query("mailsources/#{params['id']}")
         check_response(@record)
-        d_id = @record['domain']['id']
         _dummy, @domains = api_query('domains')
-        _dummy, @mail_accounts = api_query("mailaccounts?q[domain_id]=#{d_id}")
+        _dummy, @mail_accounts = api_query('mailaccounts')
         ui_edit('MailSource',
                 domain_opts: 'domain_select_options',
                 mail_account_opts: 'mail_accounts_select_options')

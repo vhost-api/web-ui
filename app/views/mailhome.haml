@@ -17,9 +17,6 @@
         To allow an Account to send from other addresses (Sources) than its own,
         you have to create a Source for that address and assign that Source to
         this Account.
-      %p<
-        An Account belongs to a Domain and can only use Aliases and Sources from
-        this Domain.
 
     %h2< Aliases
     %p<
@@ -27,11 +24,8 @@
         An </strong>Alias</strong> is used to direct messages from an address to
         an <strong>Account</strong>.
       %p<
-        An Alias can have multiple destinations (Accounts) with only one
-        constraint:
-      %p<
-        As mentioned before, the Aliases and Accounts must belong to the same
-        Domain.
+        An Alias can have multiple destinations (Accounts), even from other
+        Domains.
       %p<
         To direct messages to another Domain use a <strong>Forwarding</strong>
         (see below).
@@ -52,18 +46,14 @@
       %p<
         A <strong>Source</strong> is an address used to send mail from.
       %p<
-        A Source can be assigned to multiple <strong>Accounts</strong> with only
-        one constraint:
-      %p<
-        As mentioned before, the Aliases and Accounts must belong to the same
-        Domain.
-
+        A Source can be assigned to multiple <strong>Accounts</strong>, even
+        from other Domains.
 
     %h2< Forwardings
     %p<
       %p<
         A <strong>Forwarding</strong> is used to forward messages to other
-        addresses and does not have the same-Domain restriction.
+        addresses, that do not have to be locally existing Accounts.
       %p<
         = precede 'A Forwarding can have multiple destinations,
                    use the format explained in ' do
