@@ -101,7 +101,9 @@ namespace '/users' do
       update_params[:name] = params['name']
       update_params[:login] = params['login']
       update_params[:contact_email] = params['contact_email']
-      update_params[:enabled] = string_to_bool(params['enabled'])
+      unless params['enabled'].nil?
+        update_params[:enabled] = string_to_bool(params['enabled'])
+      end
 
       result = api_update("users/#{params['id']}", update_params)
 
