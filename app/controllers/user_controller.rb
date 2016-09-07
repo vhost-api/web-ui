@@ -97,7 +97,8 @@ namespace '/users' do
       update_params[:packages] = pkgs.map(&:to_i) unless pkgs.nil? || pkgs == ''
 
       update_params[:password] = passwd unless passwd.nil? || passwd == ''
-      update_params[:group_id] = params['group_id'].to_i
+      gid = params['group_id'].to_i
+      update_params[:group_id] = gid unless gid.zero?
       update_params[:name] = params['name']
       update_params[:login] = params['login']
       update_params[:contact_email] = params['contact_email']
