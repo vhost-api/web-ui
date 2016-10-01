@@ -648,11 +648,11 @@ namespace '/mail' do
       end
 
       get '/delete' do
-        _dummy, record = api_query("mailsources/#{params['id']}")
+        _dummy, record = api_query("mailforwardings/#{params['id']}")
         @delete = {
-          class_name: 'MailSource',
-          name: 'delete_mailsource',
-          endpoint: 'mail/sources',
+          class_name: 'MailForwarding',
+          name: 'delete_mailforwarding',
+          endpoint: 'mail/forwardings',
           id: record['id'],
           detail: record['address']
         }
@@ -660,12 +660,12 @@ namespace '/mail' do
       end
 
       post '/delete' do
-        resource = "mailsources/#{params['id']}"
+        resource = "mailforwardings/#{params['id']}"
         _dummy, record = api_query(resource)
         result = api_delete(resource)
 
         if result['status'] == 'success'
-          msg = "Successfully deleted MailSource #{record['id']}"
+          msg = "Successfully deleted MailForwarding #{record['id']}"
           msg += " (#{record['address']})"
           flash[:success] = msg
         else
@@ -675,7 +675,7 @@ namespace '/mail' do
           msg = "#{s}: #{e}, #{m}"
           flash[:error] = msg
         end
-        redirect '/mail/sources'
+        redirect '/mail/forwardings'
       end
     end
   end
