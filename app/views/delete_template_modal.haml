@@ -1,0 +1,22 @@
+.modal.fade{ id: 'modal_delete', role: 'dialog' }<
+  .modal-dialog<
+    .modal-content<
+      .modal-header<
+        %button.close{ type: 'button', data: { dismiss: 'modal' } }<= '&times;'
+        %h4.modal-title<= 'Delete ' + @delete[:class_name]
+      .modal-body<
+        %form.form-horizontal{ name: @delete[:name], method: 'POST',
+          action: "/#{@delete[:endpoint]}/#{@delete[:id]}/delete" }<
+          .form-group<
+            .col-xs-12.col-sm-12<
+              - r_id = @delete[:id]
+              - r_detail = @delete[:detail]
+              - record = "#{@delete[:class_name]} with ID #{r_id} (#{r_detail})"
+              %label<= 'Are you sure you want to delete ' + record + '?'
+          .form-group<
+            .col-xs-2.col-sm-3<
+              %button.btn.btn-danger.btn-block{ type: 'button',
+                value: 'delete',
+                onclick: "delete_record('#{@delete[:endpoint]}', #{@delete[:id]});" }< Delete
+            .col-xs-2.col-sm-3<
+              %button.btn.btn-default.btn-block{ type: 'button', data: { dismiss: 'modal' } }< Cancel

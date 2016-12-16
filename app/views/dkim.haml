@@ -28,7 +28,7 @@
         - suff = dkim['enabled'] ? en : dis
         - textval = dkim['enabled'] ? ' yes' : ' no'
         - a_del = "/mail/dkim/#{dkim['id']}/delete"
-        %tr
+        %tr{ id: "vhapi-mail-dkim-#{dkim['id']}" }<
           %td<= dkim['id']
           %td<
             %a{ href: "/mail/dkim/#{dkim['id']}/edit" }= dkim['selector']
@@ -74,7 +74,7 @@
         - suff = dkimsgn['enabled'] ? en : dis
         - textval = dkimsgn['enabled'] ? ' yes' : ' no'
         - a_del = "/mail/dkimsigning/#{dkimsgn['id']}/delete"
-        %tr
+        %tr{ id: "vhapi-mail-dkimsigning-#{dkimsgn['id']}" }<
           %td<= dkimsgn['id']
           %td<
             %a{ href: "/mail/dkimsigning/#{dksgnid}/edit" }= dkimsgn['author']

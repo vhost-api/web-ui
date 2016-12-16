@@ -32,7 +32,7 @@
           - suff = mfwd['enabled'] ? en : dis
           - textval = mfwd['enabled'] ? ' yes' : ' no'
           - a_del = "/mail/forwardings/#{mfwd['id']}/delete"
-          %tr
+          %tr{ id: "vhapi-mail-forwardings-#{mfwd['id']}" }<
             %td<= fwdid
             %td<
               %a{ href: "/mail/forwardings/#{fwdid}/edit" }<

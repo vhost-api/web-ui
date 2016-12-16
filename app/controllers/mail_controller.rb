@@ -208,7 +208,7 @@ namespace '/mail' do
           id: record['id'],
           detail: record['email']
         }
-        ui_delete
+        ui_delete(ajax: params['ajax'].nil? ? false : true)
       end
 
       post '/delete' do
@@ -216,15 +216,21 @@ namespace '/mail' do
         _dummy, record = api_query(resource)
         result = api_delete(resource)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           msg = "Successfully deleted MailAccount #{record['id']}"
           msg += " (#{record['email']})"
-          flash[:success] = msg
+          flash_status = 'success'
         else
           _err_id, msg = parse_api_error(result)
-          flash[:error] = msg
         end
-        redirect '/mail/accounts'
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
+          redirect '/mail/accounts'
+        else
+          halt 200, { status: flash_status, msg: msg }.to_json
+        end
       end
     end
   end
@@ -361,7 +367,7 @@ namespace '/mail' do
           id: record['id'],
           detail: record['address']
         }
-        ui_delete
+        ui_delete(ajax: params['ajax'].nil? ? false : true)
       end
 
       post '/delete' do
@@ -369,18 +375,21 @@ namespace '/mail' do
         _dummy, record = api_query(resource)
         result = api_delete(resource)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           msg = "Successfully deleted MailAlias #{record['id']}"
           msg += " (#{record['address']})"
-          flash[:success] = msg
+          flash_status = 'success'
         else
-          s = result['status']
-          e = result['error_id']
-          m = result['message']
-          msg = "#{s}: #{e}, #{m}"
-          flash[:error] = msg
+          _err_id, msg = parse_api_error(result)
         end
-        redirect '/mail/aliases'
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
+          redirect '/mail/aliases'
+        else
+          halt 200, { status: flash_status, msg: msg }.to_json
+        end
       end
     end
   end
@@ -517,7 +526,7 @@ namespace '/mail' do
           id: record['id'],
           detail: record['address']
         }
-        ui_delete
+        ui_delete(ajax: params['ajax'].nil? ? false : true)
       end
 
       post '/delete' do
@@ -525,18 +534,21 @@ namespace '/mail' do
         _dummy, record = api_query(resource)
         result = api_delete(resource)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           msg = "Successfully deleted MailSource #{record['id']}"
           msg += " (#{record['address']})"
-          flash[:success] = msg
+          flash_status = 'success'
         else
-          s = result['status']
-          e = result['error_id']
-          m = result['message']
-          msg = "#{s}: #{e}, #{m}"
-          flash[:error] = msg
+          _err_id, msg = parse_api_error(result)
         end
-        redirect '/mail/sources'
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
+          redirect '/mail/sources'
+        else
+          halt 200, { status: flash_status, msg: msg }.to_json
+        end
       end
     end
   end
@@ -656,7 +668,7 @@ namespace '/mail' do
           id: record['id'],
           detail: record['address']
         }
-        ui_delete
+        ui_delete(ajax: params['ajax'].nil? ? false : true)
       end
 
       post '/delete' do
@@ -664,18 +676,21 @@ namespace '/mail' do
         _dummy, record = api_query(resource)
         result = api_delete(resource)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           msg = "Successfully deleted MailForwarding #{record['id']}"
           msg += " (#{record['address']})"
-          flash[:success] = msg
+          flash_status = 'success'
         else
-          s = result['status']
-          e = result['error_id']
-          m = result['message']
-          msg = "#{s}: #{e}, #{m}"
-          flash[:error] = msg
+          _err_id, msg = parse_api_error(result)
         end
-        redirect '/mail/forwardings'
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
+          redirect '/mail/forwardings'
+        else
+          halt 200, { status: flash_status, msg: msg }.to_json
+        end
       end
     end
   end
@@ -705,7 +720,7 @@ namespace '/mail' do
           id: record['id'],
           detail: txt
         }
-        ui_delete
+        ui_delete(ajax: params['ajax'].nil? ? false : true)
       end
 
       post '/delete' do
@@ -713,18 +728,21 @@ namespace '/mail' do
         _dummy, record = api_query(resource)
         result = api_delete(resource)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           msg = "Successfully deleted DKIM #{record['id']}"
           msg += " (#{record['selector']})"
-          flash[:success] = msg
+          flash_status = 'success'
         else
-          s = result['status']
-          e = result['error_id']
-          m = result['message']
-          msg = "#{s}: #{e}, #{m}"
-          flash[:error] = msg
+          _err_id, msg = parse_api_error(result)
         end
-        redirect '/mail/dkim'
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
+          redirect '/mail/dkim'
+        else
+          halt 200, { status: flash_status, msg: msg }.to_json
+        end
       end
     end
   end
@@ -742,7 +760,7 @@ namespace '/mail' do
           id: record['id'],
           detail: txt
         }
-        ui_delete
+        ui_delete(ajax: params['ajax'].nil? ? false : true)
       end
 
       post '/delete' do
@@ -750,19 +768,21 @@ namespace '/mail' do
         _dummy, record = api_query(resource)
         result = api_delete(resource)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           msg = "Successfully deleted DkimSigning #{record['id']}"
-          msg += " (Author: #{record['author']}"
-          msg += ", DKIM ID: #{record['dkim']['id']})"
-          flash[:success] = msg
+          msg += " (#{record['author']})"
+          flash_status = 'success'
         else
-          s = result['status']
-          e = result['error_id']
-          m = result['message']
-          msg = "#{s}: #{e}, #{m}"
-          flash[:error] = msg
+          _err_id, msg = parse_api_error(result)
         end
-        redirect '/mail/dkim'
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
+          redirect '/mail/dkim'
+        else
+          halt 200, { status: flash_status, msg: msg }.to_json
+        end
       end
     end
   end

@@ -8,7 +8,7 @@
             %th<= key
       %tbody
         - @result.each_value do |g|
-          %tr
+          %tr{ id: "vhapi-groups-#{g['id']}" }<
             - g.each_key do |key|
               - if key =~ %r{name}
                 %td

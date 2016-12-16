@@ -32,7 +32,7 @@
           - suff = mailsource['enabled'] ? en : dis
           - textval = mailsource['enabled'] ? ' yes' : ' no'
           - a_del = "/mail/sources/#{mailsource['id']}/delete"
-          %tr
+          %tr{ id: "vhapi-mail-sources-#{mailsource['id']}" }<
             %td<= s_id
             %td<
               %a{ href: "/mail/sources/#{s_id}/edit" }<= mailsource['address']

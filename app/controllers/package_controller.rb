@@ -114,7 +114,7 @@ namespace '/packages' do
         id: record['id'],
         detail: record['name']
       }
-      ui_delete
+      ui_delete(ajax: params['ajax'].nil? ? false : true)
     end
 
     post '/delete' do
@@ -122,17 +122,20 @@ namespace '/packages' do
       _dummy, record = api_query(resource)
       result = api_delete(resource)
 
+      flash_status = 'error'
       if result['status'] == 'success'
         msg = "Successfully deleted Package #{record['id']} (#{record['name']})"
-        flash[:success] = msg
+        flash_status = 'success'
       else
-        s = result['status']
-        e = result['error_id']
-        m = result['message']
-        msg = "#{s}: #{e}, #{m}"
-        flash[:error] = msg
+        _err_id, msg = parse_api_error(result)
       end
-      redirect '/packages'
+
+      if params['ajax'].nil?
+        flash[flash_status.to_sym] = msg
+        redirect '/packages'
+      else
+        halt 200, { status: flash_status, msg: msg }.to_json
+      end
     end
   end
 end

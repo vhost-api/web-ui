@@ -66,7 +66,7 @@
           - en_suff = p['enabled'] ? en : dis
           - en_textval = p['enabled'] ? ' yes' : ' no'
           - a_del = "/packages/#{p['id']}/delete"
-          %tr
+          %tr{ id: "vhapi-packages-#{p['id']}" }<
             %td<= p['id']
             %td<
               %a{ href: "/packages/#{p['id']}/edit" }<= p['name']

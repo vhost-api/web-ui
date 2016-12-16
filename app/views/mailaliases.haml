@@ -32,7 +32,7 @@
           - suff = mailalias['enabled'] ? en : dis
           - textval = mailalias['enabled'] ? ' yes' : ' no'
           - a_del = "/mail/aliases/#{mailalias['id']}/delete"
-          %tr
+          %tr{ id: "vhapi-mail-aliases-#{mailalias['id']}" }<
             %td<= aliasid
             %td<
               %a{ href: "/mail/aliases/#{aliasid}/edit" }<= mailalias['address']

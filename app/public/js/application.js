@@ -22,6 +22,103 @@ function pretty_filesize(bytes) {
 	return bytes.toFixed(2);
 }
 
+function delete_record(endpoint, id) {
+	// build some stuff based on parameters
+	var target = '/' + endpoint + '/' + id + '/delete?ajax=1';
+	var row_selector = '#vhapi-' + endpoint.replace('/', '-') + '-' + id;
+
+	// initialize variable
+	var fadeout_delay = 3000;
+	var result_status = '';
+	var result_message = '';
+	var rand_id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
+	var table = $('#DataTables_Table_0').DataTable();
+
+	// run the ajax
+	$.ajax(target, {
+		method: 'POST',
+		success: function(data) {
+			var result_hash = JSON.parse(data);
+			result_status = result_hash['status'];
+			result_message = result_hash['msg'];
+		},
+		error: function(xhr, status, error) {
+			var result_hash = JSON.parse(xhr['responseText']);
+			result_status = result_hash['status'];
+			result_message = result_hash['msg'];
+			// log additional info
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		},
+		complete: function(_xhr, _status) {
+			$('#modal_delete').modal('toggle');
+
+			// create the flash message element
+			var flash_msg = document.createElement('div');
+			flash_msg.setAttribute('id', 'ajax_flash-' + rand_id);
+			flash_msg.setAttribute('role', 'alert');
+			flash_msg.className = 'ajax_flash alert fade';
+
+			// assign bootstrap alert class based on result_status
+			if(result_status === 'success') {
+				flash_msg.className += ' alert-success';
+
+				// FIXME: TODO: special case with DKIM/DkimSigning
+				/*----------------------------------------------------------*/
+				/* due to relational contraints we need to also remove
+				 * all DkimSigning records assigned to a DKIM record, when
+				 * that DKIM record is deleted
+				 */
+				if( /^#vhapi-mail-dkim-/.test(row_selector) ) {
+					var dkimsgn_table = $('#DataTables_Table_1').DataTable();
+					var needs_redraw = false;
+					// find matching DkimSigning records in the DkimSigning table
+					$('[id^=vhapi-mail-dkimsigning-]').each(function(row) {
+						if( id === parseInt($(this).children()[5].innerHTML) ){
+							needs_redraw = true;
+							dkimsgn_table.row($(this)).remove();
+						}
+					});
+					if( needs_redraw ) dkimsgn_table.draw();
+				}
+
+				// remove the row from the table
+				table.row($(row_selector)).remove();
+
+				// redraw the datatable
+				table.draw();
+			} else {
+				flash_msg.className += ' alert-danger';
+				// increase fadeout delay for error messages
+				fadeout_delay = 10000;
+			}
+
+			// flash message title
+			var alert_header = document.createElement('h4');
+			alert_header.textContent = result_status;
+			flash_msg.appendChild(alert_header);
+
+			// flash message body
+			var alert_message = document.createElement('p');
+			alert_message.textContent = result_message;
+			flash_msg.appendChild(alert_message);
+
+			// add flash message to the wrapper
+			document.getElementById('alert-wrapper').appendChild(flash_msg);
+
+			// fade-in the flash message
+			$('#ajax_flash-' + rand_id).addClass("in");
+
+			// remove it after fadeout_delay ms
+			setTimeout(function() {
+				$('#ajax_flash-' + rand_id).remove();
+			}, fadeout_delay);
+		}
+	});
+	return false;
+}
+
 $( document ).ready(function() {
 	// prettify byte units
 	$('input.byte-unit').each(function() {
@@ -89,7 +186,7 @@ $( document ).ready(function() {
 		var table = $(this).DataTable({
 			paging: false,
 			columnDefs: [
-			{ targets: 'no-sort', orderable: false }
+				{ targets: 'no-sort', orderable: false }
 			],
 			searching: true,
 			"sDom": 'lrtip'
@@ -107,5 +204,30 @@ $( document ).ready(function() {
 				}
 			} );
 		} );
+	});
+
+	// use ajax for delete buttons
+	$('a.item-delete').click(function(event) {
+		event.preventDefault();
+
+		var target = this.getAttribute('href') + '?ajax=1';
+
+		$.ajax(target, {
+			success: function(data) {
+				var parser = new DOMParser();
+				var element = parser.parseFromString(data, 'text/html');
+				var dialog_id = element.body.firstChild.getAttribute('id');
+				$('#' + dialog_id).remove();
+				$('BODY').append(element.body.innerHTML);
+				$('#' + dialog_id).modal();
+			},
+			error: function(xhr, status, error) {
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+			}
+		});
+
+		return false;
 	});
 });

@@ -21,8 +21,12 @@ module UIHelpers
     haml "edit_#{class_name.downcase}".to_sym
   end
 
-  def ui_delete
-    haml :delete_template
+  def ui_delete(ajax: false)
+    if ajax
+      haml :delete_template_modal, layout: nil
+    else
+      haml :delete_template
+    end
   end
 
   # @param class_name [String]

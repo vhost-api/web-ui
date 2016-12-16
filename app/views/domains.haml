@@ -37,7 +37,7 @@
           - dns_en_suff = d['dns_enabled'] ? en : dis
           - dns_en_textval = d['dns_enabled'] ? ' yes' : ' no'
           - a_del = "/domains/#{d['id']}/delete"
-          %tr
+          %tr{ id: "vhapi-domains-#{d['id']}" }<
             %td<= d['id']
             %td<
               %a{ href: "/domains/#{d['id']}/edit" }<= d['name']

@@ -20,6 +20,23 @@ body {
 /*
  * Notifications
  */
+div.modal-dialog {
+	z-Index: 2;
+}
+
+div.alert-wrapper {
+	position: fixed;
+	top: 80px;
+	left: calc(8vw + 20px);
+	right: 10px;
+	z-Index: 1;
+	margin: 0;
+}
+
+.ajax_flash > h4 {
+	text-transform: capitalize;
+}
+
 div#flash {
 	text-align: center;
 }

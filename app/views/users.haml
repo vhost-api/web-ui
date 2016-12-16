@@ -37,7 +37,7 @@
           - textval = u['enabled'] ? ' yes' : ' no'
           - reseller = u['reseller'] ? u['reseller']['name'] : ''
           - a_del = "/users/#{u['id']}/delete"
-          %tr
+          %tr{ id: "vhapi-users-#{u['id']}" }<
             %td<= u['id']
             %td<
               %a{ href: "/users/#{u['id']}/edit" }<= u['name']
