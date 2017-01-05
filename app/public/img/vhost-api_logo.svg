@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="320"
+   height="80"
+   viewBox="0 0 84.666666 21.166667"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.0 r"
+   sodipodi:docname="vhost-api_logo.svg"
+   inkscape:export-filename="/home/fox/git/vhost-api/web-ui/app/public/img/logo-default.png"
+   inkscape:export-xdpi="60.959999"
+   inkscape:export-ydpi="60.959999">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="159.02229"
+     inkscape:cy="10.715103"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="2554"
+     inkscape:window-height="1414"
+     inkscape:window-x="1200"
+     inkscape:window-y="20"
+     inkscape:window-maximized="0"
+     units="px" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-275.83333)">
+    <g
+       id="g4584"
+       transform="matrix(0.26458333,0,0,0.26458333,0,275.83333)">
+      <g
+         transform="translate(0,-4)"
+         inkscape:label="color"
+         id="layer9">
+        <path
+           inkscape:connector-curvature="0"
+           id="path4560"
+           d="M 19.159803,42.344889 1.6052632,52.242335 1.6829381,72.191876 19.004454,82.089322 36.636668,71.882581 36.947368,52.55163 Z"
+           style="fill:#ff9800;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4562"
+           d="M 60.601619,41.844889 43.09413,52.13144 l 0.154251,21.216012 17.276113,9.80437 17.430365,-10.366915 0.231376,-20.573103 z"
+           style="fill:#ff9800;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4564"
+           d="M 39.649291,6.0822368 22.062753,16.404183 22.217021,36.5007 39.417891,46.588057 57.23583,36.422504 V 16.325986 Z"
+           style="fill:#ff9800;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      </g>
+      <g
+         transform="translate(0,-4)"
+         style="display:inline"
+         inkscape:label="icon"
+         id="layer8">
+        <g
+           transform="matrix(0.968523,0,0,0.95351609,-8.4261501,-3.6281287)"
+           id="g4520-7">
+          <path
+             inkscape:connector-curvature="0"
+             id="path4522-5"
+             d="M 71.3,45.8 69,47.2 v -1.7 l -2,-1.1 3,-1.7 V 19.5 L 50,8 30,19.5 v 23.1 l 3,1.7 -2,1.1 v 1.7 l -2.3,-1.3 -20,11.5 v 23.1 l 20,11.5 20,-11.5 v -2.8 l 1.3,0.7 1.3,-0.7 v 2.8 l 20,11.5 20,-11.5 v -23 z m 16,32.4 -16,9.2 -16,-9.2 V 75.4 L 69,67.4 V 51.8 l 2.3,-1.3 16,9.2 z M 55.3,59.7 67,52.9 V 66.2 L 55.3,73 Z M 34,21.8 50,12.6 66,21.8 V 40.3 L 63,42 50,34.5 37,42 34,40.3 Z m 16,15 11,6.4 -11,6.4 -11,-6.4 z M 28.7,87.4 12.7,78.2 V 59.7 l 16,-9.2 2.3,1.3 v 15.6 l 13.7,7.9 v 2.8 z M 33,66.3 V 52.9 l 11.7,6.8 V 73 Z m 17,9.8 -1.3,-0.7 v -18 L 33,48.3 v -1.7 l 2,-1.1 15,8.7 15,-8.7 2,1.1 v 1.7 l -15.7,9.1 v 18 z" />
+        </g>
+      </g>
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4586"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:25px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,-18.402494,274.41763)"><flowRegion
+         id="flowRegion4588"><rect
+           id="rect4590"
+           width="504.06613"
+           height="230.31477"
+           x="154.55334"
+           y="36.10062" /></flowRegion><flowPara
+         id="flowPara4592"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48px;font-family:'Open Sans Condensed';-inkscape-font-specification:'Open Sans Condensed, '">VHost-API</flowPara></flowRoot>  </g>
+</svg>

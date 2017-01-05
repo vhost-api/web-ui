@@ -4,12 +4,12 @@
     %meta{ charset: 'utf-8' }
     %meta{ content: 'IE=edge', 'http-equiv' => 'X-UA-Compatible' }
     %meta{ content: 'width=device-width, initial-scale=1', name: 'viewport' }
+    %title= @title
     %meta{ content: '', name: 'description' }
     %meta{ content: '', name: 'author' }
-    %title= @title
+    - defined?(settings.site_favicon) or settings.site_favicon = 'favicon-default.png'
+    %link{ rel: 'shortcut icon', href: "/img/#{settings.site_favicon}" }
+    %link{ href: '/css/bootstrap.min.css', rel: 'stylesheet' }
     %link{ href: '/css/login.css', rel: 'stylesheet' }
-    %link{ href: '/img/favicon.ico', rel: 'shortcut icon' }
   %body
-    .login
-      .row
-        .col-3.col-offset-3= yield
+    .container= yield

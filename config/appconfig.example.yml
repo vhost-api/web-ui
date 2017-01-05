@@ -1,21 +1,9 @@
 development:
-  :site_title: 'vhost-API UI'
-  :api_url: 'http://localhost:9393'
-  :api_ver: 1
-  :api_key_comment: 'vhost-api-ui'
-  :session:
-    :timeout: 86400 # 1 day
-    :domain: 'localhost.localdomain'
-    :key: 'rack.session'
-    :path: '/'
-  :threshholds:
-    :display:
-      :mailquota_warn: 65
-      :mailquota_crit: 90
-  :webmail_link: 'http://webmail.localhost.localdomain'
-
-test:
-  :site_title: 'vhost-API UI'
+  :site_title: 'VHost-API UI'
+  # use logo.png as filename for custom logo (not tracked due to gitignore)
+  :site_logo: 'logo-default.png'
+  # use favicon.ico as filename for custom favicon (not tracked due to gitignore)
+  :site_favicon: 'favicon-default.ico'
   :api_url: 'http://localhost:9393'
   :api_ver: 1
   :api_key_comment: 'vhost-api-ui'
@@ -31,7 +19,11 @@ test:
   :webmail_link: 'http://webmail.localhost.localdomain'
 
 production:
-  :site_title: 'vhost-API UI'
+  :site_title: 'VHost-API UI'
+  # use logo.png as filename for custom logo (not tracked due to gitignore)
+  :site_logo: 'logo-default.png'
+  # use favicon.ico as filename for custom favicon (not tracked due to gitignore)
+  :site_favicon: 'favicon-default.ico'
   :api_url: 'https://api.example.com'
   :api_ver: 1
   :api_key_comment: 'vhost-api-ui'
@@ -45,3 +37,21 @@ production:
       :mailquota_warn: 65
       :mailquota_crit: 90
   :webmail_link: 'https://webmail.exmaple.com'
+
+test:
+  :site_title: 'VHost-API UI'
+  :site_logo: 'logo-default.png'
+  :site_favicon: 'favicon-default.ico'
+  :api_url: 'http://localhost:9393'
+  :api_ver: 1
+  :api_key_comment: 'vhost-api-ui'
+  :session:
+    :timeout: 86400 # 1 day
+    :domain: 'localhost.localdomain'
+    :key: 'rack.session'
+    :path: '/'
+  :threshholds:
+    :display:
+      :mailquota_warn: 65
+      :mailquota_crit: 90
+  :webmail_link: 'http://webmail.localhost.localdomain'

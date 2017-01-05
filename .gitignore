@@ -50,6 +50,8 @@ config/database.yml
 config/appconfig.yml
 config/session.secret
 config/puma.rb
+app/public/img/logo.png
+app/public/img/favicon.ico
 
 puma.pid
 
