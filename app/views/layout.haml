@@ -44,14 +44,8 @@
     .container-fluid<
       - if @sidebar_elements.nil? || @sidebar_elements.empty?
         .row<
-          .col-sm-12.col-md-12.col-md-offset-0.main<
-            = find_and_preserve styled_flash
-        .row<
           .col-sm-12.col-md-12.col-md-offset-0.main<= yield
       - else
-        .row<
-          .col-sm-9.col-sm-offset-3.col-md-11.col-md-offset-1.main<
-            = find_and_preserve styled_flash
         .row<
           .col-sm-3.col-md-1.sidebar<
             %ul.nav.nav-sidebar<= haml :sidebar
