@@ -73,7 +73,7 @@ end
 
 before do
   @user = session[:user] unless session[:user].nil?
-  authenticate! unless request.path_info =~ %r{/(login|css)}
+  authenticate! unless request.path_info =~ %r{/(login|css|img)}
   set_title
   set_sidebar_title
 end
