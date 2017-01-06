@@ -93,11 +93,11 @@
             %option{ value: opt[:value] }<= opt[:text]
 
 -# SUBMIT
-.form-group<
-  .col-sm-offset-2.col-sm-1<= haml :submit_button
-  .col-sm-1<
-  .col-sm-1<
-    - if admin? || reseller?
-      %a.nounderline{ href: '/users' }<= haml :cancel_button
-    - else
-      %a.nounderline{ href: '/' }<= haml :cancel_button
+.form-group
+  .col-xs-offset-0.col-xs-12.col-sm-offset-2.col-sm-3
+    .btn-group<= haml :submit_button
+    .btn-group<
+      - if admin? || reseller?
+        %a.nounderline{ href: '/users' }<= haml :cancel_button
+      - else
+        %a.nounderline{ href: '/' }<= haml :cancel_button
