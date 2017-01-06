@@ -3,7 +3,6 @@
     .login-panel.col-xs-12.col-sm-12.col-md-12.col-lg-12
       #login-access
         .header
-          - defined?(settings.site_logo) or settings.site_logo = 'logo-default.png'
           %img.center-block{ alt: 'Logo', src: "/img/#{settings.site_logo}" }
         %form.form-horizontal{ accept: { charset: 'utf-8' },
                                action: '/login',

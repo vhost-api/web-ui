@@ -7,7 +7,6 @@
     %title= @title
     %meta{ content: '', name: 'description' }
     %meta{ content: '', name: 'author' }
-    - defined?(settings.site_favicon) or settings.site_favicon = 'favicon-default.ico'
     %link{ rel: 'shortcut icon', href: "/img/#{settings.site_favicon}" }
     %link{ href: '/css/bootstrap.min.css', rel: 'stylesheet' }
     %link{ href: '/css/login.css', rel: 'stylesheet' }

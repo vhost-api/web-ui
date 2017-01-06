@@ -47,6 +47,5 @@
             %td.iso-date<= Time.at(d['updated_at'].to_i).strftime('%F')
             %td.icon{ class: "icon #{en_suff}" }= en_textval
             %td<= d['user']['name']
-            - p(d['user'])
             %td<
               %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'

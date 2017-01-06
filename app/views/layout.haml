@@ -7,7 +7,6 @@
     %title= @title
     %meta{ content: '', name: 'description' }
     %meta{ content: '', name: 'author' }
-    - defined?(settings.site_favicon) or settings.site_favicon = 'favicon-default.ico'
     %link{ rel: 'shortcut icon', href: "/img/#{settings.site_favicon}" }
     %link{ href: '/css/bootstrap.min.css', rel: 'stylesheet' }
     %link{ href: '/css/jquery.dataTables.min.css', rel: 'stylesheet' }
@@ -24,7 +23,6 @@
           </button>
           %a.navbar-brand.navbar-brand-pad{ href: '/' }<
             %span.helper<
-            - defined?(settings.site_brand) or settings.site_brand = 'brand-default.png'
             %img.hidden-xs{ alt: 'Brand', src: "/img/#{settings.site_brand}" }
         .navbar-collapse.collapse#navbar
           %ul.nav.navbar-nav
