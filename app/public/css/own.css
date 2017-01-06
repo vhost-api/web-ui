@@ -2,9 +2,9 @@
  * Base structure
  */
 
-/* Move down content because we have a fixed navbar that is 50px tall */
+/* Move down content because we have a fixed navbar that is 70px tall */
 body {
-	padding-top: 50px;
+	padding-top: 70px;
 }
 
 
@@ -68,8 +68,26 @@ div#flash .error {
  * Top navigation
  * Hide default border to remove 1px line.
  */
-.navbar-fixed-top {
+.navbar-fixed-top, .navbar-header {
+	height: 70px;
 	border: 0;
+}
+
+.navbar-brand {
+	height: 70px;
+	padding: 0 10px;
+}
+
+.navbar-brand > span.helper {
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.navbar-brand > img {
+	display: inline-block;
+	max-height: 60px;
+	vertical-align: middle;
 }
 
 .navbar-nav > li {
@@ -77,6 +95,13 @@ div#flash .error {
 	vertical-align: middle;
 	text-align: center;
 }
+
+@media (max-width: 767px) {
+	ul.navbar-nav {
+		background-color: #222;
+	}
+}
+
 
 /*
  * Sidebar
@@ -171,10 +196,6 @@ div#flash .error {
 
 .icon-title {
 	text-align: center
-}
-
-.navbar-brand-pad {
-	margin-top: 10px;
 }
 
 .progress {

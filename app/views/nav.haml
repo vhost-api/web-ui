@@ -1,56 +1,56 @@
 %li{ class: nav_current?(%r{^(|\/)$}) }<
   %a{ href: '/', title: 'Home' }<
     .icon.icon-home.icon-title
-    .title Home
+    .title< Home
 
 %li{ class: nav_current?(%r{^/users}) }<
   - if admin? || reseller?
     %a{ href: '/users', title: 'Users' }<
       .icon.icon-user.icon-title
-      .title Users
+      .title< Users
   - else
     %a{ href: "/users/#{@user[:id]}/edit", title: 'User' }<
       .icon.icon-user.icon-title
-      .title User
+      .title< User
 %li{ class: nav_current?(%r{^/stats}) }<
   %a{ href: '/stats', title: 'Stats' }<
     .icon.icon-stats.icon-title
-    .title Stats
+    .title< Stats
 - if admin? || reseller?
   %li{ class: nav_current?(%r{^/packages}) }<
     %a{ href: '/packages', title: 'Packages' }<
       .icon.icon-package.icon-title
-      .title Packages
+      .title< Packages
 - if session[:modules].include?('domain')
   %li{ class: nav_current?(%r{^/domains}) }<
     %a{ href: '/domains', title: 'Domains' }<
       .icon.icon-domain.icon-title
-      .title Domains
+      .title< Domains
 - if session[:modules].include?('email')
   %li{ class: nav_current?(%r{^/mail}) }<
     %a{ href: '/mail', title: 'Mail' }<
       .icon.icon-mail.icon-title
-      .title Mail
+      .title< Mail
 - if session[:modules].include?('vhost')
   %li{ class: nav_current?(%r{^/webhosting}) }<
     %a{ href: '/webhosting', title: 'VHosts' }<
       .icon.icon-web.icon-title
-      .title VHosts
+      .title< VHosts
 - if session[:modules].include?('database')
   %li{ class: nav_current?(%r{^/databases}) }<
     %a{ href: '/databases', title: 'DBs' }<
       .icon.icon-database.icon-title
-      .title DBs
+      .title< DBs
 - if session[:modules].include?('dns')
   %li{ class: nav_current?(%r{^/dns}) }<
     %a{ href: '/dns', title: 'DNS' }<
       .icon.icon-dns.icon-title
-      .title DNS
+      .title< DNS
 %li{ class: nav_current?(%r{^/settings}) }<
   %a{ href: '/settings', title: 'Settings' }<
     .icon.icon-settings.icon-title
-    .title Settings
+    .title< Settings
 %li<
   %a{ href: settings.webmail_link, target: '_blank', title: 'Webmail' }<
     .icon.icon-webmail.icon-title
-    .title Webmail
+    .title< Webmail

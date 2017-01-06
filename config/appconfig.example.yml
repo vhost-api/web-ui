@@ -4,6 +4,9 @@ development:
   :site_logo: 'logo-default.png'
   # use favicon.ico as filename for custom favicon (not tracked due to gitignore)
   :site_favicon: 'favicon-default.ico'
+  # use brand.png as filename for custom navbar brand (not tracked due to gitignore)
+  # 60px height at most for best results
+  :site_brand: 'brand-default.png'
   :api_url: 'http://localhost:9393'
   :api_ver: 1
   :api_key_comment: 'vhost-api-ui'
@@ -24,6 +27,9 @@ production:
   :site_logo: 'logo-default.png'
   # use favicon.ico as filename for custom favicon (not tracked due to gitignore)
   :site_favicon: 'favicon-default.ico'
+  # use brand.png as filename for custom navbar brand (not tracked due to gitignore)
+  # 60px height at most for best results
+  :site_brand: 'brand-default.png'
   :api_url: 'https://api.example.com'
   :api_ver: 1
   :api_key_comment: 'vhost-api-ui'
@@ -42,6 +48,7 @@ test:
   :site_title: 'VHost-API UI'
   :site_logo: 'logo-default.png'
   :site_favicon: 'favicon-default.ico'
+  :site_brand: 'brand-default.png'
   :api_url: 'http://localhost:9393'
   :api_ver: 1
   :api_key_comment: 'vhost-api-ui'

@@ -4,50 +4,37 @@
     %meta{ charset: 'utf-8' }
     %meta{ content: 'IE=edge', 'http-equiv' => 'X-UA-Compatible' }
     %meta{ content: 'width=device-width, initial-scale=1', name: 'viewport' }
+    %title= @title
     %meta{ content: '', name: 'description' }
     %meta{ content: '', name: 'author' }
-    %title= @title
+    - defined?(settings.site_favicon) or settings.site_favicon = 'favicon-default.ico'
+    %link{ rel: 'shortcut icon', href: "/img/#{settings.site_favicon}" }
     %link{ href: '/css/bootstrap.min.css', rel: 'stylesheet' }
     %link{ href: '/css/jquery.dataTables.min.css', rel: 'stylesheet' }
     %link{ href: '/css/own.css', rel: 'stylesheet' }
-
-    %link{ href: '/img/favicon.ico', rel: 'shortcut icon' }
   %body
     %nav.navbar.navbar-inverse.navbar-fixed-top
       .container-fluid
         .navbar-header
-          -# %button.navbar-toggle.collapsed{ 'aria-controls' => 'navbar',
-          -#                                  'aria-expanded' => 'false',
-          -#                                  'data-target' => '#navbar',
-          -#                                  'data-toggle' => 'collapse',
-          -#                                  :type => 'button' }
-          -#   %span.sr-only Toggle navigation
-          -#   %span.icon-bar
-          -#   %span.icon-bar
-          -#   %span.icon-bar
-          %a.navbar-brand.navbar-brand-pad{ href: '/' } VHost-Api
+          %button.navbar-toggle.collapsed{ type: 'button', data: { toggle: 'collapse', target: '#navbar' }, aria: { expanded: 'false' } }
+            %span.sr-only< Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          </button>
+          %a.navbar-brand.navbar-brand-pad{ href: '/' }<
+            %span.helper<
+            - defined?(settings.site_brand) or settings.site_brand = 'brand-default.png'
+            %img.hidden-xs{ alt: 'Brand', src: "/img/#{settings.site_brand}" }
         .navbar-collapse.collapse#navbar
           %ul.nav.navbar-nav
             = haml :nav
           %ul.nav.navbar-nav.navbar-right
             - if !@user.nil?
               %li
-                %a.icon.icon-logout{ href: '/logout',
-                  title: 'Logout' }= ' Logout (' + @user[:login] + ')'
-              -# %li.dropdown
-
-                -# %a.dropdown-toggle{ 'aria-expanded': 'false',
-                                    -# 'aria-haspopup': 'true',
-                                    -# 'data-toggle': 'dropdown',
-                                    -# href: '#',
-                                    -# role: 'button' }
-                  -# = @user[:login]
-                  -# %span.caret
-                -# %ul.dropdown-menu
-                  -# %li
-                    -# %a{ href: '/logout' }
-                      -# .icon.icon-logout<
-                        -# Logout
+                %a{ href: '/logout', title: 'Logout' }<
+                  %span.icon.icon-logout>
+                  %span.hidden-sm= " Logout (#{@user[:login]})"
             - else
               %li
                 %a{ href: '/login',
