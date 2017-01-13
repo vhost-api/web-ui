@@ -56,7 +56,7 @@ module FormHelpers
   def user_select_options
     return [] if @users.nil? || @users.empty?
     @users.each_value.map do |u|
-      opt = { value: u['id'], text: u['login'] }
+      opt = { value: u['id'], text: u['name'] }
       if @record.nil?
         opt[:selected] = 'selected' if (u['id']).zero?
       elsif u['id'] == @record['user']['id']
