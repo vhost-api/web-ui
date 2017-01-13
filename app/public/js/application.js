@@ -22,6 +22,24 @@ function pretty_filesize(bytes) {
 	return bytes.toFixed(2);
 }
 
+function pretty_api_error(code, msg) {
+	var result = {};
+	switch(parseInt(code)) {
+		case 1003:
+			result['msg'] = 'Insufficient permission or Quota exhausted.';
+			result['visible'] = true;
+			break;
+		case 1006:
+			result['msg'] = null;
+			result['visible'] = false;
+			break;
+		default:
+			result['msg'] = msg;
+			result['visible'] = true;
+	}
+	return result;
+}
+
 function delete_record(endpoint, id) {
 	// build some stuff based on parameters
 	var target = '/' + endpoint + '/' + id + '/delete?ajax=1';
@@ -33,6 +51,7 @@ function delete_record(endpoint, id) {
 	var result_message = '';
 	var rand_id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
 	var table = $('#DataTables_Table_0').DataTable();
+	var timer;
 
 	// run the ajax
 	$.ajax(target, {
@@ -109,11 +128,22 @@ function delete_record(endpoint, id) {
 
 			// fade-in the flash message
 			$('#ajax_flash-' + rand_id).addClass("in");
+			window.scrollTo(0, 0);
 
 			// remove it after fadeout_delay ms
-			setTimeout(function() {
-				$('#ajax_flash-' + rand_id).remove();
+			timer = setTimeout(function() {
+				$('#ajax_flash-' + rand_id).fadeOut('slow', function() {
+					$(this).remove();
+				});
 			}, fadeout_delay);
+
+			// clicking the message should remove it
+			$('#ajax_flash-' + rand_id).click(function() {
+				clearTimeout(timer);
+				$(this).fadeOut('slow', function() {
+					$(this).remove();
+				});
+			});
 		}
 	});
 	return false;
@@ -209,6 +239,7 @@ $( document ).ready(function() {
 	// use ajax for delete buttons
 	$('a.item-delete').click(function(event) {
 		event.preventDefault();
+		event.stopPropagation();
 
 		var target = this.getAttribute('href') + '?ajax=1';
 
@@ -220,6 +251,162 @@ $( document ).ready(function() {
 				$('#' + dialog_id).remove();
 				$('BODY').append(element.body.innerHTML);
 				$('#' + dialog_id).modal();
+			},
+			error: function(xhr, status, error) {
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+			}
+		});
+
+		return false;
+	});
+
+	// use ajax for submit buttons
+	$('form :submit').click(function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		// initialize variable
+		var fadeout_delay = 3000;
+		var r_status = '', r_msg = '', r_err, r_err_id = 0;
+		var rand_id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 8);
+		var form = $(this).parents('form');
+		var form_action = form.attr('action') + '?ajax=1';
+		var form_method = form.attr('method');
+		var timer;
+		var alert_header = '', alert_message = '', alert_errors = '';
+		var redirect;
+
+		$.ajax({
+			beforeSend: function() {
+				// disable all form input
+				form.find('input').attr('disabled', 'disabled');
+				form.find('button').attr('disabled', 'disabled');
+				form.find('select').attr('disabled', 'disabled');
+			},
+			url: form_action,
+			method: form_method,
+			data: form.serialize(),
+			success: function(data) {
+				var result_hash = JSON.parse(data);
+				r_status = result_hash['status'];
+				r_msg = result_hash['msg'];
+				redirect = result_hash['redirect'];
+
+				// create the flash message element
+				var flash_msg = document.createElement('div');
+				flash_msg.setAttribute('id', 'ajax_flash-' + rand_id);
+				flash_msg.setAttribute('role', 'alert');
+				flash_msg.className = 'ajax_flash alert fade';
+
+				// flash message title
+				alert_header = document.createElement('h4');
+				alert_header.textContent = r_status;
+				flash_msg.appendChild(alert_header);
+
+				// log api return code, no need to show to the user
+				console.log('api msg:', r_msg);
+
+				// assign bootstrap alert class based on r_status
+				if(r_status === 'success') {
+					flash_msg.className += ' alert-success';
+					flash_msg.appendChild(document.createElement('hr'));
+					var msg = document.createElement('p');
+					msg.textContent = r_msg;
+					flash_msg.appendChild(msg);
+					var redirect_hint = document.createElement('p');
+					redirect_hint.textContent = 'Your are being redirected in ' + +Math.round(fadeout_delay/1000) + ' seconds...';
+					flash_msg.appendChild(redirect_hint);
+				} else {
+					flash_msg.className += ' alert-danger';
+
+					r_err_id = parseInt(result_hash['error_id']);
+					r_err = result_hash['errors'];
+
+					var pretty_error = pretty_api_error(r_err_id, r_msg);
+					if( pretty_error['visible'] ) {
+						flash_msg.appendChild(document.createElement('hr'));
+						var err_code_p = document.createElement('p');
+						err_code_p.textContent = pretty_error['msg'];
+						flash_msg.appendChild(err_code_p);
+					}
+
+					// check if there are any validation errors
+					if( 'validation' in r_err ) {
+						flash_msg.appendChild(document.createElement('hr'));
+
+						var validation_errors_heading = document.createElement('h5');
+						validation_errors_heading.textContent = 'Validation Errors:'
+						flash_msg.appendChild(validation_errors_heading);
+
+						var val_errs = r_err['validation'];
+						// loop through fields
+						for (var i in val_errs) {
+							var field = val_errs[i]['field'];
+							var errors = val_errs[i]['errors'];
+							var f = document.createElement('strong');
+							f.textContent = field;
+							flash_msg.appendChild(f);
+
+							var e_ul = document.createElement('ul');
+
+							// loop through errors for this field
+							for (var j in errors) {
+								var li = document.createElement('li');
+								li.textContent = errors[j];
+								e_ul.appendChild(li);
+							}
+							flash_msg.appendChild(e_ul);
+						}
+
+						// remove this property as we are done processing it
+						delete r_err['validation'];
+					}
+
+					// show any remaining errors, that are not validation errors
+					if( Object.keys(r_err).length > 0 ) {
+						flash_msg.appendChild(document.createElement('hr'));
+
+						alert_errors_heading = document.createElement('h5');
+						alert_errors_heading.textContent = 'Other Errors:'
+						flash_msg.appendChild(alert_errors_heading);
+
+						alert_errors = document.createElement('p');
+						alert_errors.textContent = JSON.stringify(r_err);
+						flash_msg.appendChild(alert_errors);
+					}
+
+					// re-enable all form input
+					form.find('input').removeAttr('disabled');
+					form.find('button').removeAttr('disabled');
+					form.find('select').removeAttr('disabled');
+				}
+
+				// add flash message to the wrapper
+				document.getElementById('alert-wrapper').appendChild(flash_msg);
+
+				// fade-in the flash message
+				$('#ajax_flash-' + rand_id).addClass("in");
+				window.scrollTo(0, 0);
+
+				// remove it after fadeout_delay ms
+				if(r_status === 'success') {
+					timer = setTimeout(function() {
+						$('#ajax_flash-' + rand_id).fadeOut('slow', function() {
+							$(this).remove();
+							window.location.replace(redirect);
+						});
+					}, fadeout_delay);
+				}
+
+				// clicking the message should remove it
+				$('#ajax_flash-' + rand_id).click(function() {
+					clearTimeout(timer);
+					$(this).fadeOut('slow', function() {
+						$(this).remove();
+					});
+				});
 			},
 			error: function(xhr, status, error) {
 				console.log(xhr);

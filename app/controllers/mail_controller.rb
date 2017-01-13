@@ -90,23 +90,24 @@ namespace '/mail' do
                                 end
       result = api_create('mailaccounts', create_params)
 
+      flash_status = 'error'
       if result['status'] == 'success'
         @record = result['data']['object']
         msg = "Successfully created MailAcccount #{@record['id']}"
         msg += ", #{@record['email']}"
-        flash[:success] = msg
+        flash_status = 'success'
+      else
+        err_id, msg, errors = parse_api_error(result)
+      end
+
+      if params['ajax'].nil?
+        flash[flash_status.to_sym] = msg
         redirect '/mail/accounts'
       else
-        err_id, msg = parse_api_error(result)
-        flash[:error] = msg
-        case err_id
-        when '1003' then
-          # permission denied or quota exhausted
-          redirect '/mail/accounts'
-        else
-          # try again
-          redirect '/mail/accounts/new'
-        end
+        reply = { status: flash_status, msg: msg, redirect: '/mail/accounts' }
+        reply['error_id'] = err_id if errors
+        reply['errors'] = errors if errors
+        halt 200, reply.to_json
       end
     end
 
@@ -176,26 +177,24 @@ namespace '/mail' do
 
         result = api_update("mailaccounts/#{params['id']}", upd_params)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           @record = result['data']['object']
           msg = "Successfully updated MailAcccount #{@record['id']}"
           msg += ", #{@record['email']}"
-          flash[:success] = msg
+          flash_status = 'success'
+        else
+          err_id, msg, errors = parse_api_error(result)
+        end
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
           redirect '/mail/accounts'
         else
-          err_id, msg = parse_api_error(result)
-          flash[:error] = msg
-          case err_id
-          when '1004' then
-            # not found
-            redirect '/mail/accounts'
-          when '1003' then
-            # permission denied or quota exhausted
-            redirect '/mail/accounts'
-          else
-            # try again
-            redirect "/mail/accounts/#{params['id']}/edit"
-          end
+          reply = { status: flash_status, msg: msg, redirect: '/mail/accounts' }
+          reply['error_id'] = err_id if errors
+          reply['errors'] = errors if errors
+          halt 200, reply.to_json
         end
       end
 
@@ -279,23 +278,24 @@ namespace '/mail' do
 
       result = api_create('mailaliases', create_params)
 
+      flash_status = 'error'
       if result['status'] == 'success'
         @record = result['data']['object']
         msg = "Successfully created MailAlias #{@record['id']}"
         msg += ", #{@record['address']}"
-        flash[:success] = msg
+        flash_status = 'success'
+      else
+        err_id, msg, errors = parse_api_error(result)
+      end
+
+      if params['ajax'].nil?
+        flash[flash_status.to_sym] = msg
         redirect '/mail/aliases'
       else
-        err_id, msg = parse_api_error(result)
-        flash[:error] = msg
-        case err_id
-        when '1003' then
-          # permission denied or quota exhausted
-          redirect '/mail/aliases'
-        else
-          # try again
-          redirect '/mail/aliases/new'
-        end
+        reply = { status: flash_status, msg: msg, redirect: '/mail/aliases' }
+        reply['error_id'] = err_id if errors
+        reply['errors'] = errors if errors
+        halt 200, reply.to_json
       end
     end
 
@@ -335,26 +335,24 @@ namespace '/mail' do
 
         result = api_update("mailaliases/#{params['id']}", upd_params)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           @record = result['data']['object']
           msg = "Successfully updated MailAlias #{@record['id']}"
           msg += ", #{@record['address']}"
-          flash[:success] = msg
+          flash_status = 'success'
+        else
+          err_id, msg, errors = parse_api_error(result)
+        end
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
           redirect '/mail/aliases'
         else
-          err_id, msg = parse_api_error(result)
-          flash[:error] = msg
-          case err_id
-          when '1004' then
-            # not found
-            redirect '/mail/aliases'
-          when '1003' then
-            # permission denied or quota exhausted
-            redirect '/mail/aliases'
-          else
-            # try again
-            redirect "/mail/aliases/#{params['id']}/edit"
-          end
+          reply = { status: flash_status, msg: msg, redirect: '/mail/aliases' }
+          reply['error_id'] = err_id if errors
+          reply['errors'] = errors if errors
+          halt 200, reply.to_json
         end
       end
 
@@ -438,23 +436,24 @@ namespace '/mail' do
 
       result = api_create('mailsources', create_params)
 
+      flash_status = 'error'
       if result['status'] == 'success'
         @record = result['data']['object']
         msg = "Successfully created MailSource #{@record['id']}"
         msg += ", #{@record['address']}"
-        flash[:success] = msg
+        flash_status = 'success'
+      else
+        err_id, msg, errors = parse_api_error(result)
+      end
+
+      if params['ajax'].nil?
+        flash[flash_status.to_sym] = msg
         redirect '/mail/sources'
       else
-        err_id, msg = parse_api_error(result)
-        flash[:error] = msg
-        case err_id
-        when '1003' then
-          # permission denied or quota exhausted
-          redirect '/mail/sources'
-        else
-          # try again
-          redirect '/mail/sources/new'
-        end
+        reply = { status: flash_status, msg: msg, redirect: '/mail/sources' }
+        reply['error_id'] = err_id if errors
+        reply['errors'] = errors if errors
+        halt 200, reply.to_json
       end
     end
 
@@ -494,26 +493,24 @@ namespace '/mail' do
 
         result = api_update("mailsources/#{params['id']}", upd_params)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           @record = result['data']['object']
           msg = "Successfully updated MailSource #{@record['id']}"
           msg += ", #{@record['address']}"
-          flash[:success] = msg
+          flash_status = 'success'
+        else
+          err_id, msg, errors = parse_api_error(result)
+        end
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
           redirect '/mail/sources'
         else
-          err_id, msg = parse_api_error(result)
-          flash[:error] = msg
-          case err_id
-          when '1004' then
-            # not found
-            redirect '/mail/sources'
-          when '1003' then
-            # permission denied or quota exhausted
-            redirect '/mail/sources'
-          else
-            # try again
-            redirect "/mail/sources/#{params['id']}/edit"
-          end
+          reply = { status: flash_status, msg: msg, redirect: '/mail/sources' }
+          reply['error_id'] = err_id if errors
+          reply['errors'] = errors if errors
+          halt 200, reply.to_json
         end
       end
 
@@ -588,23 +585,24 @@ namespace '/mail' do
 
       result = api_create('mailforwardings', create_params)
 
+      flash_status = 'error'
       if result['status'] == 'success'
         @record = result['data']['object']
         msg = "Successfully created MailForwarding #{@record['id']}"
         msg += ", #{@record['address']}"
-        flash[:success] = msg
+        flash_status = 'success'
+      else
+        err_id, msg, errors = parse_api_error(result)
+      end
+
+      if params['ajax'].nil?
+        flash[flash_status.to_sym] = msg
         redirect '/mail/forwardings'
       else
-        err_id, msg = parse_api_error(result)
-        flash[:error] = msg
-        case err_id
-        when '1003' then
-          # permission denied or quota exhausted
-          redirect '/mail/forwardings'
-        else
-          # try again
-          redirect '/mail/forwardings/new'
-        end
+        reply = { status: flash_status, msg: msg, redirect: '/mail/forwardings' }
+        reply['error_id'] = err_id if errors
+        reply['errors'] = errors if errors
+        halt 200, reply.to_json
       end
     end
 
@@ -636,26 +634,24 @@ namespace '/mail' do
 
         result = api_update("mailforwardings/#{params['id']}", upd_params)
 
+        flash_status = 'error'
         if result['status'] == 'success'
           @record = result['data']['object']
           msg = "Successfully updated MailForwarding #{@record['id']}"
           msg += ", #{@record['address']}"
-          flash[:success] = msg
+          flash_status = 'success'
+        else
+          err_id, msg, errors = parse_api_error(result)
+        end
+
+        if params['ajax'].nil?
+          flash[flash_status.to_sym] = msg
           redirect '/mail/forwardings'
         else
-          err_id, msg = parse_api_error(result)
-          flash[:error] = msg
-          case err_id
-          when '1004' then
-            # not found
-            redirect '/mail/forwardings'
-          when '1003' then
-            # permission denied or quota exhausted
-            redirect '/mail/forwardings'
-          else
-            # try again
-            redirect "/mail/forwardings/#{params['id']}/edit"
-          end
+          reply = { status: flash_status, msg: msg, redirect: '/mail/forwardings' }
+          reply['error_id'] = err_id if errors
+          reply['errors'] = errors if errors
+          halt 200, reply.to_json
         end
       end
 

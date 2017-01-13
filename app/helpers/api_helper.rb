@@ -91,17 +91,11 @@ module APIHelpers
   def parse_api_error(result)
     e = result['error_id']
     msg = "#{result['status']}: #{e}, #{result['message']}"
+    errors = {}
     unless result['data'].nil?
-      errors = result.fetch('data', {}).fetch('errors', {})
-      # validation = errors.fetch('validation', {}) if errors.key?('validation')
-      # if validation.is_a?(Array)
-      #   validation.each do |err|
-      #     msg += "</br>field: #{err['field']}, errors: #{err['errors']}"
-      #   end
-      # end
-      msg += "</br>#{errors.inspect}" if errors
+      errors = result.fetch('data', {}).fetch('errors', {}) || {}
     end
-    [e, msg]
+    [e, msg, errors]
   end
 
   # @param endpoint [String]

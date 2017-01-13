@@ -25,15 +25,17 @@ div.modal-dialog {
 }
 
 div.alert-wrapper {
-	position: fixed;
-	top: 80px;
-	left: calc(8vw + 20px);
-	right: 10px;
-	z-Index: 1;
-	margin: 0;
+	/* position: fixed; */
+	/* top: 80px; */
+	/* left: calc(8vw + 20px); */
+	/* right: 10px; */
+	/* z-Index: 23; */
+	/* margin: 0; */
+	margin-top: 10px;
+	margin-left: calc(8vw + 20px);
 }
 
-.ajax_flash > h4 {
+div.ajax_flash > h4 {
 	text-transform: capitalize;
 }
 
