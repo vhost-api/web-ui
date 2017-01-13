@@ -34,25 +34,23 @@ namespace '/domains' do
 
     result = api_create('domains', create_params)
 
+    flash_status = 'error'
     if result['status'] == 'success'
       @record = result['data']['object']
       msg = "Successfully created Domain #{@record['id']}, #{@record['name']}"
-      flash[:success] = msg
+      flash_status = 'success'
+    else
+      err_id, msg, errors = parse_api_error(result)
+    end
+
+    if params['ajax'].nil?
+      flash[flash_status.to_sym] = msg
       redirect '/domains'
     else
-      err_id, msg = parse_api_error(result)
-      flash[:error] = msg
-      case err_id
-      when '1004' then
-        # not found
-        redirect '/domains'
-      when '1003' then
-        # permission denied or quota exhausted
-        redirect '/domains'
-      else
-        # try again
-        redirect '/domains/new'
-      end
+      reply = { status: flash_status, msg: msg, redirect: '/domains' }
+      reply['error_id'] = err_id if errors
+      reply['errors'] = errors if errors
+      halt 200, reply.to_json
     end
   end
 
@@ -78,25 +76,23 @@ namespace '/domains' do
 
       result = api_update("domains/#{params['id']}", update_params)
 
+      flash_status = 'error'
       if result['status'] == 'success'
-        msg = "Successfully updated Domain #{params['id']}, #{params['name']}"
-        flash[:success] = msg
         @record = result['data']['object']
+        msg = "Successfully updated Domain #{@record['id']}, #{@record['name']}"
+        flash_status = 'success'
+      else
+        err_id, msg, errors = parse_api_error(result)
+      end
+
+      if params['ajax'].nil?
+        flash[flash_status.to_sym] = msg
         redirect '/domains'
       else
-        err_id, msg = parse_api_error(result)
-        flash[:error] = msg
-        case err_id
-        when '1004' then
-          # not found
-          redirect '/domains'
-        when '1003' then
-          # permission denied or quota exhausted
-          redirect '/domains'
-        else
-          # try again
-          redirect "/domains/#{params['id']}/edit"
-        end
+        reply = { status: flash_status, msg: msg, redirect: '/domains' }
+        reply['error_id'] = err_id if errors
+        reply['errors'] = errors if errors
+        halt 200, reply.to_json
       end
     end
 
