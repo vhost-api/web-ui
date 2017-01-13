@@ -50,25 +50,23 @@ namespace '/users' do
 
     result = api_create('users', create_params)
 
+    flash_status = 'error'
     if result['status'] == 'success'
       @record = result['data']['object']
       msg = "Successfully created User #{@record['id']}, #{@record['login']}"
-      flash[:success] = msg
+      flash_status = 'success'
+    else
+      err_id, msg, errors = parse_api_error(result)
+    end
+
+    if params['ajax'].nil?
+      flash[flash_status.to_sym] = msg
       redirect '/users'
     else
-      err_id, msg = parse_api_error(result)
-      flash[:error] = msg
-      case err_id
-      when '1004' then
-        # not found
-        admin? || reseller? ? redirect('/users') : redirect('/')
-      when '1003' then
-        # permission denied or quota exhausted
-        admin? || reseller? ? redirect('/users') : redirect('/')
-      else
-        # try again
-        admin? || reseller? ? redirect('/users/new') : redirect('/')
-      end
+      reply = { status: flash_status, msg: msg, redirect: '/users' }
+      reply['error_id'] = err_id if errors
+      reply['errors'] = errors if errors
+      halt 200, reply.to_json
     end
   end
 
@@ -108,28 +106,23 @@ namespace '/users' do
 
       result = api_update("users/#{params['id']}", update_params)
 
+      flash_status = 'error'
       if result['status'] == 'success'
-        msg = "Successfully updated User #{params['id']}, #{params['name']}"
-        flash[:success] = msg
         @record = result['data']['object']
+        msg = "Successfully updated User #{@record['id']}, #{@record['login']}"
+        flash_status = 'success'
+      else
+        err_id, msg, errors = parse_api_error(result)
+      end
+
+      if params['ajax'].nil?
+        flash[flash_status.to_sym] = msg
         redirect '/users'
       else
-        s = result['status']
-        e = result['error_id']
-        m = result['message']
-        msg = "#{s}: #{e}, #{m}"
-        flash[:error] = msg
-        case e
-        when '1004' then
-          # not found
-          redirect '/users'
-        when '1003' then
-          # permission denied or quota exhausted
-          redirect '/users'
-        else
-          # try again
-          redirect "/users/#{params['id']}/edit"
-        end
+        reply = { status: flash_status, msg: msg, redirect: '/users' }
+        reply['error_id'] = err_id if errors
+        reply['errors'] = errors if errors
+        halt 200, reply.to_json
       end
     end
 
