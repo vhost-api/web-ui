@@ -78,6 +78,7 @@ function AjaxResponse(form_origin = false, rand_id, status = '', msg = '', redir
 		container.appendChild(alert_heading);
 
 		if(this.status === 'success') {
+			document.body.style.cursor = 'wait';
 			container.className += ' alert-success';
 			container.appendChild(document.createElement('hr'));
 
@@ -144,6 +145,7 @@ function AjaxResponse(form_origin = false, rand_id, status = '', msg = '', redir
 			}
 
 			if(this.form_origin) toggle_form_input(true, form);
+			document.body.style.cursor = 'auto';
 		}
 
 		// add flash message to the wrapper
@@ -186,6 +188,9 @@ function delete_record(endpoint, id) {
 
 	// run the ajax
 	$.ajax({
+		beforeSend: function() {
+			document.body.style.cursor = 'wait';
+		},
 		url: target,
 		method: 'POST',
 		success: function(data) {
@@ -249,6 +254,7 @@ function delete_record(endpoint, id) {
 			}
 			// render the flash message
 			response.render();
+			document.body.style.cursor = 'auto';
 		}
 	});
 	return false;
@@ -381,6 +387,7 @@ $( document ).ready(function() {
 		$.ajax({
 			beforeSend: function() {
 				toggle_form_input(false, form);
+				document.body.style.cursor = 'wait';
 			},
 			url: form_action,
 			method: form_method,

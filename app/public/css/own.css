@@ -35,35 +35,12 @@ div.alert-wrapper {
 	margin-left: calc(8vw + 20px);
 }
 
+div.ajax_flash:hover {
+	cursor: pointer;
+}
+
 div.ajax_flash > h4 {
 	text-transform: capitalize;
-}
-
-div#flash {
-	text-align: center;
-}
-
-div#flash .flash {
-	display: inline-block;
-	max-width: 600pt;
-	padding: 5pt;
-	font-weight: normal;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 30pt;
-	text-align: left;
-}
-div#flash .success {
-	background: #90e090;
-	color: #006500;
-	border: 1pt solid #006500;
-}
-div#flash .notice { }
-div#flash .warn { }
-div#flash .error {
-	background: #ff9090;
-	color: #c70f19;
-	border: 1pt solid #c70f19;
 }
 
 /*
