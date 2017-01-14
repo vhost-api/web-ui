@@ -13,7 +13,7 @@ namespace '/packages' do
     @users = { '0' => { 'id' => 0, 'name' => 'Please select a user...' } }
     _dummy, existing_users = api_query('users')
     @users.merge!(existing_users)
-    ui_create('Package', user_opts: 'user_select_options')
+    ui_create('Package', user_opts: 'user_select_options_package')
   end
 
   post do
@@ -61,7 +61,7 @@ namespace '/packages' do
       _dummy, @record = api_query("packages/#{params['id']}")
       check_response(@record)
       _dummy, @users = api_query('users')
-      ui_edit('Package', user_opts: 'user_select_options')
+      ui_edit('Package', user_opts: 'user_select_options_package')
     end
 
     post do

@@ -67,6 +67,20 @@ module FormHelpers
   end
 
   # @return [Hash]
+  def user_select_options_package
+    return [] if @users.nil? || @users.empty?
+    @users.each_value.map do |u|
+      opt = { value: u['id'], text: u['name'] }
+      if @record.nil?
+        opt[:selected] = 'selected' if (u['id']).zero?
+      elsif u['id'] == @record['user_id']
+        opt[:selected] = 'selected'
+      end
+      opt
+    end
+  end
+
+  # @return [Hash]
   def domain_select_options
     return [] if @domains.nil? || @domains.empty?
     @domains.each_value.map do |d|
