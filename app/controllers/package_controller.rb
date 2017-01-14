@@ -34,25 +34,23 @@ namespace '/packages' do
 
     result = api_create('packages', create_params)
 
+    flash_status = 'error'
     if result['status'] == 'success'
       @record = result['data']['object']
       msg = "Successfully created Package #{@record['id']}, #{@record['name']}"
-      flash[:success] = msg
+      flash_status = 'success'
+    else
+      err_id, msg, errors = parse_api_error(result)
+    end
+
+    if params['ajax'].nil?
+      flash[flash_status.to_sym] = msg
       redirect '/packages'
     else
-      err_id, msg = parse_api_error(result)
-      flash[:error] = msg
-      case err_id
-      when '1004' then
-        # not found
-        redirect '/packages'
-      when '1003' then
-        # permission denied or quota exhausted
-        redirect '/packages'
-      else
-        # try again
-        redirect '/packages/new'
-      end
+      reply = { status: flash_status, msg: msg, redirect: '/packages' }
+      reply['error_id'] = err_id if errors
+      reply['errors'] = errors if errors
+      halt 200, reply.to_json
     end
   end
 
@@ -83,25 +81,23 @@ namespace '/packages' do
 
       result = api_update("packages/#{params['id']}", update_params)
 
+      flash_status = 'error'
       if result['status'] == 'success'
-        msg = "Successfully updated Package #{params['id']}, #{params['name']}"
-        flash[:success] = msg
         @record = result['data']['object']
+        msg = "Successfully updated Package #{@record['id']}, #{@record['name']}"
+        flash_status = 'success'
+      else
+        err_id, msg, errors = parse_api_error(result)
+      end
+
+      if params['ajax'].nil?
+        flash[flash_status.to_sym] = msg
         redirect '/packages'
       else
-        err_id, msg = parse_api_error(result)
-        flash[:error] = msg
-        case err_id
-        when '1004' then
-          # not found
-          redirect '/packages'
-        when '1003' then
-          # permission denied or quota exhausted
-          redirect '/packages'
-        else
-          # try again
-          redirect "/packages/#{params['id']}/edit"
-        end
+        reply = { status: flash_status, msg: msg, redirect: '/packages' }
+        reply['error_id'] = err_id if errors
+        reply['errors'] = errors if errors
+        halt 200, reply.to_json
       end
     end
 
