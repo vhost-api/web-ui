@@ -383,6 +383,15 @@ $( document ).ready(function() {
 		var form = $(this).parents('form');
 		var form_action = form.attr('action') + '?ajax=1';
 		var form_method = form.attr('method');
+		var form_data = form.serialize();
+
+		// include select[multiple] options to form_data (ajax endpoint will interpret those)
+		// exclude multi-select with name "from[]" as they are not relevant
+		form.find('select[multiple]:not([name="from\[\]"])').each(function(_idx, el) {
+			$(el).children().each(function(_idx, opt) {
+				form_data += '&' + $(el).attr('name') + '=' + $(opt).val();
+			});
+		});
 
 		$.ajax({
 			beforeSend: function() {
@@ -391,7 +400,7 @@ $( document ).ready(function() {
 			},
 			url: form_action,
 			method: form_method,
-			data: form.serialize(),
+			data: form_data,
 			success: function(data) {
 				var result_hash = JSON.parse(data);
 				var response = new AjaxResponse(
