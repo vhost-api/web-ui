@@ -119,7 +119,14 @@ module APIHelpers
   # @param apiresponse [RestClientResponse]
   # @return [Hash]
   def parse_apiresponse(apiresponse)
-    JSON.parse(apiresponse.body)
+    begin
+      JSON.parse(apiresponse.body)
+    rescue JSON::ParserError => err
+      p(err)
+      # p(err.backtrace)
+      p('invalid json: ' + apiresponse.body)
+      halt 400, { status: 'error', msg: 'invalid request (invalid json)', errors: [err] }.to_json
+    end
   end
 
   # @param response [Hash]
