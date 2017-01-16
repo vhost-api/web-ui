@@ -103,46 +103,53 @@ function AjaxResponse(form_origin = false, rand_id, status = '', msg = '', redir
 				container.appendChild(error_p);
 			}
 
-			if( 'validation' in errors ) {
-				container.appendChild(document.createElement('hr'));
+			if(errors) {
+				if( 'validation' in errors ) {
+					container.appendChild(document.createElement('hr'));
 
-				var heading = document.createElement('h5');
-				heading.textContent = 'Validation Errors:';
-				container.appendChild(heading);
+					var heading = document.createElement('h5');
+					heading.textContent = 'Validation Errors:';
+					container.appendChild(heading);
 
-				var val_errs = errors['validation'];
-				for (var i in val_errs) {
-					var field = val_errs[i]['field'];
-					var f_errors = val_errs[i]['errors'];
+					var val_errs = errors['validation'];
+					for (var i in val_errs) {
+						var field = val_errs[i]['field'];
+						var f_errors = val_errs[i]['errors'];
 
-					var f = document.createElement('strong');
-					f.textContent = field;
-					container.appendChild(f);
+						var f = document.createElement('strong');
+						f.textContent = field;
+						container.appendChild(f);
 
-					var err_ul = document.createElement('ul');
+						var err_ul = document.createElement('ul');
 
-					for (var j in f_errors) {
-						var err_li = document.createElement('li');
-						err_li.textContent = f_errors[j];
-						err_ul.appendChild(err_li);
+						for (var j in f_errors) {
+							var err_li = document.createElement('li');
+							err_li.textContent = f_errors[j];
+							err_ul.appendChild(err_li);
+						}
+						container.appendChild(err_ul);
 					}
-					container.appendChild(err_ul);
+					// remove this property as we are done processing it
+					delete errors['validation'];
 				}
-				// remove this property as we are done processing it
-				delete errors['validation'];
+
+				// show any remaining errors, that are not validation errors
+				if( Object.keys(errors).length > 0 ) {
+					container.appendChild(document.createElement('hr'));
+					var heading = document.createElement('h5');
+					heading.textContent = 'Other Errors:';
+					container.appendChild(heading);
+
+					var alert_errors = document.createElement('div');
+					for( var err_idx in errors ) {
+						var err_p = document.createElement('p');
+						err_p.textContent = JSON.stringify(errors[err_idx]);
+						alert_errors.appendChild(err_p);
+					}
+					container.appendChild(alert_errors);
+				}
 			}
 
-			// show any remaining errors, that are not validation errors
-			if( Object.keys(errors).length > 0 ) {
-				container.appendChild(document.createElement('hr'));
-				var heading = document.createElement('h5');
-				heading.textContent = 'Other Errors:';
-				container.appendChild(heading);
-
-				var alert_errors = document.createElement('p');
-				alert_errors.textContent = JSON.stringify(errors);
-				container.appendChild(alert_errors);
-			}
 
 			if(this.form_origin) toggle_form_input(true, form);
 			document.body.style.cursor = 'auto';
@@ -419,6 +426,29 @@ $( document ).ready(function() {
 				console.log(xhr);
 				console.log(status);
 				console.log(error);
+				var result_hash;
+				try {
+					result_hash = JSON.parse(xhr['responseText']);
+				} catch(e) {
+					console.log(e);
+					result_hash = {
+						status: xhr['statusText'],
+						msg: 'unknown error',
+						error_id: parseInt(xhr['status']),
+						errors: null
+					};
+				}
+				response = new AjaxResponse(
+					true,
+					rand_id,
+					result_hash['status'],
+					result_hash['msg'],
+					null,
+					10000,
+					parseInt(result_hash['error_id']),
+					result_hash['errors']
+				);
+				response.render();
 			}
 		});
 		return false;
