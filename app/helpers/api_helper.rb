@@ -22,7 +22,10 @@ module APIHelpers
   # @return [Hash, nil]
   def api_query(endpoint, params = {})
     apiresponse = RestClient.get(
-      gen_api_url(endpoint), params: params, Authorization: auth_secret_apikey
+      gen_api_url(endpoint),
+      params: params,
+      Authorization: auth_secret_apikey,
+      content_type: :json
     )
     extract_api_data(apiresponse.headers[:etag], apiresponse)
   rescue RestClient::ExceptionWithResponse => err
@@ -42,7 +45,10 @@ module APIHelpers
     apiresponse = RestClient::Request.execute(
       method: :patch,
       url: gen_api_url(resource) + '?verbose',
-      headers: { Authorization: auth_secret_apikey },
+      headers: {
+        Authorization: auth_secret_apikey,
+        content_type: :json
+      },
       payload: params.to_json
     )
     parse_apiresponse(apiresponse)
@@ -56,7 +62,10 @@ module APIHelpers
     apiresponse = RestClient::Request.execute(
       method: :delete,
       url: gen_api_url(resource) + '?verbose',
-      headers: { Authorization: auth_secret_apikey }
+      headers: {
+        Authorization: auth_secret_apikey,
+        content_type: :json
+      }
     )
     parse_apiresponse(apiresponse)
   rescue RestClient::ExceptionWithResponse => err
@@ -70,7 +79,10 @@ module APIHelpers
     apiresponse = RestClient::Request.execute(
       method: :post,
       url: gen_api_url(resource) + '?verbose',
-      headers: { Authorization: auth_secret_apikey },
+      headers: {
+        Authorization: auth_secret_apikey,
+        content_type: :json
+      },
       payload: params.to_json
     )
     parse_apiresponse(apiresponse)
