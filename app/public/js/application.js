@@ -86,10 +86,12 @@ function AjaxResponse(form_origin = false, rand_id, status = '', msg = '', redir
 			message.textContent = this.msg;
 			container.appendChild(message);
 
-			container.appendChild(document.createElement('br'));
-			var redirect_hint = document.createElement('p');
-			redirect_hint.textContent = 'You are being redirected in ' + +Math.round(this.fadeout_delay/1000) + ' seconds...';
-			container.appendChild(redirect_hint);
+			if(this.redirect) {
+				container.appendChild(document.createElement('br'));
+				var redirect_hint = document.createElement('p');
+				redirect_hint.textContent = 'You are being redirected in ' + +Math.round(this.fadeout_delay/1000) + ' seconds...';
+				container.appendChild(redirect_hint);
+			}
 		} else {
 			container.className += ' alert-danger';
 
