@@ -2,11 +2,11 @@
 source 'https://rubygems.org'
 
 # core
+gem 'rack-cache'
 gem 'rest-client'
 gem 'rest-client-components',
     git: 'https://github.com/amatriain/rest-client-components',
     branch: 'rest-client-2-compatibility'
-gem 'rack-cache'
 gem 'sinatra'
 gem 'sinatra-contrib'
 # tools
@@ -14,16 +14,16 @@ gem 'rake', require: false
 # engine
 gem 'puma'
 # style
-gem 'sinatra-flash'
+gem 'filesize'
 gem 'haml'
 gem 'sass'
-gem 'filesize'
+gem 'sinatra-flash'
 
 group :development do
-  gem 'shotgun', require: false
-  gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'pry'
+  gem 'shotgun', require: false
 end
 
 group :test, :development do
