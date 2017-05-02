@@ -18,6 +18,9 @@ gem 'filesize'
 gem 'haml'
 gem 'sass'
 gem 'sinatra-flash'
+gem 'tilt',
+    git: 'https://github.com/k0kubun/tilt',
+    branch: 'haml-5-api'
 
 group :development do
   gem 'better_errors'
