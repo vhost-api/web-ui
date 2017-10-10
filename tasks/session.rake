@@ -2,6 +2,7 @@
 begin
   require 'yaml'
   require 'benchmark'
+  require 'securerandom'
 
   namespace :session do
     desc 'Generate new session secret'
