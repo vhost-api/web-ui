@@ -7,13 +7,34 @@ GIT
       rack (>= 1.0.1)
       rest-client (>= 1.6.0)
 
+GIT
+  remote: https://github.com/sinatra/sinatra
+  revision: 89cbd96866355729bb347a76ce601b98c3ff579b
+  ref: 89cbd96866355729bb347a76ce601b98c3ff579b
+  branch: master
+  specs:
+    rack-protection (2.0.0)
+      rack
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
+    sinatra-contrib (2.0.0)
+      backports (>= 2.0)
+      multi_json
+      mustermann (~> 1.0)
+      rack-protection (= 2.0.0)
+      sinatra (= 2.0.0)
+      tilt (>= 1.3, < 3)
+
 GEM
   remote: https://rubygems.org/
   specs:
     ast (2.3.0)
     astrolabe (1.3.1)
       parser (~> 2.2)
-    backports (3.9.1)
+    backports (3.10.0)
     better_errors (2.3.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -58,8 +79,6 @@ GEM
     rack (2.0.3)
     rack-cache (1.7.1)
       rack (>= 0.4)
-    rack-protection (2.0.0)
-      rack
     rainbow (2.2.2)
       rake
     rake (12.1.0)
@@ -85,18 +104,6 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.7)
     shotgun (0.9.2)
       rack (>= 1.0)
-    sinatra (2.0.0)
-      mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.0)
-      tilt (~> 2.0)
-    sinatra-contrib (2.0.0)
-      backports (>= 2.0)
-      multi_json
-      mustermann (~> 1.0)
-      rack-protection (= 2.0.0)
-      sinatra (= 2.0.0)
-      tilt (>= 1.3, < 3)
     sinatra-flash (0.3.0)
       sinatra (>= 1.0.0)
     sysexits (1.2.0)
@@ -126,7 +133,7 @@ DEPENDENCIES
   rubocop
   sass
   shotgun
-  sinatra
+  sinatra!
   sinatra-contrib
   sinatra-flash
   tilt

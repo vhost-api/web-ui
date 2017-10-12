@@ -7,7 +7,10 @@ gem 'rest-client'
 gem 'rest-client-components',
     git: 'https://github.com/amatriain/rest-client-components',
     branch: 'rest-client-2-compatibility'
-gem 'sinatra'
+gem 'sinatra',
+  git: 'https://github.com/sinatra/sinatra',
+  branch: 'master',
+  ref: '89cbd96866355729bb347a76ce601b98c3ff579b'
 gem 'sinatra-contrib'
 # tools
 gem 'rake', require: false
