@@ -1,42 +1,40 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # core
-gem 'rack-cache'
-gem 'rest-client'
-gem 'rest-client-components',
-    git: 'https://github.com/amatriain/rest-client-components',
-    branch: 'rest-client-2-compatibility'
-gem 'sinatra',
-  git: 'https://github.com/sinatra/sinatra',
-  branch: 'master',
-  ref: '89cbd96866355729bb347a76ce601b98c3ff579b'
-gem 'sinatra-contrib'
+gem 'rack-cache', '~> 1.7.1'
+gem 'rest-client', '~> 2.0.2'
+gem 'rest-client-components', '~> 1.5.0'
+# gem 'rest-client-components',
+# git: 'https://github.com/amatriain/rest-client-components',
+# branch: 'rest-client-2-compatibility'
+gem 'sinatra', '~> 2.0.1'
+# gem 'sinatra',
+# git: 'https://github.com/sinatra/sinatra',
+# branch: 'master',
+# ref: '89cbd96866355729bb347a76ce601b98c3ff579b'
+gem 'sinatra-contrib', '~> 2.0.1'
 # tools
-gem 'rake', require: false
+gem 'rake', '~> 12.0', require: false
 # engine
-gem 'puma'
+gem 'puma', '~> 3.11'
 # style
-gem 'filesize'
-gem 'haml'
-gem 'sass'
-gem 'sinatra-flash'
-gem 'tilt'
+gem 'filesize', '~> 0.1.1'
+gem 'haml', '~> 5.0.4'
+gem 'sass', '~> 3.5.6'
+gem 'sinatra-flash', '~> 0.3.0'
+gem 'tilt', '~> 2.0.8'
 
 group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'pry'
-  gem 'shotgun', require: false
+  gem 'better_errors', '~> 2.4.0'
+  gem 'binding_of_caller', '~> 0.8.0'
+  gem 'pry', '~> 0.11.3'
+  gem 'shotgun', '~> 0.9.2', require: false
 end
 
 group :test, :development do
-  # gem 'yard', require: false
-  # gem 'simplecov', require: false
-  # gem 'rspec', require: false
-  gem 'rubocop', require: false
-  # gem 'rubocop-rspec', require: false
-  gem 'astrolabe', require: false
-  gem 'haml-lint', require: false
-  # gem 'faker', require: false
+  gem 'astrolabe', '~> 1.3.1', require: false
+  gem 'haml-lint', '~> 0.999.999', require: false
+  gem 'rubocop', '~> 0.54.0', require: false
 end
