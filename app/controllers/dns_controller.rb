@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace '/dns' do
   before do
     @sidebar_title = 'DNS'

@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 post '/login' do
   unless params['user'] && params['password']
     flash[:error] = 'Missing parameters'
@@ -6,18 +8,16 @@ post '/login' do
   end
 
   # perform the login request on the api to get an apikey for future requests
-  begin
-    apiresponse = RestClient.post(
-      gen_api_url('auth/login'),
-      user: params['user'],
-      password: params['password'],
-      apikey_comment: settings.api_key_comment.to_s
-    )
-    data = parse_apiresponse(apiresponse)
-  rescue => err
-    data = parse_apiresponse(err.response)
-    data[:code] = err.response.code
-  end
+  apiresponse = RestClient.post(
+    gen_api_url('auth/login'),
+    user: params['user'],
+    password: params['password'],
+    apikey_comment: settings.api_key_comment.to_s
+  )
+  data = parse_apiresponse(apiresponse)
+rescue Error => err
+  data = parse_apiresponse(err.response)
+  data[:code] = err.response.code
 
   if data.key?(:code)
     msg = 'Invalid Login'
@@ -73,3 +73,4 @@ end
 get '/login' do
   haml :login, layout: :layout_login
 end
+# rubocop:enable Metrics/BlockLength

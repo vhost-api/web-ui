@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 namespace '/mail' do
   before do
     @sidebar_title = 'Mail'
@@ -21,8 +23,8 @@ namespace '/mail' do
     get do
       ui_output(
         'mailaccounts',
-        fields: %w(id enabled email realname receiving_enabled quota quotausage
-                   quotausage_rel updated_at created_at).join(',')
+        fields: %w[id enabled email realname receiving_enabled quota quotausage
+                   quotausage_rel updated_at created_at].join(',')
       )
     end
 
@@ -56,18 +58,18 @@ namespace '/mail' do
 
       create_params[:realname] = params['realname']
 
-      %w(quota quota_sieve_script).each do |k|
+      %w[quota quota_sieve_script].each do |k|
         input = params[k].to_f
         mult = params["#{k}_unit"].to_i
         value = (input * mult).round(0)
         create_params[k.to_sym] = value
       end
 
-      %w(quota_sieve_actions quota_sieve_redirects).each do |k|
+      %w[quota_sieve_actions quota_sieve_redirects].each do |k|
         create_params[k.to_sym] = params[k].to_i
       end
 
-      %w(receiving_enabled enabled).each do |k|
+      %w[receiving_enabled enabled].each do |k|
         create_params[k.to_sym] = if params[k].nil?
                                     false
                                   else
@@ -111,7 +113,7 @@ namespace '/mail' do
       end
     end
 
-    namespace'/:id' do
+    namespace '/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailaccounts/#{params['id']}")
         check_response(@record)
@@ -142,18 +144,18 @@ namespace '/mail' do
 
         upd_params[:realname] = params['realname']
 
-        %w(quota quota_sieve_script).each do |k|
+        %w[quota quota_sieve_script].each do |k|
           input = params[k].to_f
           mult = params["#{k}_unit"].to_i
           value = (input * mult).round(0)
           upd_params[k.to_sym] = value
         end
 
-        %w(quota_sieve_actions quota_sieve_redirects).each do |k|
+        %w[quota_sieve_actions quota_sieve_redirects].each do |k|
           upd_params[k.to_sym] = params[k].to_i
         end
 
-        %w(receiving_enabled enabled).each do |k|
+        %w[receiving_enabled enabled].each do |k|
           upd_params[k.to_sym] = if params[k].nil?
                                    false
                                  else
@@ -238,8 +240,8 @@ namespace '/mail' do
     get do
       ui_output(
         'mailaliases',
-        fields: %w(id address created_at updated_at enabled domain
-                   mail_accounts).join(',')
+        fields: %w[id address created_at updated_at enabled domain
+                   mail_accounts].join(',')
       )
     end
 
@@ -261,7 +263,7 @@ namespace '/mail' do
 
       create_params[:address] = [params['localpart'], domain['name']].join('@')
 
-      %w(enabled).each do |k|
+      %w[enabled].each do |k|
         create_params[k.to_sym] = if params[k].nil?
                                     false
                                   else
@@ -299,7 +301,7 @@ namespace '/mail' do
       end
     end
 
-    namespace'/:id' do
+    namespace '/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailaliases/#{params['id']}")
         check_response(@record)
@@ -318,7 +320,7 @@ namespace '/mail' do
 
         upd_params[:address] = [params['localpart'], domain['name']].join('@')
 
-        %w(enabled).each do |k|
+        %w[enabled].each do |k|
           upd_params[k.to_sym] = if params[k].nil?
                                    false
                                  else
@@ -396,8 +398,8 @@ namespace '/mail' do
     get do
       ui_output(
         'mailsources',
-        fields: %w(id address created_at updated_at enabled domain
-                   mail_accounts).join(',')
+        fields: %w[id address created_at updated_at enabled domain
+                   mail_accounts].join(',')
       )
     end
 
@@ -419,7 +421,7 @@ namespace '/mail' do
 
       create_params[:address] = [params['localpart'], domain['name']].join('@')
 
-      %w(enabled).each do |k|
+      %w[enabled].each do |k|
         create_params[k.to_sym] = if params[k].nil?
                                     false
                                   else
@@ -457,7 +459,7 @@ namespace '/mail' do
       end
     end
 
-    namespace'/:id' do
+    namespace '/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailsources/#{params['id']}")
         check_response(@record)
@@ -476,7 +478,7 @@ namespace '/mail' do
 
         upd_params[:address] = [params['localpart'], domain['name']].join('@')
 
-        %w(enabled).each do |k|
+        %w[enabled].each do |k|
           upd_params[k.to_sym] = if params[k].nil?
                                    false
                                  else
@@ -554,8 +556,8 @@ namespace '/mail' do
     get do
       ui_output(
         'mailforwardings',
-        fields: %w(id address created_at updated_at enabled domain
-                   destinations).join(',')
+        fields: %w[id address created_at updated_at enabled domain
+                   destinations].join(',')
       )
     end
 
@@ -575,7 +577,7 @@ namespace '/mail' do
       create_params[:address] = [params['localpart'], domain['name']].join('@')
       create_params[:destinations] = params['destinations']
 
-      %w(enabled).each do |k|
+      %w[enabled].each do |k|
         create_params[k.to_sym] = if params[k].nil?
                                     false
                                   else
@@ -599,14 +601,16 @@ namespace '/mail' do
         flash[flash_status.to_sym] = msg
         redirect '/mail/forwardings'
       else
-        reply = { status: flash_status, msg: msg, redirect: '/mail/forwardings' }
+        reply = { status: flash_status,
+                  msg: msg,
+                  redirect: '/mail/forwardings' }
         reply['error_id'] = err_id if errors
         reply['errors'] = errors if errors
         halt 200, reply.to_json
       end
     end
 
-    namespace'/:id' do
+    namespace '/:id' do
       get '/edit' do
         _dummy, @record = api_query("mailforwardings/#{params['id']}")
         check_response(@record)
@@ -624,7 +628,7 @@ namespace '/mail' do
         upd_params[:address] = [params['localpart'], domain['name']].join('@')
         upd_params[:destinations] = params['destinations']
 
-        %w(enabled).each do |k|
+        %w[enabled].each do |k|
           upd_params[k.to_sym] = if params[k].nil?
                                    false
                                  else
@@ -648,7 +652,9 @@ namespace '/mail' do
           flash[flash_status.to_sym] = msg
           redirect '/mail/forwardings'
         else
-          reply = { status: flash_status, msg: msg, redirect: '/mail/forwardings' }
+          reply = { status: flash_status,
+                    msg: msg,
+                    redirect: '/mail/forwardings' }
           reply['error_id'] = err_id if errors
           reply['errors'] = errors if errors
           halt 200, reply.to_json
@@ -704,7 +710,7 @@ namespace '/mail' do
       haml :dkim
     end
 
-    namespace'/:id' do
+    namespace '/:id' do
       get '/delete' do
         _dummy, record = api_query("dkims/#{params['id']}")
         txt = "Domain: #{record['domain']['name']}"
@@ -744,7 +750,7 @@ namespace '/mail' do
   end
 
   namespace '/dkimsigning' do
-    namespace'/:id' do
+    namespace '/:id' do
       get '/delete' do
         _dummy, record = api_query("dkimsignings/#{params['id']}")
         txt = "Author: #{record['author']}"
@@ -783,3 +789,4 @@ namespace '/mail' do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

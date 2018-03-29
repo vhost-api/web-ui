@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'bundler/setup'
 
 require 'rest-client'
@@ -19,17 +20,19 @@ Dir.glob('./app/classes/*.rb').each { |file| require file }
 Dir.glob('./app/helpers/*.rb').each { |file| require file }
 
 configure do
-  set :root, File.expand_path('../app/', __FILE__)
-  set :views, File.expand_path('../app/views', __FILE__)
+  set :root, File.expand_path('app/', __dir__)
+  set :views, File.expand_path('app/views', __dir__)
   set :jsdir, 'js'
   set :cssdir, 'css'
   enable :coffeescript
   set :cssengine, 'scss'
   set :start_time, Time.now
   set :logging, false
+  # rubocop:disable Security/YAMLLoad
   @appconfig = YAML.load(
     File.read('config/appconfig.yml')
   )[settings.environment.to_s]
+  # rubocop:enable Security/YAMLLoad
   @appconfig.keys.each do |key|
     set key, @appconfig[key]
   end

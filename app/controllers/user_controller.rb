@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 namespace '/users' do
   before do
     @sidebar_title = 'Users'
@@ -8,8 +10,8 @@ namespace '/users' do
   get do
     ui_output(
       'users',
-      fields: %w(id name login contact_email created_at updated_at reseller
-                 group enabled).join(',')
+      fields: %w[id name login contact_email created_at updated_at reseller
+                 group enabled].join(',')
     )
   end
 
@@ -70,7 +72,7 @@ namespace '/users' do
     end
   end
 
-  namespace'/:id' do
+  namespace '/:id' do
     get '/edit' do
       _dummy, @record = api_query("users/#{params['id']}")
       check_response(@record)
@@ -160,3 +162,4 @@ namespace '/users' do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

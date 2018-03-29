@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# Helper class for the Package model
+
 # rubocop:disable Metrics/ClassLength
+# Helper class for the Package model
 class Package
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def initialize(params = {})
@@ -30,6 +31,7 @@ class Package
     @enabled = params.fetch(:enabled, false)
     @user_opts = {}
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   attr_accessor :id, :name, :price_unit, :created_at, :updated_at, :enabled
   attr_accessor :quota_apikeys, :quota_custom_packages, :quota_customers,
@@ -39,6 +41,7 @@ class Package
                 :quota_mail_aliases, :quota_mail_sources, :quota_mail_storage,
                 :quota_sftp_users, :quota_shell_users, :user_opts
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   # @return [FormFieldSet]
   def field_set
     visible = []
@@ -72,6 +75,7 @@ class Package
 
     FormFieldSet.new(hidden_fields: [], visible_fields: visible).to_hash
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private
 
@@ -234,3 +238,4 @@ class Package
     ).to_hash
   end
 end
+# rubocop:enable Metrics/ClassLength

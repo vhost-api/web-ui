@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 namespace '/webhosting' do
   before do
     @sidebar_title = 'Webhosting'
@@ -41,3 +43,4 @@ namespace '/webhosting' do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
