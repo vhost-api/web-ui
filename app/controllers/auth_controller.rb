@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pp'
+
 # rubocop:disable Metrics/BlockLength
 post '/login' do
   unless params['user'] && params['password']
@@ -7,17 +9,19 @@ post '/login' do
     redirect '/login'
   end
 
-  # perform the login request on the api to get an apikey for future requests
-  apiresponse = RestClient.post(
-    gen_api_url('auth/login'),
-    user: params['user'],
-    password: params['password'],
-    apikey_comment: settings.api_key_comment.to_s
-  )
-  data = parse_apiresponse(apiresponse)
-rescue Error => err
-  data = parse_apiresponse(err.response)
-  data[:code] = err.response.code
+  begin
+    # perform the login request on the api to get an apikey for future requests
+    apiresponse = RestClient.post(
+      gen_api_url('auth/login'),
+      user: params['user'],
+      password: params['password'],
+      apikey_comment: settings.api_key_comment.to_s
+    )
+    data = parse_apiresponse(apiresponse)
+  rescue Error => err
+    data = parse_apiresponse(err.response)
+    data[:code] = err.response.code
+  end
 
   if data.key?(:code)
     msg = 'Invalid Login'
