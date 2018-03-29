@@ -42,7 +42,7 @@ module GenericHelpers
 
   def authenticate!
     @user = session[:user] unless session[:user].nil?
-    return true if user
+    return true if user?
 
     flash[:error] = 'You need to be logged in!'
     session[:return_to] = request.path_info
