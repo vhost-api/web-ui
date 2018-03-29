@@ -6,14 +6,7 @@ source 'https://rubygems.org'
 gem 'rack-cache', '~> 1.7.1'
 gem 'rest-client', '~> 2.0.2'
 gem 'rest-client-components', '~> 1.5.0'
-# gem 'rest-client-components',
-# git: 'https://github.com/amatriain/rest-client-components',
-# branch: 'rest-client-2-compatibility'
 gem 'sinatra', '~> 2.0.1'
-# gem 'sinatra',
-# git: 'https://github.com/sinatra/sinatra',
-# branch: 'master',
-# ref: '89cbd96866355729bb347a76ce601b98c3ff579b'
 gem 'sinatra-contrib', '~> 2.0.1'
 # tools
 gem 'rake', '~> 12.0', require: false
@@ -37,4 +30,5 @@ group :test, :development do
   gem 'astrolabe', '~> 1.3.1', require: false
   gem 'haml-lint', '~> 0.999.999', require: false
   gem 'rubocop', '~> 0.54.0', require: false
+  gem 'rubocop-rspec', '~> 1.24.0', require: false
 end
