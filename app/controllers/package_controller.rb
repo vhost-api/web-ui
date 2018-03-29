@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 namespace '/packages' do
   before do
     @sidebar_title = 'Packages'
@@ -54,7 +56,7 @@ namespace '/packages' do
     end
   end
 
-  namespace'/:id' do
+  namespace '/:id' do
     get '/edit' do
       _dummy, @record = api_query("packages/#{params['id']}")
       check_response(@record)
@@ -84,7 +86,9 @@ namespace '/packages' do
       flash_status = 'error'
       if result['status'] == 'success'
         @record = result['data']['object']
+        # rubocop:disable Metrics/LineLength
         msg = "Successfully updated Package #{@record['id']}, #{@record['name']}"
+        # rubocop:enable Metrics/LineLength
         flash_status = 'success'
       else
         err_id, msg, errors = parse_api_error(result)
@@ -135,3 +139,4 @@ namespace '/packages' do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

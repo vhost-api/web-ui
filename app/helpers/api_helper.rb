@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+
+# rubocop:disable Metrics/ModuleLength
 # collection of helpers for communication with the API
 module APIHelpers
   # @param etag [String]
@@ -18,6 +19,7 @@ module APIHelpers
     end
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   # @param endpoint [String]
   # @return [Hash, nil]
   def api_query(endpoint, params = {})
@@ -37,6 +39,7 @@ module APIHelpers
     parsed_data[:code] = c
     [nil, parsed_data]
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   # @param resource [String]
   # @param params [Hash]
@@ -45,10 +48,8 @@ module APIHelpers
     apiresponse = RestClient::Request.execute(
       method: :patch,
       url: gen_api_url(resource) + '?verbose',
-      headers: {
-        Authorization: auth_secret_apikey,
-        content_type: :json
-      },
+      headers: { Authorization: auth_secret_apikey,
+                 content_type: :json },
       payload: params.to_json
     )
     parse_apiresponse(apiresponse)
@@ -62,10 +63,8 @@ module APIHelpers
     apiresponse = RestClient::Request.execute(
       method: :delete,
       url: gen_api_url(resource) + '?verbose',
-      headers: {
-        Authorization: auth_secret_apikey,
-        content_type: :json
-      }
+      headers: { Authorization: auth_secret_apikey,
+                 content_type: :json }
     )
     parse_apiresponse(apiresponse)
   rescue RestClient::ExceptionWithResponse => err
@@ -79,10 +78,8 @@ module APIHelpers
     apiresponse = RestClient::Request.execute(
       method: :post,
       url: gen_api_url(resource) + '?verbose',
-      headers: {
-        Authorization: auth_secret_apikey,
-        content_type: :json
-      },
+      headers: { Authorization: auth_secret_apikey,
+                 content_type: :json },
       payload: params.to_json
     )
     parse_apiresponse(apiresponse)
@@ -119,16 +116,17 @@ module APIHelpers
   # @param apiresponse [RestClientResponse]
   # @return [Hash]
   def parse_apiresponse(apiresponse)
-    begin
-      JSON.parse(apiresponse.body)
-    rescue JSON::ParserError => err
-      p(err)
-      # p(err.backtrace)
-      p('invalid json: ' + apiresponse.body)
-      halt 400, { status: 'error', msg: 'invalid request (invalid json)', errors: [err] }.to_json
-    end
+    JSON.parse(apiresponse.body)
+  rescue JSON::ParserError => err
+    p(err)
+    # p(err.backtrace)
+    p('invalid json: ' + apiresponse.body)
+    halt 400, { status: 'error',
+                msg: 'invalid request (invalid json)',
+                errors: [err] }.to_json
   end
 
+  # rubocop:disable Metrics/MethodLength
   # @param response [Hash]
   # @return [Boolean]
   def check_response(response)
@@ -148,4 +146,6 @@ module APIHelpers
     end
     true
   end
+  # rubocop:enable Metrics/MethodLength
 end
+# rubocop:enable Metrics/ModuleLength

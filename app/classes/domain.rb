@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Helper class for the Domain model
 class Domain
   def initialize(params = {})

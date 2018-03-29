@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 namespace '/domains' do
   before do
     @sidebar_title = 'Domains'
@@ -8,8 +10,8 @@ namespace '/domains' do
   get do
     ui_output(
       'domains',
-      fields: %w(id name mail_enabled dns_enabled created_at updated_at enabled
-                 user).join(',')
+      fields: %w[id name mail_enabled dns_enabled created_at updated_at enabled
+                 user].join(',')
     )
   end
 
@@ -24,7 +26,7 @@ namespace '/domains' do
     create_params = {}
     create_params[:user_id] = params['user_id'].to_i
     create_params[:name] = params['name']
-    %w(mail_enabled dns_enabled enabled).each do |k|
+    %w[mail_enabled dns_enabled enabled].each do |k|
       create_params[k.to_sym] = if params[k].nil?
                                   false
                                 else
@@ -54,7 +56,7 @@ namespace '/domains' do
     end
   end
 
-  namespace'/:id' do
+  namespace '/:id' do
     get '/edit' do
       _dummy, @record = api_query("domains/#{params['id']}")
       check_response(@record)
@@ -66,7 +68,7 @@ namespace '/domains' do
       update_params = {}
       update_params[:user_id] = params['user_id'].to_i
       update_params[:name] = params['name']
-      %w(mail_enabled dns_enabled enabled).each do |k|
+      %w[mail_enabled dns_enabled enabled].each do |k|
         update_params[k.to_sym] = if params[k].nil?
                                     false
                                   else
@@ -130,3 +132,4 @@ namespace '/domains' do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

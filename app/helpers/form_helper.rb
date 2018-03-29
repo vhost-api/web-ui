@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # rubocop:disable Metrics/ModuleLength
 # collection of form helpers
 module FormHelpers
@@ -45,6 +46,7 @@ module FormHelpers
       opt
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # @return [Array(Fixnum)]
   def extract_active_pkg_ids
@@ -94,6 +96,7 @@ module FormHelpers
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   # @return [Hash]
   def mail_aliases_select_options
     return [] if @mail_aliases.nil? || @mail_aliases.empty?
@@ -108,7 +111,9 @@ module FormHelpers
       opt
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/MethodLength
   # @return [Hash]
   def mail_sources_select_options
     return [] if @mail_sources.nil? || @mail_sources.empty?
@@ -123,7 +128,9 @@ module FormHelpers
       opt
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/MethodLength
   # @return [Hash]
   def mail_accounts_select_options
     return [] if @mail_accounts.nil? || @mail_accounts.empty?
@@ -138,4 +145,6 @@ module FormHelpers
       opt
     end
   end
+  # rubocop:enable Metrics/MethodLength
 end
+# rubocop:enable Metrics/ModuleLength

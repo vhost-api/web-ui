@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # collection of helpers for the user interface
 module UIHelpers
   # @param endpoint [String]
@@ -14,6 +15,7 @@ module UIHelpers
     etag response_digest if session[:flash].nil? || session[:flash].empty?
     haml endpoint.to_sym
   end
+  # rubocop:enable Metrics/AbcSize
 
   # @param class_name [String]
   def ui_edit(class_name, options_helpers = {})

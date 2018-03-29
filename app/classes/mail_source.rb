@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Helper class for the MailSource model
 class MailSource
   def initialize(params = {})

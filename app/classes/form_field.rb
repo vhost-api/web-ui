@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Helper class for a html form field
 class FormField
   # select field

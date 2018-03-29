@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Helper class for the MailForwarding model
 class MailForwarding
   def initialize(params = {})

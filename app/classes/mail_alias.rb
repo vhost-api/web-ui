@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Helper class for the MailAlias model
 class MailAlias
   def initialize(params = {})

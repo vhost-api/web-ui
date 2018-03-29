@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Helper class for the Group model
 class Group
   def initialize(params = {})

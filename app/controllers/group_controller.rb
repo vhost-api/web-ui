@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 namespace '/groups' do
   before do
     @sidebar_title = 'Groups'
@@ -9,7 +11,7 @@ namespace '/groups' do
     ui_output('groups')
   end
 
-  namespace'/:id' do
+  namespace '/:id' do
     get '/edit' do
       _dummy, @record = api_query("groups/#{params['id']}")
       check_response(@record)
@@ -49,3 +51,4 @@ namespace '/groups' do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

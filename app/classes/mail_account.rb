@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-# Helper class for the MailAccount model
+
 # rubocop:disable Metrics/ClassLength
+# Helper class for the MailAccount model
 class MailAccount
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def initialize(params = {})
@@ -19,12 +20,14 @@ class MailAccount
     @mail_alias_opts = {}
     @mail_source_opts = {}
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   attr_accessor :id, :email, :realname, :quota, :quota_sieve_script,
                 :quota_sieve_actions, :quota_sieve_redirects,
                 :receiving_enabled, :created_at, :updated_at, :enabled,
                 :domain_opts, :mail_alias_opts, :mail_source_opts
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   # @return [FormFieldSet]
   def field_set
     visible = []
@@ -44,6 +47,7 @@ class MailAccount
 
     FormFieldSet.new(hidden_fields: [], visible_fields: visible).to_hash
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private
 
@@ -129,3 +133,4 @@ class MailAccount
     ).to_hash
   end
 end
+# rubocop:enable Metrics/ClassLength
