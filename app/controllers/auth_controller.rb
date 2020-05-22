@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rest-client'
 require 'pp'
 
 # rubocop:disable Metrics/BlockLength
@@ -18,7 +19,7 @@ post '/login' do
       apikey_comment: settings.api_key_comment.to_s
     )
     data = parse_apiresponse(apiresponse)
-  rescue Error => err
+  rescue RestClient::Exception => err
     data = parse_apiresponse(err.response)
     data[:code] = err.response.code
   end
