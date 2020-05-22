@@ -9,7 +9,7 @@ gem 'rest-client-components', '~> 1.5.0'
 gem 'sinatra', '~> 2.0.1'
 gem 'sinatra-contrib', '~> 2.0.1'
 # tools
-gem 'rake', '~> 12.0', require: false
+gem 'rake', '~> 12.3', require: false
 # engine
 gem 'puma', '~> 3.11'
 # style
