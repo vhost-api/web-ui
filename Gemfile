@@ -20,7 +20,7 @@ gem 'sinatra-flash', '~> 0.3.0'
 gem 'tilt', '~> 2.0.8'
 
 group :development do
-  gem 'better_errors', '~> 2.4.0'
+  gem 'better_errors', '~> 2.8.0'
   gem 'binding_of_caller', '~> 0.8.0'
   gem 'pry', '~> 0.11.3'
   gem 'shotgun', '~> 0.9.2', require: false
