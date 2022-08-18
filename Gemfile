@@ -11,7 +11,7 @@ gem 'sinatra-contrib', '~> 2.0', '>= 2.0.1'
 # tools
 gem 'rake', '~> 12.0', require: false
 # engine
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3', '>= 4.3.12'
 # style
 gem 'filesize', '~> 0.1', '>= 0.1.1'
 gem 'haml', '~> 5.0', '>= 5.0.4'
