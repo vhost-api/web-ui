@@ -31,8 +31,8 @@
       - @result.each_value do |mailaccount|
         - acc_id = mailaccount['id']
         - edit_link = "/mail/accounts/#{acc_id}/edit"
-        - en = 'icon-check item-enabled'
-        - dis = 'icon-cross item-disabled'
+        - en = 'icon-active item-enabled'
+        - dis = 'icon-disabled item-disabled'
         - en_suff = mailaccount['enabled'] ? en : dis
         - en_textval = mailaccount['enabled'] ? ' yes' : ' no'
         - rcv_suff = mailaccount['receiving_enabled'] ? en : dis

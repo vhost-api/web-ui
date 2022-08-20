@@ -1,0 +1,179 @@
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	viewBox="0 0 16 16"
+>
+	<defs>
+		<style>
+			symbol        { display: none; }
+			symbol:target { display: inline; }
+		</style>
+	</defs>
+	<symbol id="home" viewBox="0 0 16 16" role="presentation">
+		<title>Home</title>
+		<path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+		<path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+	</symbol>
+	<symbol id="mail" viewBox="0 0 16 16" role="presentation">
+		<title>Mail</title>
+		<path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+	</symbol>
+	<symbol id="user" viewBox="0 0 16 16" role="presentation">
+		<title>User</title>
+		<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+	</symbol>
+	<symbol id="user_add" viewBox="0 0 16 16" role="presentation">
+		<title>User add</title>
+		<path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+		<path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+	</symbol>
+	<symbol id="user_del" viewBox="0 0 16 16" role="presentation">
+		<title>User delete</title>
+		<path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+		<path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+	</symbol>
+	<symbol id="arrow_right" viewBox="0 0 16 16" role="presentation">
+		<title>Arrow Right</title>
+		<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+	</symbol>
+	<symbol id="arrow_right_double" viewBox="0 0 16 16" role="presentation">
+		<title>Arrow Right Double</title>
+		<path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+		<path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+	</symbol>
+	<symbol id="arrow_left" viewBox="0 0 16 16" role="presentation">
+		<title>Arrow Left</title>
+		<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+	</symbol>
+	<symbol id="arrow_left_double" viewBox="0 0 16 16" role="presentation">
+		<title>Arrow Left Double</title>
+		<path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+		<path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+	</symbol>
+	<symbol id="settings" viewBox="0 0 16 16" role="presentation">
+		<title>Settings</title>
+		<path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+	</symbol>
+	<symbol id="package" viewBox="0 0 16 16" role="presentation">
+		<title>Package</title>
+		<path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
+	</symbol>
+	<symbol id="stats" viewBox="0 0 16 16" role="presentation">
+		<title>Stats</title>
+		<path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"/>
+	</symbol>
+	<symbol id="logout" viewBox="0 0 16 16" role="presentation">
+		<title>Logout</title>
+		<path d="M7.5 1v7h1V1h-1z"/>
+		<path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/>
+	</symbol>
+	<symbol id="globe" viewBox="0 0 16 16" role="presentation">
+		<title>Globe</title>
+		<path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"/>
+	</symbol>
+	<symbol id="webmail" viewBox="0 0 16 16" role="presentation">
+		<title>Webmail</title>
+		<path d="M4 4a3 3 0 0 0-3 3v6h6V7a3 3 0 0 0-3-3zm0-1h8a4 4 0 0 1 4 4v6a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V7a4 4 0 0 1 4-4zm2.646 1A3.99 3.99 0 0 1 8 7v6h7V7a3 3 0 0 0-3-3H6.646z"/>
+		<path d="M11.793 8.5H9v-1h5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.354-.146l-.853-.854zM5 7c0 .552-.448 0-1 0s-1 .552-1 0a1 1 0 0 1 2 0z"/>
+	</symbol>
+	<symbol id="trash" viewBox="0 0 16 16" role="presentation">
+		<title>Trash</title>
+		<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+	</symbol>
+	<symbol id="active" viewBox="0 0 16 16" role="presentation">
+		<title>Active</title>
+		<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+		<path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z"/>
+	</symbol>
+	<symbol id="active_fill" viewBox="0 0 16 16" role="presentation">
+		<title>Active</title>
+		<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+	</symbol>
+	<symbol id="database" viewBox="0 0 16 16" role="presentation">
+		<title>Database</title>
+		<path d="M1.333 2.667C1.333 1.194 4.318 0 8 0s6.667 1.194 6.667 2.667V4c0 1.473-2.985 2.667-6.667 2.667S1.333 5.473 1.333 4V2.667z"/>
+		<path d="M1.333 6.334v3C1.333 10.805 4.318 12 8 12s6.667-1.194 6.667-2.667V6.334a6.51 6.51 0 0 1-1.458.79C11.81 7.684 9.967 8 8 8c-1.966 0-3.809-.317-5.208-.876a6.508 6.508 0 0 1-1.458-.79z"/>
+		<path d="M14.667 11.668a6.51 6.51 0 0 1-1.458.789c-1.4.56-3.242.876-5.21.876-1.966 0-3.809-.316-5.208-.876a6.51 6.51 0 0 1-1.458-.79v1.666C1.333 14.806 4.318 16 8 16s6.667-1.194 6.667-2.667v-1.665z"/>
+	</symbol>
+	<symbol id="dns" viewBox="0 0 16 16" role="presentation">
+		<title>DNS</title>
+		<path d="M7.293.707A1 1 0 0 0 7 1.414V4H2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h5v6h2v-6h3.532a1 1 0 0 0 .768-.36l1.933-2.32a.5.5 0 0 0 0-.64L13.3 4.36a1 1 0 0 0-.768-.36H9V1.414A1 1 0 0 0 7.293.707z"/>
+	</symbol>
+	<symbol id="dns_alt" viewBox="0 0 16 16" role="presentation">
+		<title>DNS</title>
+		<path d="M7 16h2V6h5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.8 2.4A1 1 0 0 0 14 2H9v-.586a1 1 0 0 0-2 0V7H2a1 1 0 0 0-.8.4L.225 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4h5v5z"/>
+	</symbol>
+	<symbol id="vhosts" viewBox="0 0 16 16" role="presentation">
+		<title>VHosts</title>
+		<path d="M11.473 9a4.5 4.5 0 0 0-8.72-.99A3 3 0 0 0 3 14h8.5a2.5 2.5 0 1 0-.027-5z"/>
+		<path d="M14.544 9.772a3.506 3.506 0 0 0-2.225-1.676 5.502 5.502 0 0 0-6.337-4.002 4.002 4.002 0 0 1 7.392.91 2.5 2.5 0 0 1 1.17 4.769z"/>
+	</symbol>
+	<symbol id="disabled" viewBox="0 0 16 16" role="presentation">
+		<title>Disabled</title>
+		<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+	</symbol>
+	<symbol id="plus" viewBox="0 0 16 16" role="presentation">
+		<title>Plus</title>
+		<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+	</symbol>
+	<symbol id="plus_alt" viewBox="0 0 16 16" role="presentation">
+		<title>Plus</title>
+		<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+	</symbol>
+	<symbol id="arrow_updown" viewBox="0 0 16 16" role="presentation">
+		<title>Arrow Up Down</title>
+		<path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+	</symbol>
+	<symbol id="caret_up" viewBox="0 0 16 16" role="presentation">
+		<title>Caret Up</title>
+		<path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+	</symbol>
+	<symbol id="caret_up_fill" viewBox="0 0 16 16" role="presentation">
+		<title>Caret Up</title>
+		<path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+	</symbol>
+	<symbol id="caret_down" viewBox="0 0 16 16" role="presentation">
+		<title>Caret Down</title>
+		<path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+	</symbol>
+	<symbol id="caret_down_fill" viewBox="0 0 16 16" role="presentation">
+		<title>Caret Down</title>
+		<path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+	</symbol>
+	<!--<symbol id="" viewBox="0 0 16 16" role="presentation">-->
+		<!--<title></title>-->
+	<!--</symbol>-->
+
+	<use x="0" y="0" width="16" height="16" xlink:href="#home"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#mail"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#user"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#user_add"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#user_del"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#arrow_right"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#arrow_right_double"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#arrow_left"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#arrow_left_double"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#settings"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#package"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#stats"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#logout"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#globe"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#webmail"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#trash"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#active"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#active_fill"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#database"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#dns"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#dns_alt"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#vhosts"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#disabled"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#plus"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#plus_alt"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#arrow_updown"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#caret_up"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#caret_up_fill"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#caret_down"/>
+	<use x="0" y="0" width="16" height="16" xlink:href="#caret_down_fill"/>
+	<!--<use x="0" y="0" width="16" height="16" xlink:href="#"/>-->
+</svg>
+

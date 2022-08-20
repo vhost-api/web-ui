@@ -27,8 +27,8 @@
       %tbody
         - @result.each_value do |mailsource|
           - s_id = mailsource['id']
-          - en = 'icon-check item-enabled'
-          - dis = 'icon-cross item-disabled'
+          - en = 'icon-active item-enabled'
+          - dis = 'icon-disabled item-disabled'
           - suff = mailsource['enabled'] ? en : dis
           - textval = mailsource['enabled'] ? ' yes' : ' no'
           - a_del = "/mail/sources/#{mailsource['id']}/delete"

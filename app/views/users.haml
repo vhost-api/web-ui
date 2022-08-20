@@ -31,8 +31,8 @@
           %th.no-sort<
       %tbody
         - @result.each_value do |u|
-          - en = 'icon-check item-enabled'
-          - dis = 'icon-cross item-disabled'
+          - en = 'icon-active item-enabled'
+          - dis = 'icon-disabled item-disabled'
           - suff = u['enabled'] ? en : dis
           - textval = u['enabled'] ? ' yes' : ' no'
           - reseller = u['reseller'] ? u['reseller']['name'] : ''

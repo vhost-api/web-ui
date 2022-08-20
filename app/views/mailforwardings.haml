@@ -27,8 +27,8 @@
       %tbody
         - @result.each_value do |mfwd|
           - fwdid = mfwd['id']
-          - en = 'icon-check item-enabled'
-          - dis = 'icon-cross item-disabled'
+          - en = 'icon-active item-enabled'
+          - dis = 'icon-disabled item-disabled'
           - suff = mfwd['enabled'] ? en : dis
           - textval = mfwd['enabled'] ? ' yes' : ' no'
           - a_del = "/mail/forwardings/#{mfwd['id']}/delete"
