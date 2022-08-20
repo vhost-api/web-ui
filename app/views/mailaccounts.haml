@@ -57,7 +57,10 @@
           %td.iso-date<= Time.at(mailaccount['created_at'].to_i).strftime('%F')
           %td.iso-date<= Time.at(mailaccount['updated_at'].to_i).strftime('%F')
           %td.icon{ class: rcv_suff }= rcv_textval
-          %td{ data: { order: mailaccount['quotausage'].to_i } }<
+          %td._quota{ data: { order: mailaccount['quotausage'].to_i },
+               _data_rel: mailaccount['quotausage_rel'].to_i,
+               _data_abs: mailaccount['quotausage'].to_i,
+               _data_order: 'abs' }<
             .progress<
               %div{ class: progress_class,
                     'role': 'progress',
