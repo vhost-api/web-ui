@@ -67,12 +67,14 @@
                     'aria-valuemin': '0',
                     'aria-valuemax': '100',
                     style: "width:#{mailaccount['quotausage_rel']}%" }<
-                %span<
+                %span.progress_text<
                   - q_usage = mailaccount['quotausage']
-                  - if q_usage.is_a?(Integer)
-                    = Filesize.from("#{mailaccount['quotausage']} B").pretty
-                  - else
-                    N/A
+                  %span.progress_left<
+                    - if q_usage.is_a?(Integer)
+                      = Filesize.from("#{mailaccount['quotausage']} B").pretty
+                    - else
+                      N/A
+                  %span.progress_right<= "#{mailaccount['quotausage_rel']}%"
           %td.number{ style: 'text-align: right;',
                       data: { order: quota_order } }<
             - if quota.zero?
