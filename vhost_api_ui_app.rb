@@ -60,7 +60,8 @@ configure :development, :test do
                              key: settings.session[:key].to_s,
                              domain: settings.session[:domain].to_s,
                              expire_after: settings.session[:timeout],
-                             path: settings.session[:path].to_s
+                             path: settings.session[:path].to_s,
+                             httponly: true
 end
 
 configure :production do
@@ -72,7 +73,9 @@ configure :production do
                              domain: settings.session[:domain].to_s,
                              expire_after: settings.session[:timeout],
                              path: settings.session[:path].to_s,
-                             secure: true
+                             httponly: true,
+                             secure: true,
+                             same_site: 'None'
 end
 
 before do
