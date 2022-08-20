@@ -8,9 +8,9 @@
     %meta{ content: '', name: 'description' }
     %meta{ content: '', name: 'author' }
     %link{ rel: 'shortcut icon', href: "/img/#{settings.site_favicon}" }
-    %link{ href: '/css/bootstrap.min.css', rel: 'stylesheet' }
-    %link{ href: '/css/jquery.dataTables.min.css', rel: 'stylesheet' }
-    %link{ href: '/css/own.css', rel: 'stylesheet' }
+    %link{ href: link_with_mtime('/css/bootstrap.min.css'), rel: 'stylesheet' }
+    %link{ href: link_with_mtime('/css/jquery.dataTables.min.css'), rel: 'stylesheet' }
+    %link{ href: link_with_mtime('/css/own.css'), rel: 'stylesheet' }
   %body
     %nav.navbar.navbar-inverse.navbar-fixed-top
       .container-fluid
@@ -48,8 +48,8 @@
           .col-sm-3.col-md-1.sidebar<
             %ul.nav.nav-sidebar<= haml :sidebar
           .col-sm-9.col-sm-offset-3.col-md-11.col-md-offset-1.main<= yield
-    %script{ src: '/js/jquery.js' }
-    %script{ src: '/js/bootstrap.min.js' }
-    %script{ src: '/js/multiselect.js' }
-    %script{ src: '/js/jquery.dataTables.min.js' }
-    %script{ src: '/js/application.js' }
+    %script{ src: link_with_mtime('/js/jquery.js') }
+    %script{ src: link_with_mtime('/js/bootstrap.min.js') }
+    %script{ src: link_with_mtime('/js/multiselect.js') }
+    %script{ src: link_with_mtime('/js/jquery.dataTables.min.js') }
+    %script{ src: link_with_mtime('/js/application.js') }

@@ -60,4 +60,10 @@ module GenericHelpers
     return false if str =~ %r{^(false|no|FALSE|NO|n|0|off|OFF)$}
     raise ArgumentError
   end
+
+  def link_with_mtime(path)
+    abs_path = settings.public_folder.chomp('/') + path
+    path += '?' + File.mtime(abs_path).strftime('%s') if File.file?(abs_path)
+    path
+  end
 end
