@@ -28,6 +28,7 @@ configure do
   set :cssengine, 'scss'
   set :start_time, Time.now
   set :logging, false
+  set :public_folder, File.expand_path('app/public', __dir__)
   # rubocop:disable Security/YAMLLoad
   @appconfig = YAML.load(
     File.read('config/appconfig.yml')
@@ -63,6 +64,7 @@ configure :development, :test do
 end
 
 configure :production do
+  set :static_cache_control, [:public, :must_revalidate, :max_age => 3600 * 7 * 2]
   set :show_exceptions, false
   set :raise_errors, false
   use Rack::Session::Cookie, secret: File.read('config/session.secret'),
@@ -81,22 +83,6 @@ before do
 end
 
 Dir.glob('./app/controllers/*.rb').each { |file| require file }
-
-get '/js/*.js' do
-  pass unless settings.coffeescript?
-  last_modified File.mtime(settings.root + '/views/' + settings.jsdir)
-  content_type :js
-  cache_control :public, :must_revalidate
-  coffee [settings.jsdir, params[:splat].first].join('/').to_sym
-end
-
-get '/css/*.css' do
-  last_modified File.mtime(settings.root + '/views/' + settings.cssdir)
-  content_type :css
-  cache_control :public, :must_revalidate
-  send(settings.cssengine,
-       [settings.cssdir, params[:splat].first].join('/').to_sym)
-end
 
 get '/' do
   response_digest, @result = api_query("users/#{@user[:id]}/quota_stats", {})
