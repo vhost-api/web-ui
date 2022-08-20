@@ -29,37 +29,37 @@ span.icon::before {
 	vertical-align: -50%;
 }
 
-.icon-home::before               { -webkit-mask-image: url('/img/icons.svg#home');               mask-image: url('/img/icons.svg#home'); }
-.icon-mail::before               { -webkit-mask-image: url('/img/icons.svg#mail');               mask-image: url('/img/icons.svg#mail'); }
-.icon-user::before               { -webkit-mask-image: url('/img/icons.svg#user');               mask-image: url('/img/icons.svg#user'); }
-.icon-user_add::before           { -webkit-mask-image: url('/img/icons.svg#user_add');           mask-image: url('/img/icons.svg#user_add'); }
-.icon-user_del::before           { -webkit-mask-image: url('/img/icons.svg#user_del');           mask-image: url('/img/icons.svg#user_del'); }
-.icon-arrow_right::before        { -webkit-mask-image: url('/img/icons.svg#arrow_right');        mask-image: url('/img/icons.svg#arrow_right'); }
-.icon-arrow_right_double::before { -webkit-mask-image: url('/img/icons.svg#arrow_right_double'); mask-image: url('/img/icons.svg#arrow_right_double'); }
-.icon-arrow_left::before         { -webkit-mask-image: url('/img/icons.svg#arrow_left');         mask-image: url('/img/icons.svg#arrow_left'); }
-.icon-arrow_left_double::before  { -webkit-mask-image: url('/img/icons.svg#arrow_left_double');  mask-image: url('/img/icons.svg#arrow_left_double'); }
-.icon-settings::before           { -webkit-mask-image: url('/img/icons.svg#settings');           mask-image: url('/img/icons.svg#settings'); }
-.icon-package::before            { -webkit-mask-image: url('/img/icons.svg#package');            mask-image: url('/img/icons.svg#package'); }
-.icon-stats::before              { -webkit-mask-image: url('/img/icons.svg#stats');              mask-image: url('/img/icons.svg#stats'); }
-.icon-logout::before             { -webkit-mask-image: url('/img/icons.svg#logout');             mask-image: url('/img/icons.svg#logout'); }
-.icon-globe::before              { -webkit-mask-image: url('/img/icons.svg#globe');              mask-image: url('/img/icons.svg#globe'); }
-.icon-webmail::before            { -webkit-mask-image: url('/img/icons.svg#webmail');            mask-image: url('/img/icons.svg#webmail'); }
-.icon-trash::before              { -webkit-mask-image: url('/img/icons.svg#trash');              mask-image: url('/img/icons.svg#trash'); }
-.icon-active::before             { -webkit-mask-image: url('/img/icons.svg#active_fill');        mask-image: url('/img/icons.svg#active_fill'); }
-/*.icon-active::before         { -webkit-mask-image: url('/img/icons.svg#active');             mask-image: url('/img/icons.svg#active'); }*/
-.icon-database::before           { -webkit-mask-image: url('/img/icons.svg#database');           mask-image: url('/img/icons.svg#database'); }
-.icon-dns::before                { -webkit-mask-image: url('/img/icons.svg#dns');                mask-image: url('/img/icons.svg#dns'); }
-.icon-dns_alt::before            { -webkit-mask-image: url('/img/icons.svg#dns_alt');            mask-image: url('/img/icons.svg#dns_alt'); }
-.icon-vhosts::before             { -webkit-mask-image: url('/img/icons.svg#vhosts');             mask-image: url('/img/icons.svg#vhosts'); }
-.icon-disabled::before           { -webkit-mask-image: url('/img/icons.svg#disabled');           mask-image: url('/img/icons.svg#disabled'); }
-.icon-plus::before               { -webkit-mask-image: url('/img/icons.svg#plus');               mask-image: url('/img/icons.svg#plus'); }
-/*.icon-plus::before               { -webkit-mask-image: url('/img/icons.svg#plus_alt');               mask-image: url('/img/icons.svg#plus_alt'); }*/
-.icon-arrow_updown::before       { -webkit-mask-image: url('/img/icons.svg#arrow_updown');       mask-image: url('/img/icons.svg#arrow_updown'); }
-.icon-caret_up::before           { -webkit-mask-image: url('/img/icons.svg#caret_up');           mask-image: url('/img/icons.svg#caret_up'); }
-.icon-caret_up_fill::before      { -webkit-mask-image: url('/img/icons.svg#caret_up_fill');      mask-image: url('/img/icons.svg#caret_up_fill'); }
-.icon-caret_down::before           { -webkit-mask-image: url('/img/icons.svg#caret_down');       mask-image: url('/img/icons.svg#caret_down'); }
-.icon-caret_down_fill::before      { -webkit-mask-image: url('/img/icons.svg#caret_down_fill');  mask-image: url('/img/icons.svg#caret_down_fill'); }
-/*.icon-::before        { -webkit-mask-image: url('/img/icons.svg#');                          mask-image: url('/img/icons.svg#'); }*/
+.icon-home::before               { -webkit-mask-image: url('/img/home.svg');               mask-image: url('/img/home.svg'); }
+.icon-mail::before               { -webkit-mask-image: url('/img/mail.svg');               mask-image: url('/img/mail.svg'); }
+.icon-user::before               { -webkit-mask-image: url('/img/user.svg');               mask-image: url('/img/user.svg'); }
+.icon-user_add::before           { -webkit-mask-image: url('/img/user_add.svg');           mask-image: url('/img/user_add.svg'); }
+.icon-user_del::before           { -webkit-mask-image: url('/img/user_del.svg');           mask-image: url('/img/user_del.svg'); }
+.icon-arrow_right::before        { -webkit-mask-image: url('/img/arrow_right.svg');        mask-image: url('/img/arrow_right.svg'); }
+.icon-arrow_right_double::before { -webkit-mask-image: url('/img/arrow_right_double.svg'); mask-image: url('/img/arrow_right_double.svg'); }
+.icon-arrow_left::before         { -webkit-mask-image: url('/img/arrow_left.svg');         mask-image: url('/img/arrow_left.svg'); }
+.icon-arrow_left_double::before  { -webkit-mask-image: url('/img/arrow_left_double.svg');  mask-image: url('/img/arrow_left_double.svg'); }
+.icon-settings::before           { -webkit-mask-image: url('/img/settings.svg');           mask-image: url('/img/settings.svg'); }
+.icon-package::before            { -webkit-mask-image: url('/img/package.svg');            mask-image: url('/img/package.svg'); }
+.icon-stats::before              { -webkit-mask-image: url('/img/stats.svg');              mask-image: url('/img/stats.svg'); }
+.icon-logout::before             { -webkit-mask-image: url('/img/logout.svg');             mask-image: url('/img/logout.svg'); }
+.icon-globe::before              { -webkit-mask-image: url('/img/globe.svg');              mask-image: url('/img/globe.svg'); }
+.icon-webmail::before            { -webkit-mask-image: url('/img/webmail.svg');            mask-image: url('/img/webmail.svg'); }
+.icon-trash::before              { -webkit-mask-image: url('/img/trash.svg');              mask-image: url('/img/trash.svg'); }
+.icon-active::before             { -webkit-mask-image: url('/img/active_fill.svg');        mask-image: url('/img/active_fill.svg'); }
+/*.icon-active::before             { -webkit-mask-image: url('/img/active.svg');             mask-image: url('/img/active.svg'); }*/
+.icon-database::before           { -webkit-mask-image: url('/img/database.svg');           mask-image: url('/img/database.svg'); }
+.icon-dns::before                { -webkit-mask-image: url('/img/dns.svg');                mask-image: url('/img/dns.svg'); }
+.icon-dns_alt::before            { -webkit-mask-image: url('/img/dns_alt.svg');            mask-image: url('/img/dns_alt.svg'); }
+.icon-vhosts::before             { -webkit-mask-image: url('/img/vhosts.svg');             mask-image: url('/img/vhosts.svg'); }
+.icon-disabled::before           { -webkit-mask-image: url('/img/disabled.svg');           mask-image: url('/img/disabled.svg'); }
+.icon-plus::before               { -webkit-mask-image: url('/img/plus.svg');               mask-image: url('/img/plus.svg'); }
+/*.icon-plus::before               { -webkit-mask-image: url('/img/plus_alt.svg');           mask-image: url('/img/plus_alt.svg'); }*/
+.icon-arrow_updown::before       { -webkit-mask-image: url('/img/arrow_updown.svg');       mask-image: url('/img/arrow_updown.svg'); }
+.icon-caret_up::before           { -webkit-mask-image: url('/img/caret_up.svg');           mask-image: url('/img/caret_up.svg'); }
+.icon-caret_up_fill::before      { -webkit-mask-image: url('/img/caret_up_fill.svg');      mask-image: url('/img/caret_up_fill.svg'); }
+.icon-caret_down::before         { -webkit-mask-image: url('/img/caret_down.svg');         mask-image: url('/img/caret_down.svg'); }
+.icon-caret_down_fill::before    { -webkit-mask-image: url('/img/caret_down_fill.svg');    mask-image: url('/img/caret_down_fill.svg'); }
+/*.icon-::before                   { -webkit-mask-image: url('/img/.svg');                   mask-image: url('/img/.svg'); }*/
 
 /*
  * red color for delete links / trash icon / disabled cross
