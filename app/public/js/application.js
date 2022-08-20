@@ -354,6 +354,48 @@ $( document ).ready(function() {
 				}
 			} );
 		} );
+
+		// custom order multi-toggle
+		table.on('order.dt', function() {
+			order = table.order();
+			order_col = order[0][0];
+			order_dir = order[0][1];
+			req_path = window.location.pathname;
+			// column 7 is usage / quota
+			quota_col = 7
+			if (req_path == '/mail/accounts' && order_col == quota_col) {
+				if (typeof last !== 'undefined' && typeof clicked !== 'undefined' && typeof sort_value !== 'undefined') {
+					if (last != order_dir && (clicked % 2) == 0) {
+						// switch data absolute and relative
+						if (sort_value == 'abs') {
+							sort_value = 'rel';
+						} else {
+							sort_value = 'abs';
+						}
+						col_nodes = table.column(quota_col).nodes().to$();
+						if (col_nodes) {
+							curr = $('td', col_nodes).first().attr('_data_order');
+							if (curr != sort_value) {
+								src_attr = '_data_' + sort_value;
+								col_nodes.each(function() {
+									val = $(this).attr(src_attr);
+									$(this).attr('data-order', val);
+									$(this).attr('_data-order', sort_value);
+								});
+								table.cells('._quota').invalidate('dom');
+							}
+						}
+					}
+				}
+				last = order_dir;
+				if (typeof clicked === 'undefined') {
+					clicked = 1;
+					sort_value = 'abs';
+				} else {
+					clicked += 1;
+				}
+			}
+		});
 	});
 
 	// use ajax for delete buttons

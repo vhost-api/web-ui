@@ -284,13 +284,32 @@ div.ajax_flash > h4 {
 
 .progress {
 	position: relative;
+	/*line-height: normal;*/
+	margin: 0;
 }
 
-.progress span {
+.progress span.progress_text {
 	position: absolute;
 	display: block;
 	width: 100%;
+	max-width: 100%;
 	color: black;
+}
+.progress span.progress_text > span.progress_left {
+	position: absolute;
+	display: block;
+	width: 100%;
+	text-align: left;
+	margin: 0;
+	padding: 0 0 0 .5em;
+}
+.progress span.progress_text > span.progress_right {
+	position: absolute;
+	display: block;
+	width: 100%;
+	text-align: right;
+	margin: 0;
+	padding: 0 .5em 0 0;
 }
 
 .btn-delete {

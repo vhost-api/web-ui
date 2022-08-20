@@ -1,7 +1,7 @@
 .table-wrapper
   - @create_btn_txt = 'New MailAccount'
   %a{ href: '/mail/accounts/new' }<= haml :create_button
-  %table.table.table-triped.data-table<
+  %table.table.table-striped.data-table<
     %caption< MailAccounts
     %thead<
       %tr<
@@ -57,19 +57,24 @@
           %td.iso-date<= Time.at(mailaccount['created_at'].to_i).strftime('%F')
           %td.iso-date<= Time.at(mailaccount['updated_at'].to_i).strftime('%F')
           %td.icon{ class: rcv_suff }= rcv_textval
-          %td{ data: { order: mailaccount['quotausage'].to_i } }<
+          %td._quota{ data: { order: mailaccount['quotausage'].to_i },
+               _data_rel: mailaccount['quotausage_rel'].to_i,
+               _data_abs: mailaccount['quotausage'].to_i,
+               _data_order: 'abs' }<
             .progress<
               %div{ class: progress_class,
                     'role': 'progress',
                     'aria-valuemin': '0',
                     'aria-valuemax': '100',
                     style: "width:#{mailaccount['quotausage_rel']}%" }<
-                %span<
+                %span.progress_text<
                   - q_usage = mailaccount['quotausage']
-                  - if q_usage.is_a?(Integer)
-                    = Filesize.from("#{mailaccount['quotausage']} B").pretty
-                  - else
-                    N/A
+                  %span.progress_left<
+                    - if q_usage.is_a?(Integer)
+                      = Filesize.from("#{mailaccount['quotausage']} B").pretty
+                    - else
+                      N/A
+                  %span.progress_right<= "#{mailaccount['quotausage_rel']}%"
           %td.number{ style: 'text-align: right;',
                       data: { order: quota_order } }<
             - if quota.zero?
