@@ -23,8 +23,8 @@
         %th.no-sort<
     %tbody<
       - @dkims.each_value do |dkim|
-        - en = 'icon-check item-enabled'
-        - dis = 'icon-cross item-disabled'
+        - en = 'icon-active item-enabled'
+        - dis = 'icon-disabled item-disabled'
         - suff = dkim['enabled'] ? en : dis
         - textval = dkim['enabled'] ? ' yes' : ' no'
         - a_del = "/mail/dkim/#{dkim['id']}/delete"
@@ -69,8 +69,8 @@
     %tbody
       - @dkimsignings.each_value do |dkimsgn|
         - dksgnid = dkimsgn['id']
-        - en = 'icon-check item-enabled'
-        - dis = 'icon-cross item-disabled'
+        - en = 'icon-active item-enabled'
+        - dis = 'icon-disabled item-disabled'
         - suff = dkimsgn['enabled'] ? en : dis
         - textval = dkimsgn['enabled'] ? ' yes' : ' no'
         - a_del = "/mail/dkimsigning/#{dkimsgn['id']}/delete"

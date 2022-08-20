@@ -1,56 +1,56 @@
 %li{ class: nav_current?(%r{^(|\/)$}) }<
   %a{ href: '/', title: 'Home' }<
     .icon.icon-home.icon-title
-    .title< Home
+    .title.hidden-sm< Home
 
 %li{ class: nav_current?(%r{^/users}) }<
   - if admin? || reseller?
     %a{ href: '/users', title: 'Users' }<
       .icon.icon-user.icon-title
-      .title< Users
+      .title.hidden-sm< Users
   - else
     %a{ href: "/users/#{@user[:id]}/edit", title: 'User' }<
       .icon.icon-user.icon-title
-      .title< User
+      .title.hidden-sm< User
 %li{ class: nav_current?(%r{^/stats}) }<
   %a{ href: '/stats', title: 'Stats' }<
     .icon.icon-stats.icon-title
-    .title< Stats
+    .title.hidden-sm< Stats
 - if admin? || reseller?
   %li{ class: nav_current?(%r{^/packages}) }<
     %a{ href: '/packages', title: 'Packages' }<
       .icon.icon-package.icon-title
-      .title< Packages
+      .title.hidden-sm< Packages
 - if session[:modules].include?('domain')
   %li{ class: nav_current?(%r{^/domains}) }<
     %a{ href: '/domains', title: 'Domains' }<
-      .icon.icon-domain.icon-title
-      .title< Domains
+      .icon.icon-globe.icon-title
+      .title.hidden-sm< Domains
 - if session[:modules].include?('email')
   %li{ class: nav_current?(%r{^/mail}) }<
     %a{ href: '/mail', title: 'Mail' }<
       .icon.icon-mail.icon-title
-      .title< Mail
+      .title.hidden-sm< Mail
 - if session[:modules].include?('vhost')
   %li{ class: nav_current?(%r{^/webhosting}) }<
     %a{ href: '/webhosting', title: 'VHosts' }<
-      .icon.icon-web.icon-title
-      .title< VHosts
+      .icon.icon-vhosts.icon-title
+      .title.hidden-sm< VHosts
 - if session[:modules].include?('database')
   %li{ class: nav_current?(%r{^/databases}) }<
     %a{ href: '/databases', title: 'DBs' }<
       .icon.icon-database.icon-title
-      .title< DBs
+      .title.hidden-sm< DBs
 - if session[:modules].include?('dns')
   %li{ class: nav_current?(%r{^/dns}) }<
     %a{ href: '/dns', title: 'DNS' }<
       .icon.icon-dns.icon-title
-      .title< DNS
+      .title.hidden-sm< DNS
 %li{ class: nav_current?(%r{^/settings}) }<
   %a{ href: '/settings', title: 'Settings' }<
     .icon.icon-settings.icon-title
-    .title< Settings
+    .title.hidden-sm< Settings
 %li<
   %a{ href: settings.webmail_link, target: '_blank', title: 'Webmail' }<
     .icon.icon-webmail.icon-title
-    .title< Webmail
+    .title.hidden-sm< Webmail

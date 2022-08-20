@@ -23,7 +23,7 @@
           </button>
           %a.navbar-brand.navbar-brand-pad{ href: '/' }<
             %span.helper<
-            %img.hidden-xs{ alt: 'Brand', src: "/img/#{settings.site_brand}" }
+            %img.hidden-xs.site_brand{ alt: 'Brand', width: 56, height: 56, src: "/img/#{settings.site_brand}" }
         .navbar-collapse.collapse#navbar
           %ul.nav.navbar-nav
             = haml :nav

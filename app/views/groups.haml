@@ -16,8 +16,8 @@
               - elsif key =~ %r{ed_at$}
                 %td.iso-date<= Time.at(g[key].to_i).strftime('%F')
               - elsif key =~ %r{enabled$}
-                - en = 'icon-check item-enabled'
-                - dis = 'icon-cross item-disabled'
+                - en = 'icon-active item-enabled'
+                - dis = 'icon-disabled item-disabled'
                 - suff = g[key] ? en : dis
                 - textval = g[key] ? ' yes' : ' no'
                 %td.icon{ class: "icon #{suff}" }= textval
