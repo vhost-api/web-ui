@@ -4,22 +4,20 @@
     - unless @result.nil? || @result.empty?
       %thead
         %tr
-          - @result.each_value.first.each_key do |key|
-            %th<= key
+          %th< ID
+          %th< Name
+          %th< Created
+          %th< Updated
+          %th.bool< Enabled
+          %th.no-sort<
       %tbody
         - @result.each_value do |g|
-          %tr{ id: "vhapi-groups-#{g['id']}" }<
-            - g.each_key do |key|
-              - if key =~ %r{name}
-                %td
-                  %a{ href: "/groups/#{g['id']}/edit" }<= g[key]
-              - elsif key =~ %r{ed_at$}
-                %td.iso-date<= Time.at(g[key].to_i).strftime('%F')
-              - elsif key =~ %r{enabled$}
-                - en = 'icon-active item-enabled'
-                - dis = 'icon-disabled item-disabled'
-                - suff = g[key] ? en : dis
-                - textval = g[key] ? ' yes' : ' no'
-                %td.icon{ class: "icon #{suff}" }= textval
-              - else
-                %td<= g[key]
+          - id = g['id']
+          - alt = "Group #{id} (#{g['name']})"
+          %tr{ id: "vhapi-groups-#{id}" }<
+            %td<= id
+            - haml_td_edit "/groups", id, g['name'], alt
+            %td.iso-date<= Time.at(g['created_at'].to_i).strftime('%F')
+            %td.iso-date<= Time.at(g['updated_at'].to_i).strftime('%F')
+            - haml_td_bool g['enabled']
+            - haml_td_delete "/groups", id, alt

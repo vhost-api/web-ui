@@ -29,15 +29,8 @@
         %th.no-sort<
     %tbody<
       - @result.each_value do |mailaccount|
-        - acc_id = mailaccount['id']
-        - edit_link = "/mail/accounts/#{acc_id}/edit"
-        - en = 'icon-active item-enabled'
-        - dis = 'icon-disabled item-disabled'
-        - en_suff = mailaccount['enabled'] ? en : dis
-        - en_textval = mailaccount['enabled'] ? ' yes' : ' no'
-        - rcv_suff = mailaccount['receiving_enabled'] ? en : dis
-        - rcv_textval = mailaccount['receiving_enabled'] ? ' yes' : ' no'
-        - a_del = "/mail/accounts/#{mailaccount['id']}/delete"
+        - id = mailaccount['id']
+        - alt = "Account #{id} (#{mailaccount['email']})"
         - quota = mailaccount['quota'].to_i
         - quota_pretty = Filesize.from("#{quota} B").pretty
         - progress_class = 'progress-bar progress-bar-info'
@@ -48,15 +41,14 @@
         - if mailaccount['quotausage_rel'] >= thresh_crit
           - progress_class = 'progress-bar progress-bar-danger'
         - quota_order = quota.zero? ? (2**63 - 2) : quota
-        %tr{ id: "vhapi-mail-accounts-#{acc_id}" }<
-          %td<= acc_id
-          %td.icon{ class: en_suff }= en_textval
-          %td<
-            %a{ href: edit_link }<= mailaccount['email']
+        %tr{ id: "vhapi-mail-accounts-#{id}" }<
+          %td<= id
+          - haml_td_bool mailaccount['enabled']
+          - haml_td_edit "/mail/accounts", id, mailaccount['email'], alt
           %td<= mailaccount['realname']
           %td.iso-date<= Time.at(mailaccount['created_at'].to_i).strftime('%F')
           %td.iso-date<= Time.at(mailaccount['updated_at'].to_i).strftime('%F')
-          %td.icon{ class: rcv_suff }= rcv_textval
+          - haml_td_bool mailaccount['receiving_enabled']
           %td._quota{ data: { order: mailaccount['quotausage'].to_i },
                _data_rel: mailaccount['quotausage_rel'].to_i,
                _data_abs: mailaccount['quotausage'].to_i,
@@ -81,5 +73,4 @@
               Unlimited
             - else
               = quota_pretty
-          %td<
-            %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+          - haml_td_delete "/mail/accounts", id, alt

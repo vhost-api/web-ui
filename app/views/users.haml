@@ -31,22 +31,17 @@
           %th.no-sort<
       %tbody
         - @result.each_value do |u|
-          - en = 'icon-active item-enabled'
-          - dis = 'icon-disabled item-disabled'
-          - suff = u['enabled'] ? en : dis
-          - textval = u['enabled'] ? ' yes' : ' no'
+          - id = u['id']
+          - alt = "User #{id} (#{u['name']})"
           - reseller = u['reseller'] ? u['reseller']['name'] : ''
-          - a_del = "/users/#{u['id']}/delete"
           %tr{ id: "vhapi-users-#{u['id']}" }<
             %td<= u['id']
-            %td<
-              %a{ href: "/users/#{u['id']}/edit" }<= u['name']
+            - haml_td_edit "/users", id, u['name'], alt
             %td<= u['login']
             %td<= u['contact_email']
             %td.iso-date<= Time.at(u['created_at'].to_i).strftime('%F')
             %td.iso-date<= Time.at(u['updated_at'].to_i).strftime('%F')
-            %td.icon{ class: "icon #{suff}" }= textval
+            - haml_td_bool u['enabled']
             %td<= u['group']['name']
             %td<= reseller
-            %td<
-              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+            - haml_td_delete "/users", id, alt

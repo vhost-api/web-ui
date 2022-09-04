@@ -26,22 +26,16 @@
           %th.no-sort<
       %tbody
         - @result.each_value do |mailalias|
-          - aliasid = mailalias['id']
-          - en = 'icon-active item-enabled'
-          - dis = 'icon-disabled item-disabled'
-          - suff = mailalias['enabled'] ? en : dis
-          - textval = mailalias['enabled'] ? ' yes' : ' no'
-          - a_del = "/mail/aliases/#{mailalias['id']}/delete"
-          %tr{ id: "vhapi-mail-aliases-#{mailalias['id']}" }<
-            %td<= aliasid
-            %td<
-              %a{ href: "/mail/aliases/#{aliasid}/edit" }<= mailalias['address']
+          - id = mailalias['id']
+          - alt = "Alias #{id} (#{mailalias['address']})"
+          %tr{ id: "vhapi-mail-aliases-#{id}" }<
+            %td<= id
+            - haml_td_edit "/mail/aliases", id, mailalias['address'], alt
             %td.iso-date<= Time.at(mailalias['created_at'].to_i).strftime('%F')
             %td.iso-date<= Time.at(mailalias['updated_at'].to_i).strftime('%F')
-            %td.icon{ class: "icon #{suff}" }= textval
+            - haml_td_bool mailalias['enabled']
             %td<= mailalias['domain']['name']
             %td<
               - mailalias['mail_accounts'].each do |dest|
                 %p<= dest['email']
-            %td<
-              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+            - haml_td_delete "/mail/aliases", id, alt

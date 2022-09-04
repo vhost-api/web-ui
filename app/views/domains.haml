@@ -28,24 +28,15 @@
           %th.no-sort<
       %tbody
         - @result.each_value do |d|
-          - en = 'icon-active item-enabled'
-          - dis = 'icon-disabled item-disabled'
-          - en_suff = d['enabled'] ? en : dis
-          - en_textval = d['enabled'] ? ' yes' : ' no'
-          - mail_en_suff = d['mail_enabled'] ? en : dis
-          - mail_en_textval = d['mail_enabled'] ? ' yes' : ' no'
-          - dns_en_suff = d['dns_enabled'] ? en : dis
-          - dns_en_textval = d['dns_enabled'] ? ' yes' : ' no'
-          - a_del = "/domains/#{d['id']}/delete"
-          %tr{ id: "vhapi-domains-#{d['id']}" }<
+          - id = d['id']
+          - alt = "Domain #{id} (#{d['name']})"
+          %tr{ id: "vhapi-domains-#{id}" }<
             %td<= d['id']
-            %td<
-              %a{ href: "/domains/#{d['id']}/edit" }<= d['name']
-            %td.icon{ class: "icon #{mail_en_suff}" }= mail_en_textval
-            %td.icon{ class: "icon #{dns_en_suff}" }= dns_en_textval
+            - haml_td_edit "/packages", id, d['name'], alt
+            - haml_td_bool d['mail_enabled']
+            - haml_td_bool d['dns_enabled']
             %td.iso-date<= Time.at(d['created_at'].to_i).strftime('%F')
             %td.iso-date<= Time.at(d['updated_at'].to_i).strftime('%F')
-            %td.icon{ class: "icon #{en_suff}" }= en_textval
+            - haml_td_bool d['enabled']
             %td<= d['user']['name']
-            %td<
-              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+            - haml_td_delete "/domains", id, alt

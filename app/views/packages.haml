@@ -61,19 +61,15 @@
           %th.no-sort<
       %tbody
         - @result.each_value do |p|
-          - en = 'icon-active item-enabled'
-          - dis = 'icon-disabled item-disabled'
-          - en_suff = p['enabled'] ? en : dis
-          - en_textval = p['enabled'] ? ' yes' : ' no'
-          - a_del = "/packages/#{p['id']}/delete"
+          - id = p['id']
+          - alt = "Edit Package #{id} (#{p['name']})"
           %tr{ id: "vhapi-packages-#{p['id']}" }<
             %td<= p['id']
-            %td<
-              %a{ href: "/packages/#{p['id']}/edit" }<= p['name']
+            - haml_td_edit "/packages", id, p['name'], alt
             %td<= p['price_unit']
             %td.iso-date<= Time.at(p['created_at'].to_i).strftime('%F')
             %td.iso-date<= Time.at(p['updated_at'].to_i).strftime('%F')
-            %td.icon{ class: "icon #{en_suff}" }= en_textval
+            - haml_td_bool p['enabled']
             %td<= p['user_id']
             %td<= p['quota_apikeys']
             %td<= p['quota_customers']
@@ -92,5 +88,4 @@
             %td<= p['quota_sftp_users']
             %td<= p['quota_shell_users']
             %td<= p['quota_ssh_pubkeys']
-            %td<
-              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+            - haml_td_delete "/packages", id, alt

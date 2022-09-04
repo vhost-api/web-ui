@@ -26,23 +26,16 @@
           %th.no-sort<
       %tbody
         - @result.each_value do |mfwd|
-          - fwdid = mfwd['id']
-          - en = 'icon-active item-enabled'
-          - dis = 'icon-disabled item-disabled'
-          - suff = mfwd['enabled'] ? en : dis
-          - textval = mfwd['enabled'] ? ' yes' : ' no'
-          - a_del = "/mail/forwardings/#{mfwd['id']}/delete"
+          - id = mfwd['id']
+          - alt = "Forwarding #{id} (#{mfwd['address']})"
           %tr{ id: "vhapi-mail-forwardings-#{mfwd['id']}" }<
-            %td<= fwdid
-            %td<
-              %a{ href: "/mail/forwardings/#{fwdid}/edit" }<
-                = mfwd['address']
+            %td<= id
+            - haml_td_edit "/mail/forwardings", id, mfwd['address'], alt
             %td.iso-date<= Time.at(mfwd['created_at'].to_i).strftime('%F')
             %td.iso-date<= Time.at(mfwd['updated_at'].to_i).strftime('%F')
-            %td.icon{ class: "icon #{suff}" }= textval
+            - haml_td_bool mfwd['enabled']
             %td<= mfwd['domain']['name']
             %td<
               - mfwd['destinations'].split("\n").each do |dest|
                 %p<= dest
-            %td<
-              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+            - haml_td_delete "/mail/forwardings", id, alt

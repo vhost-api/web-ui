@@ -26,22 +26,16 @@
           %th.no-sort<
       %tbody
         - @result.each_value do |mailsource|
-          - s_id = mailsource['id']
-          - en = 'icon-active item-enabled'
-          - dis = 'icon-disabled item-disabled'
-          - suff = mailsource['enabled'] ? en : dis
-          - textval = mailsource['enabled'] ? ' yes' : ' no'
-          - a_del = "/mail/sources/#{mailsource['id']}/delete"
+          - id = mailsource['id']
+          - alt = "Source #{id} (#{mailsource['address']})"
           %tr{ id: "vhapi-mail-sources-#{mailsource['id']}" }<
-            %td<= s_id
-            %td<
-              %a{ href: "/mail/sources/#{s_id}/edit" }<= mailsource['address']
+            %td<= id
+            - haml_td_edit "/mail/sources", id, mailsource['address'], alt
             %td.iso-date<= Time.at(mailsource['created_at'].to_i).strftime('%F')
             %td.iso-date<= Time.at(mailsource['updated_at'].to_i).strftime('%F')
-            %td.icon{ class: "icon #{suff}" }= textval
+            - haml_td_bool mailsource['enabled']
             %td<= mailsource['domain']['name']
             %td<
               - mailsource['mail_accounts'].each do |acc|
                 %p<= acc['email']
-            %td<
-              %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+            - haml_td_delete "/mail/sources", id, alt

@@ -1,5 +1,5 @@
 .table-wrapper
-  %table.table.table-triped.data-table<
+  %table.table.table-striped.data-table<
     %caption< DKIM Keys
     %thead<
       %tr<
@@ -23,30 +23,25 @@
         %th.no-sort<
     %tbody<
       - @dkims.each_value do |dkim|
-        - en = 'icon-active item-enabled'
-        - dis = 'icon-disabled item-disabled'
-        - suff = dkim['enabled'] ? en : dis
-        - textval = dkim['enabled'] ? ' yes' : ' no'
-        - a_del = "/mail/dkim/#{dkim['id']}/delete"
-        %tr{ id: "vhapi-mail-dkim-#{dkim['id']}" }<
-          %td<= dkim['id']
-          %td<
-            %a{ href: "/mail/dkim/#{dkim['id']}/edit" }= dkim['selector']
+        - id = dkim['id']
+        - alt = "DKIM #{id} (#{dkim['selector']}) of #{dkim['domain']['name']}"
+        %tr{ id: "vhapi-mail-dkim-#{id}" }<
+          %td<= id
+          - haml_td_edit "/mail/dkim", id, dkim['selector'], alt
           %td.iso-date<= Time.at(dkim['created_at'].to_i).strftime('%F')
           %td.iso-date<= Time.at(dkim['updated_at'].to_i).strftime('%F')
           %td<= dkim['domain']['name']
-          %td.icon{ class: suff }= textval
+          - haml_td_bool dkim['enabled']
           %td<
             - dkim['dkim_signings'].each do |dksgn|
               %p<= dksgn['author']
-          %td<
-            %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+          - haml_td_delete "/mail/dkim", id, alt
 
 %br<
 %br<
 
 .table-wrapper
-  %table.table.table-triped.data-table
+  %table.table.table-striped.data-table
     %caption DKIM Author-Key Associations
     %thead
       %tr
@@ -68,19 +63,14 @@
         %th.no-sort<
     %tbody
       - @dkimsignings.each_value do |dkimsgn|
-        - dksgnid = dkimsgn['id']
-        - en = 'icon-active item-enabled'
-        - dis = 'icon-disabled item-disabled'
-        - suff = dkimsgn['enabled'] ? en : dis
-        - textval = dkimsgn['enabled'] ? ' yes' : ' no'
-        - a_del = "/mail/dkimsigning/#{dkimsgn['id']}/delete"
-        %tr{ id: "vhapi-mail-dkimsigning-#{dkimsgn['id']}" }<
-          %td<= dkimsgn['id']
-          %td<
-            %a{ href: "/mail/dkimsigning/#{dksgnid}/edit" }= dkimsgn['author']
+        - id = dkimsgn['id']
+        - key_id = dkimsgn['dkim']['id']
+        - alt = "DKIM Signing #{id} (#{dkimsgn['author']})"
+        %tr{ id: "vhapi-mail-dkimsigning-#{id}" }<
+          %td<= id
+          - haml_td_edit "/mail/dkimsigning", id, dkimsgn['author'], alt
           %td.iso-date<= Time.at(dkimsgn['created_at'].to_i).strftime('%F')
           %td.iso-date<= Time.at(dkimsgn['updated_at'].to_i).strftime('%F')
-          %td.icon{ class: suff }= textval
-          %td<= dkimsgn['dkim']['id']
-          %td<
-            %a.icon.item-delete.icon-trash{ href: a_del }= ' delete'
+          - haml_td_bool dkimsgn['enabled']
+          %td<= key_id
+          - haml_td_delete "/mail/dkimsigning", id, alt

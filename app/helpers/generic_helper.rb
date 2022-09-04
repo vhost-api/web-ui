@@ -66,4 +66,39 @@ module GenericHelpers
     path += '?' + File.mtime(abs_path).strftime('%s') if File.file?(abs_path)
     path
   end
+
+  def haml_td_bool(state, &block)
+    return nil unless is_haml?
+    classes = ['icon']
+    alt = ''
+    if state
+      classes.concat(['icon-active', 'item-enabled'])
+      alt = 'Enabled'
+    else
+      classes.concat(['icon-disabled', 'item-disabled'])
+      alt = 'Disabled'
+    end
+    haml_tag :td, class: classes, alt: alt, title: alt, &block
+  end
+
+  def haml_td_edit(base, id, name, alt)
+    return nil unless is_haml?
+    href = "#{base}/#{id}/edit"
+    alt = "Edit #{alt}"
+    haml_tag :td do
+      haml_tag :a, href: href, alt: alt, title: alt do
+        haml_concat name
+      end
+    end
+  end
+
+  def haml_td_delete(base, id, alt)
+    return nil unless is_haml?
+    classes = ['icon', 'item-delete', 'icon-trash']
+    href = "#{base}/#{id}/delete"
+    alt = "Delete #{alt}"
+    haml_tag :td do
+      haml_tag :a, class: classes, href: href, alt: alt, title: alt
+    end
+  end
 end
