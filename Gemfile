@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gem 'rack-cache', '~> 1.7', '>= 1.7.1'
 gem 'rest-client', '~> 2.0', '>= 2.0.2'
 gem 'rest-client-components', '~> 1.5'
-gem 'sinatra', '~> 2.0', '>= 2.0.1'
+gem 'sinatra', '~> 2.2'
 gem 'sinatra-contrib', '~> 2.0', '>= 2.0.1'
 # tools
 gem 'rake', '~> 12.0', require: false
